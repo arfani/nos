@@ -17,6 +17,14 @@ export default {
         },
     },
 
-    plugins: [forms],
-    darkMode: 'class'
+    plugins: [
+        forms,
+        require('daisyui'),
+        require('@tailwindcss/typography'),
+    ],
+    darkMode: 'selector',
+
+    daisyui: {
+        themes: ['coffee']
+    }
 };
