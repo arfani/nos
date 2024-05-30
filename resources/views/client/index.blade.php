@@ -1,19 +1,19 @@
 <x-client-layout>
     {{-- HERO --}}
     <div class="hero bg-base-200 mb-6">
-        <div class="hero-content flex-col sm:flex-row-reverse lg:mx-20">
+        <div class="hero-content flex-col sm:flex-row-reverse lg:mx-10">
             <div class="!w-60 sm:!w-80 swiper heroSwiper">
                 <div class="swiper-wrapper">
                     <!-- Slides -->
-                    <div class="swiper-slide rounded-box mask mask-hexagon">
+                    <div class="swiper-slide rounded-box mask mask-squircle">
                         <img src="{{ Storage::url('public/sliders/a.jpg') }}" class="w-full"
                             alt="Tailwind CSS Carousel component" />
                     </div>
-                    <div class="swiper-slide rounded-box mask mask-hexagon">
+                    <div class="swiper-slide rounded-box mask mask-squircle">
                         <img src="{{ Storage::url('public/sliders/b.jpg') }}" class="w-full"
                             alt="Tailwind CSS Carousel component" />
                     </div>
-                    <div class="swiper-slide rounded-box mask mask-hexagon">
+                    <div class="swiper-slide rounded-box mask mask-squircle">
                         <img src="{{ Storage::url('public/sliders/c.jpg') }}" class="w-full"
                             alt="Tailwind CSS Carousel component" />
                     </div>
@@ -24,8 +24,9 @@
                 <p class="py-6">Kualitas tinggi dengan garansi Lorem ipsum dolor sit amet consectetur adipisicing
                     elit. Repellendus alias est voluptate rerum dolorem ad culpa quos, voluptates itaque reiciendis
                     maxime eum, odit deleniti in at ratione asperiores iste facere.</p>
-                <button class="btn text-primary-content hover:text-primary bg-primary/50 tracking-wider">Daftar |
-                    Masuk</button>
+                    <div class="relative">
+                        @include('components_custom.button-hero')
+                    </div>
             </div>
         </div>
     </div>

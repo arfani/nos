@@ -9,14 +9,14 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
-    
+
     <script src="https://kit.fontawesome.com/8e04c6a931.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="antialiased">
-    
-    <div class="loadingScreen fixed w-screen h-screen z-[9999] bg-base-300 flex justify-center">
-        <span class="loading loading-ring loading-lg"></span>
+
+    <div class="loadingScreen fixed w-screen h-screen z-[9999] bg-base-300 flex justify-center items-center">
+        @include('components_custom.loader')
     </div>
 
     @include('layouts.client.navbar')
