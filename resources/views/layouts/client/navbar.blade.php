@@ -23,14 +23,14 @@
 </div>
 
 
-<div class="navbar bg-base-300 fixed z-20 py-3 md:px-7 hidden md:flex">
+<div class="navbar bg-base-300 fixed z-20 py-3 md:px-7">
     <div class="flex-1">
         <a href="{{ route('client.dashboard') }}" class="ml-2 sm:mr-2">
             <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="60px" class="">
         </a>
         <div class="tooltip tooltip-bottom tooltip-secondary" data-tip="Daftar Kategori">
             <div tabindex="0" role="button" class="btn btn-ghost outline-none text-lg" onclick="menu.showModal()">
-                <span class="fa fa-list"></span> Kategori
+                <span class="fa fa-list"></span> <span class="hidden sm:inline">Kategori</span>
             </div>
         </div>
         @include('layouts.client.menu')

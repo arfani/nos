@@ -21,7 +21,7 @@
 
     @include('layouts.client.navbar')
     <!-- Page Content -->
-    <main class="md:pt-28 px-4 transition-all">
+    <main class="pt-28 px-4 transition-all">
         {{ $slot }}
     </main>
     {{-- <button class="btn btn-primary themeSetter" to="coffee">coffee</button>
