@@ -1,3 +1,4 @@
+{{-- bottom navigation --}}
 <div class="btm-nav md:hidden bg-base-300 z-20">
     <button class="text-info active">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -13,29 +14,25 @@
         </svg>
     </button>
     <button class="text-info">
-        {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg> --}}
         <span class="fa fa-user"></span>
     </button>
 </div>
 
-
+{{-- top navigation --}}
 <div class="navbar bg-base-300 fixed z-20 py-3 md:px-7">
     <div class="flex-1">
-        <a href="{{ route('client.dashboard') }}" class="ml-2 sm:mr-2">
+        <a href="{{ route('client.home') }}" class="ml-2 sm:mr-2">
             <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="60px" class="">
         </a>
         <div class="tooltip tooltip-bottom tooltip-secondary" data-tip="Daftar Kategori">
-            <div tabindex="0" role="button" class="btn btn-ghost outline-none text-lg" onclick="menu.showModal()">
+            <div tabindex="0" role="button" class="btn btn-ghost outline-none text-lg" onclick="menuKategori.showModal()">
                 <span class="fa fa-list"></span> <span class="hidden sm:inline">Kategori</span>
             </div>
         </div>
         @include('layouts.client.menu')
     </div>
     <div class="flex-none">
+        {{-- searching --}}
         <div class="form-control hidden md:block mr-2">
             <input type="text" placeholder="Search" class="input input-bordered lg:w-96 w-auto" />
         </div>
@@ -46,16 +43,35 @@
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
         </button>
-        <button class="btn btn-ghost btn-circle hidden sm:block">
-            <div class="indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+        
+        {{-- notifications --}}
+        <div class="dropdown dropdown-end hidden sm:block">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                <div class="indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
                 <span class="badge badge-xs badge-primary indicator-item"></span>
+                </div>
             </div>
-        </button>
+            <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
+                <div class="card-body gap-0">
+                    <span class="font-bold text-lg mb-2">Notifikasi</span>
+                    <span class="text-info py-1 px-2 bg-primary/5">Subtotal: $999</span>
+                    <span class="text-info py-1 px-2 bg-primary/5">Subtotal: $999</span>
+                    <span class="text-info py-1 px-2">Subtotal: $999</span>
+                    <span class="text-info py-1 px-2">Subtotal: $999</span>
+                    <span class="text-info py-1 px-2">Subtotal: $999</span>
+                    <div class="card-actions mt-2">
+                        <a href="#" class="link mx-auto">Lihat semua</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- cart --}}
         <div class="dropdown dropdown-end hidden sm:block">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
                 <div class="indicator">
@@ -77,6 +93,7 @@
                 </div>
             </div>
         </div>
+
         {{-- user icon --}}
         <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 // CLIENT ROUTES
 Route::get('/', function () {
     return view('client.index');
-})->name('client.dashboard');
+})->name('client.home');
 
 // ADMIN ROUTES
 Route::prefix('admin')
