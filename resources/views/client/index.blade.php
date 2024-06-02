@@ -24,9 +24,9 @@
                 <p class="py-6">Kualitas tinggi dengan garansi Lorem ipsum dolor sit amet consectetur adipisicing
                     elit. Repellendus alias est voluptate rerum dolorem ad culpa quos, voluptates itaque reiciendis
                     maxime eum, odit deleniti in at ratione asperiores iste facere.</p>
-                    <div class="relative">
-                        @include('components_custom.button-hero')
-                    </div>
+                <div class="relative">
+                    @include('components_custom.button-hero')
+                </div>
             </div>
         </div>
     </div>
@@ -58,31 +58,22 @@
             </div>
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+                    <img src="{{ Storage::url('public/mocks/a.jpg') }}" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+                    <img src="{{ Storage::url('public/mocks/b.jpg') }}" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                    <img src="{{ Storage::url('public/mocks/c.jpg') }}" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                    <img src="{{ Storage::url('public/mocks/d.jpg') }}" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+                    <img src="{{ Storage::url('public/mocks/e.jpg') }}" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
+                    <img src="{{ Storage::url('public/mocks/f.jpg') }}" />
                 </div>
             </div>
             <div class="swiper-pagination"></div>
@@ -95,44 +86,55 @@
         <h2 class="text-center mb-10 text-3xl uppercase font-bold tracking-wider">Barang Lelang</h2>
 
         <div class="flex flex-col lg:flex-row items-center">
-            <div class="swiper lelangSwiper mb-10 lg:mb-0">
-                <div class="swiper-wrapper lg:mx-24">
+            <div class="swiper lelangSwiper mb-10 lg:mb-0 !w-60 !h-60">
+                <div class="swiper-wrapper lg:mx-24 ">
                     <div class="swiper-slide">
-                        {{-- <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
-                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                          <span class="countdown font-mono">
-                            <span style="--value:15;"></span>
-                          </span>
-                          days
-                        </div> 
-                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                          <span class="countdown font-mono">
-                            <span style="--value:10;"></span>
-                          </span>
-                          hours
-                        </div> 
-                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                          <span class="countdown font-mono">
-                            <span style="--value:24;"></span>
-                          </span>
-                          min
-                        </div> 
-                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                          <span class="countdown font-mono">
-                            <span style="--value:49;"></span>
-                          </span>
-                          sec
-                        </div>
-                      </div> --}}
-                        Slide 1</div>
-                    <div class="swiper-slide">Slide 2</div>
-                    <div class="swiper-slide">Slide 3</div>
-                    <div class="swiper-slide">Slide 4</div>
-                    <div class="swiper-slide">Slide 5</div>
-                    <div class="swiper-slide">Slide 6</div>
-                    <div class="swiper-slide">Slide 7</div>
-                    <div class="swiper-slide">Slide 8</div>
-                    <div class="swiper-slide">Slide 9</div>
+                        {{-- <div class="grid grid-flow-col gap-5 text-center auto-cols-max verti">
+                            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                                <span class="countdown font-mono">
+                                    <span style="--value:15;"></span>
+                                </span>
+                                days
+                            </div>
+                            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                                <span class="countdown font-mono">
+                                    <span style="--value:10;"></span>
+                                </span>
+                                hours
+                            </div>
+                            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                                <span class="countdown font-mono">
+                                    <span style="--value:24;"></span>
+                                </span>
+                                min
+                            </div>
+                            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                                <span class="countdown font-mono">
+                                    <span style="--value:49;"></span>
+                                </span>
+                                sec
+                            </div>
+                        </div> --}}
+                        <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="" srcset="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{ Storage::url('public/mocks/a.jpg') }}" alt="" srcset="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{ Storage::url('public/mocks/b.jpg') }}" alt="" srcset="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="" srcset="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{ Storage::url('public/mocks/d.jpg') }}" alt="" srcset="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{ Storage::url('public/mocks/e.jpg') }}" alt="" srcset="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="" srcset="">
+                    </div>
                 </div>
             </div>
 
@@ -156,46 +158,7 @@
         <div class="flex flex-wrap justify-around">
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"
-                        class="rounded-xl" />
-                </figure>
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-            <div class="card w-72 bg-base-200 shadow-xl mb-8">
-                <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"
-                        class="rounded-xl" />
-                </figure>
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-            <div class="card w-72 bg-base-200 shadow-xl mb-8">
-                <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"
-                        class="rounded-xl" />
-                </figure>
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-            <div class="card w-72 bg-base-200 shadow-xl mb-8">
-                <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                    <img src="{{ Storage::url('public/mocks/a.jpg') }}"
                         alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
@@ -208,7 +171,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                    <img src="{{ Storage::url('public/mocks/b.jpg') }}"
                         alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
@@ -221,7 +184,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                    <img src="{{ Storage::url('public/mocks/c.jpg') }}"
                         alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
@@ -234,7 +197,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                    <img src="{{ Storage::url('public/mocks/d.jpg') }}"
                         alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
@@ -247,7 +210,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                    <img src="{{ Storage::url('public/mocks/e.jpg') }}"
                         alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
@@ -260,7 +223,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                    <img src="{{ Storage::url('public/mocks/b.jpg') }}"
                         alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
@@ -273,7 +236,46 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+                    <img src="{{ Storage::url('public/mocks/f.jpg') }}"
+                        alt="Shoes" class="rounded-xl" />
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h2 class="card-title">Shoes!</h2>
+                    <p>If a dog chews shoes whose shoes does he choose?</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card w-72 bg-base-200 shadow-xl mb-8">
+                <figure class="px-10 pt-10">
+                    <img src="{{ Storage::url('public/mocks/c.jpg') }}"
+                        alt="Shoes" class="rounded-xl" />
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h2 class="card-title">Shoes!</h2>
+                    <p>If a dog chews shoes whose shoes does he choose?</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card w-72 bg-base-200 shadow-xl mb-8">
+                <figure class="px-10 pt-10">
+                    <img src="{{ Storage::url('public/mocks/d.jpg') }}"
+                        alt="Shoes" class="rounded-xl" />
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h2 class="card-title">Shoes!</h2>
+                    <p>If a dog chews shoes whose shoes does he choose?</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card w-72 bg-base-200 shadow-xl mb-8">
+                <figure class="px-10 pt-10">
+                    <img src="{{ Storage::url('public/mocks/a.jpg') }}"
                         alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
@@ -529,8 +531,8 @@
             }
 
             .lelang .swiper {
-                width: 240px;
-                height: 320px;
+                /* width: 240px; */
+                /* height: 320px; */
             }
 
             .lelang .swiper-slide {

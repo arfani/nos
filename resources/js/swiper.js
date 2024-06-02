@@ -14,8 +14,8 @@ const heroSwiper = new Swiper('.heroSwiper', {
 var lelangSwiper = new Swiper(".lelangSwiper", {
   effect: "cube",
   grabCursor: true,
-  loop:true,
-  autoplay:true,
+  loop: true,
+  autoplay: true,
 });
 
 var promoSwiper = new Swiper(".promoSwiper", {
@@ -33,7 +33,7 @@ var promoSwiper = new Swiper(".promoSwiper", {
   pagination: {
     el: ".swiper-pagination",
   },
-  autoplay: true,
+  autoplay: { delay: 1000 },
   loop: true,
 });
 
@@ -41,9 +41,9 @@ var promoSwiper = new Swiper(".promoSwiper", {
 var testimonialSwiper = new Swiper(".testimonialSwiper", {
   // effect: "cards",
   grabCursor: true,
-  loop:true,
+  loop: true,
   autoplay: {
-    delay:5000
+    delay: 5000
   },
 });
 
@@ -51,7 +51,7 @@ var testimonialSwiper2 = new Swiper(".testimonialSwiper2", {
   effect: "cards",
   grabCursor: true,
   // loop:true,
-  autoplay:{
-    delay:2000
+  autoplay: {
+    delay: 2000
   },
 });
