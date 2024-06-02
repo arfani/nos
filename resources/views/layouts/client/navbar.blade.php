@@ -77,6 +77,7 @@
                 </div>
             </div>
         </div>
+        {{-- user icon --}}
         <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                 <div class="w-10 rounded-full">
@@ -85,9 +86,8 @@
                 </div>
             </div>
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box">
-                <li>
-                    <div class="sm:hidden">
-                        <button class="btn btn-ghost btn-circle">
+                <div class="flex justify-evenly">
+                        <button class="btn btn-ghost btn-circle sm:hidden">
                             <div class="indicator">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -97,7 +97,7 @@
                                 <span class="badge badge-xs badge-primary indicator-item"></span>
                             </div>
                         </button>
-                        <button class="btn btn-ghost btn-circle">
+                        <button class="btn btn-ghost btn-circle sm:hidden">
                             <div class="indicator">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -129,8 +129,7 @@
 
                             </label>
                         </button>
-                    </div>
-                </li>
+                </div>
                 <li><a class="py-2"><span class="fa fa-user"></span><span>Profil</span></a></li>
                 <div class="divider my-0"></div>
                 <li><a class="py-2"><span class="fa fa-person-running"></span><span>Keluar</span></a></li>

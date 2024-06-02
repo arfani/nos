@@ -55,3 +55,16 @@ var testimonialSwiper2 = new Swiper(".testimonialSwiper2", {
     delay: 2000
   },
 });
+
+// for FAQ section
+document.addEventListener('DOMContentLoaded', function() {
+  // TOGGLE COLLAPSE FAQ
+  const collapses = document.querySelectorAll('.collapse');
+  collapses.forEach((collapse, index) => {
+      const title = collapse.querySelector('.collapse-title');
+      const radio = collapse.querySelector('input[type="radio"]');
+      collapse.addEventListener('click', function() {
+          radio.checked = radio.checked == true ? false : true;
+      });
+  });
+});

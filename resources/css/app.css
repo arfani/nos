@@ -3,152 +3,115 @@
 @tailwind utilities;
 
 @layer base {
-    @font-face {
-        font-family: 'Open Sauce One';
-        font-style: normal;
-        font-weight: normal;
-        src: local('Open Sauce One'), url('/public/fonts/OpenSauceOne.woff') format('woff');
-    }
+  @font-face {
+    font-family: 'Open Sauce One';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Open Sauce One'), url('/public/fonts/OpenSauceOne.woff') format('woff');
+  }
 }
 
-
 @layer utilities {
-    [hidden] {
-        display: none;
-    }
-
-    .sidebar-hidden {
-        transform: translateX(-100%);
-    }
-
-    .sidebar-visible {
-        transform: translateX(0);
-    }
-
-    .submenuMaster {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out, opacity .5s ease-out;
-        opacity: 0;
-    }
-
-    .submenu-visible {
-        max-height: 500px;
-        /* Set this to a value that can accommodate your submenu's height */
-        opacity: 1;
-    }
-
-    .content-shift {
-        margin-left: 16rem;
-        /* Width of the sidebar */
-        transition: margin-left 0.2s ease-out;
-    }
-
-    .navbar-shift {
-        /* width: calc(100% - 16rem); Adjust width when sidebar is open */
-        transition: width 0.2s ease-out;
-    }
-
-    /* Transition for button */
-    #toggleSidebarBtn {
-        transition: transform 0.3s ease;
-    }
-
-    #toggleSidebarBtn.active {
-        transform: rotate(180deg);
-    }
-
-    /* FOR NOTICE (RUNNING TEXT) */
-    
-@keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
+  [hidden] {
+    display: none;
   }
-  
+
+  .sidebar-hidden {
+    transform: translateX(-100%);
+  }
+
+  .sidebar-visible {
+    transform: translateX(0);
+  }
+
+  .submenuMaster {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out, opacity .5s ease-out;
+    opacity: 0;
+  }
+
+  .submenu-visible {
+    max-height: 500px;
+    /* Set this to a value that can accommodate your submenu's height */
+    opacity: 1;
+  }
+
+  .content-shift {
+    margin-left: 16rem;
+    /* Width of the sidebar */
+    transition: margin-left 0.2s ease-out;
+  }
+
+  .navbar-shift {
+    /* width: calc(100% - 16rem); Adjust width when sidebar is open */
+    transition: width 0.2s ease-out;
+  }
+
+  /* Transition for button */
+  #toggleSidebarBtn {
+    transition: transform 0.3s ease;
+  }
+
+  #toggleSidebarBtn.active {
+    transform: rotate(180deg);
+  }
+
+  /* FOR NOTICE (RUNNING TEXT) */
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
   .main-runtext {
     overflow: visible;
     position: relative;
     height: 40px;
   }
-  
+
   .marquee {
     margin-top: 5px;
     width: 100%;
     display: flex;
     animation: marquee 30s linear infinite;
   }
-  
+
   .marquee:hover {
     animation-play-state: paused;
   }
-  
+
   .holder {
     position: relative;
     display: inline-block;
     white-space: nowrap;
   }
 
+  /* end running text */
 
-  
-}
-
-.swiper {
-    width: 100%;
-    height: 100%;
-  }
-
-  .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .swiper {
-    width: 100%;
-    height: 300px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .swiper-slide {
-    background-size: cover;
+  .promo .swiper-slide {
     background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 300px;
   }
 
-  .mySwiper2 {
-    height: 80%;
-    width: 100%;
-  }
-
-  .mySwiper {
-    height: 20%;
-    box-sizing: border-box;
-    padding: 10px 0;
-  }
-
-  .mySwiper .swiper-slide {
-    width: 25%;
-    height: 100%;
-    opacity: 0.4;
-  }
-
-  .mySwiper .swiper-slide-thumb-active {
-    opacity: 1;
-  }
-
-  .swiper-slide img {
+  .promo .swiper-slide img {
     display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
+
+  .lelang .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #000;
+  }
+
+}

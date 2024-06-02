@@ -1,6 +1,6 @@
 import './bootstrap';
-import './themeSetter';
-import './swiper';
+import './client/themeSetter';
+import './client/home';
 
 import Alpine from 'alpinejs';
 

@@ -53,7 +53,7 @@
     <div class="promo mb-14">
         <h2 class="text-center text-3xl uppercase font-bold tracking-wider">Spesial Promo</h2>
         <div class="swiper promoSwiper w-full pt-5">
-            <div class="w-full text-center my-2">
+            <div class="w-full text-center mt-2 mb-6">
                 <button class="btn btn-primary btn-sm btn-ghost">Lihat Semua</button>
             </div>
             <div class="swiper-wrapper">
@@ -87,8 +87,8 @@
 
         <div class="flex flex-col lg:flex-row items-center">
             <div class="swiper lelangSwiper mb-10 lg:mb-0 !w-60 !h-60">
-                <div class="swiper-wrapper lg:mx-24 ">
-                    <div class="swiper-slide">
+                <div class="swiper-wrapper lg:mx-24">
+                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         {{-- <div class="grid grid-flow-col gap-5 text-center auto-cols-max verti">
                             <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
                                 <span class="countdown font-mono">
@@ -117,22 +117,22 @@
                         </div> --}}
                         <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="" srcset="">
                     </div>
-                    <div class="swiper-slide">
+                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <img src="{{ Storage::url('public/mocks/a.jpg') }}" alt="" srcset="">
                     </div>
-                    <div class="swiper-slide">
+                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <img src="{{ Storage::url('public/mocks/b.jpg') }}" alt="" srcset="">
                     </div>
-                    <div class="swiper-slide">
+                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="" srcset="">
                     </div>
-                    <div class="swiper-slide">
+                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <img src="{{ Storage::url('public/mocks/d.jpg') }}" alt="" srcset="">
                     </div>
-                    <div class="swiper-slide">
+                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <img src="{{ Storage::url('public/mocks/e.jpg') }}" alt="" srcset="">
                     </div>
-                    <div class="swiper-slide">
+                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="" srcset="">
                     </div>
                 </div>
@@ -158,8 +158,7 @@
         <div class="flex flex-wrap justify-around">
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/a.jpg') }}"
-                        alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/a.jpg') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -171,8 +170,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/b.jpg') }}"
-                        alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/b.jpg') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -184,8 +182,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/c.jpg') }}"
-                        alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -197,8 +194,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/d.jpg') }}"
-                        alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/d.jpg') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -210,8 +206,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/e.jpg') }}"
-                        alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/e.jpg') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -223,8 +218,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/b.jpg') }}"
-                        alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/b.jpg') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -236,8 +230,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/f.jpg') }}"
-                        alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -249,8 +242,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/c.jpg') }}"
-                        alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -262,8 +254,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/d.jpg') }}"
-                        alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/d.jpg') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -275,8 +266,7 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/a.jpg') }}"
-                        alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/a.jpg') }}" alt="Shoes" class="rounded-xl" />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -514,148 +504,4 @@
             </div>
         </div>
     </div>
-
-
-    @push('styles')
-        <style>
-            .promo .swiper-slide {
-                background-position: center;
-                background-size: cover;
-                width: 300px;
-                height: 300px;
-            }
-
-            .promo .swiper-slide img {
-                display: block;
-                width: 100%;
-            }
-
-            .lelang .swiper {
-                /* width: 240px; */
-                /* height: 320px; */
-            }
-
-            .lelang .swiper-slide {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 22px;
-                font-weight: bold;
-                color: #000;
-            }
-
-            .lelang .swiper-slide:nth-child(1n) {
-                background-color: rgb(206, 17, 17);
-            }
-
-            .lelang .swiper-slide:nth-child(2n) {
-                background-color: rgb(0, 140, 255);
-            }
-
-            .lelang .swiper-slide:nth-child(3n) {
-                background-color: rgb(10, 184, 111);
-            }
-
-            .lelang .swiper-slide:nth-child(4n) {
-                background-color: rgb(211, 122, 7);
-            }
-
-            .lelang .swiper-slide:nth-child(5n) {
-                background-color: rgb(118, 163, 12);
-            }
-
-            .lelang .swiper-slide:nth-child(6n) {
-                background-color: rgb(180, 10, 47);
-            }
-
-            .lelang .swiper-slide:nth-child(7n) {
-                background-color: rgb(35, 99, 19);
-            }
-
-            .lelang .swiper-slide:nth-child(8n) {
-                background-color: rgb(0, 68, 255);
-            }
-
-            .lelang .swiper-slide:nth-child(9n) {
-                background-color: rgb(218, 12, 218);
-            }
-
-            .lelang .swiper-slide:nth-child(10n) {
-                background-color: rgb(54, 94, 77);
-            }
-
-
-
-            .testimonial .swiper {
-                /* width: 240px; */
-                /* height: 320px; */
-            }
-
-            .testimonial .swiper-slide {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 18px;
-                font-size: 22px;
-                font-weight: bold;
-                color: #000;
-            }
-
-            .testimonial .swiper-slide:nth-child(1n) {
-                background-color: rgb(206, 17, 17);
-            }
-
-            .testimonial .swiper-slide:nth-child(2n) {
-                background-color: rgb(0, 140, 255);
-            }
-
-            .testimonial .swiper-slide:nth-child(3n) {
-                background-color: rgb(10, 184, 111);
-            }
-
-            .testimonial .swiper-slide:nth-child(4n) {
-                background-color: rgb(211, 122, 7);
-            }
-
-            .testimonial .swiper-slide:nth-child(5n) {
-                background-color: rgb(118, 163, 12);
-            }
-
-            .testimonial .swiper-slide:nth-child(6n) {
-                background-color: rgb(180, 10, 47);
-            }
-
-            .testimonial .swiper-slide:nth-child(7n) {
-                background-color: rgb(35, 99, 19);
-            }
-
-            .testimonial .swiper-slide:nth-child(8n) {
-                background-color: rgb(0, 68, 255);
-            }
-
-            .testimonial .swiper-slide:nth-child(9n) {
-                background-color: rgb(218, 12, 218);
-            }
-
-            .testimonial .swiper-slide:nth-child(10n) {
-                background-color: rgb(54, 94, 77);
-            }
-        </style>
-    @endpush
-
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // TOGGLE COLLAPSE FAQ
-                const collapses = document.querySelectorAll('.collapse');
-                collapses.forEach((collapse, index) => {
-                    const title = collapse.querySelector('.collapse-title');
-                    const radio = collapse.querySelector('input[type="radio"]');
-                    collapse.addEventListener('click', function() {
-                        radio.checked = radio.checked == true ? false : true;
-                    });
-                });
-            });
-        </script>
-    @endpush
 </x-client-layout>
