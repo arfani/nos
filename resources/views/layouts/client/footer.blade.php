@@ -20,11 +20,11 @@
         <a class="link link-hover">Cookie policy</a>
     </nav>
 </footer>
-<footer class="footer px-10 py-4 border-t bg-primary/30 text-white border-base-300">
+<footer class="footer px-10 py-4 border-t bg-primary/30 text-primary-content border-base-300">
     <aside class="items-center grid-flow-col">
-        <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="50px" class="hidden sm:block">
+        <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="50px" class="hidden sm:block mr-2">
         <div class="flex flex-col">
-            <p class="text-primary">Toko Online</p>
+            <p>Toko Online</p>
             <strong>DSComputer</strong>
         </div>
     </aside>

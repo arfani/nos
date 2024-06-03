@@ -24,16 +24,19 @@ export default {
     ],
     darkMode: 'selector',
     
+   
     daisyui: {
         themes: ['nord', 
         'coffee',
-            // {
-            //     coffee: {
-            //         ...require('daisyui/src/theming/themes')["coffee"],
-            //         secondary: '#373A40'
-            //     }
-            // }
+            {
+                coffee: {
+                    ...require('daisyui/src/theming/themes')["coffee"],
+                    secondary: '#373A40'
+                }
+            }
         ],
         darkTheme: 'coffee'
     },
+    
+    darkMode: 'selector'
 };
