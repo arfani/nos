@@ -1,21 +1,30 @@
 {{-- bottom navigation --}}
-<div class="btm-nav md:hidden bg-base-300 z-20">
-    <button class="text-info active">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-        </svg>
-    </button>
-    <button class="text-info border-x border-x-primary/30">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-    </button>
-    <button class="text-info">
-        <span class="fa fa-user"></span>
-    </button>
+<div class="btm-nav md:hidden bg-base-300 text-primary z-20">
+    <a href="{{ route('client.home') }}" @class(['active' => Request::routeIs('client.home')])>
+        <div class="tooltip tooltip-primary" data-tip="Home">
+            <span class="fa fa-home"></span>
+        </div>
+    </a>
+    <a href="{{ route('client.lelang') }}" @class(['active' => Request::routeIs('client.lelang')])>
+        <div class="tooltip tooltip-primary" data-tip="Lelang">
+            <span class="fa fa-laptop"></span>
+        </div>
+    </a>
+    <a href="{{ route('client.promo') }}" @class(['active' => Request::routeIs('client.promo')])>
+        <div class="tooltip tooltip-primary" data-tip="Promo">
+            <span class="fa fa-percent"></span>
+        </div>
+    </a>
+    <a href="{{ route('client.notification') }}" @class(['active' => Request::routeIs('client.notification')])>
+        <div class="tooltip tooltip-primary" data-tip="Notifikasi">
+            <span class="fa fa-envelope"></span>
+        </div>
+    </a>
+    <a href="{{ route('client.profile') }}" @class(['active' => Request::routeIs('client.profile')])>
+        <div class="tooltip tooltip-primary" data-tip="Profil">
+            <span class="fa fa-user"></span>
+        </div>
+    </a>
 </div>
 
 {{-- top navigation --}}
@@ -24,7 +33,7 @@
         <a href="{{ route('client.home') }}" class="ml-2 sm:mr-2">
             <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="60px" class="">
         </a>
-        <div class="tooltip tooltip-bottom tooltip-secondary" data-tip="Daftar Kategori">
+        <div class="tooltip tooltip-primary tooltip tooltip-primary-bottom tooltip tooltip-primary-secondary" data-tip="Daftar Kategori">
             <div tabindex="0" role="button" class="btn btn-ghost outline-none text-lg"
                 onclick="menuKategori.showModal()">
                 <span class="fa fa-list"></span> <span class="hidden sm:inline">Kategori</span>

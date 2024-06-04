@@ -54,7 +54,7 @@
         <h2 class="text-center text-3xl uppercase font-bold tracking-wider">Spesial Promo</h2>
         <div class="swiper promoSwiper w-full pt-5">
             <div class="w-full text-center mt-2 mb-6">
-                <button class="btn btn-primary btn-sm btn-ghost">Lihat Semua</button>
+                <a href="{{ route('client.promo') }}" class="btn btn-primary btn-sm btn-ghost">Lihat Semua</a>
             </div>
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -145,7 +145,7 @@
                     amet consectetur adipisicing elit. Debitis rerum, cumque quidem nam mollitia aperiam suscipit
                     voluptatem fugit earum ipsa ducimus provident excepturi ullam ipsum unde ratione, dolore voluptates
                     non?</p>
-                <button class="btn btn-primary">Lihat Semua</button>
+                <a href="{{ route('client.lelang') }}" class="btn btn-primary">Lihat Semua</a>
             </div>
         </div>
     </div>
@@ -164,7 +164,9 @@
                     <h2 class="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -176,7 +178,9 @@
                     <h2 class="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,7 +192,9 @@
                     <h2 class="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -200,7 +206,9 @@
                     <h2 class="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -212,7 +220,9 @@
                     <h2 class="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -224,7 +234,9 @@
                     <h2 class="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -236,7 +248,9 @@
                     <h2 class="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -248,7 +262,9 @@
                     <h2 class="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -260,7 +276,9 @@
                     <h2 class="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -272,14 +290,16 @@
                     <h2 class="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div class="card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="w-full text-center my-2">
-            <button class="btn btn-primary btn-ghost">Lihat Semua Produk</button>
+            <a href="{{ route('client.product') }}" class="btn btn-primary btn-ghost">Lihat Semua Produk</a>
         </div>
 
     </div>
@@ -323,7 +343,24 @@
                                 Obi-Wan Kenobi
                             </div>
                             <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Incidunt reprehenderit laboriosam aperiam quam possimus,
+                                consectetur possimus,
+                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
+                                consectetur alias exercitationem, veniam saepe.</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide !bg-transparent">
+                        <div class="chat chat-start">
+                            <div class="chat-image avatar">
+                                <div class="w-10 rounded-full">
+                                    <img alt="Tailwind CSS chat bubble component"
+                                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                </div>
+                            </div>
+                            <div class="chat-header text-primary">
+                                Obi-Wan Kenobi
+                            </div>
+                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
+                                consectetur possimus,
                                 iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
                                 consectetur alias exercitationem, veniam saepe.</div>
                         </div>
@@ -356,27 +393,7 @@
                             <div class="chat-header text-primary">
                                 Obi-Wan Kenobi
                             </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Incidunt reprehenderit laboriosam aperiam quam possimus,
-                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
-                                consectetur alias exercitationem, veniam saepe.</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide !bg-transparent">
-                        <div class="chat chat-start">
-                            <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
-                                    <img alt="Tailwind CSS chat bubble component"
-                                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                                </div>
-                            </div>
-                            <div class="chat-header text-primary">
-                                Obi-Wan Kenobi
-                            </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Incidunt reprehenderit laboriosam aperiam quam possimus,
-                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
-                                consectetur alias exercitationem, veniam saepe.</div>
+                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipspe.</div>
                         </div>
                     </div>
                     <div class="swiper-slide !bg-transparent">

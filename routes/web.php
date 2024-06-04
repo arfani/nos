@@ -20,6 +20,22 @@ Route::get('/profile', function () {
     return view('client.profile.index');
 })->name('client.profile');
 
+Route::get('/promo', function () {
+    return view('client.promo.index');
+})->name('client.promo');
+
+Route::get('/lelang', function () {
+    return view('client.lelang.index');
+})->name('client.lelang');
+
+Route::get('/product', function () {
+    return view('client.product.index');
+})->name('client.product');
+
+Route::get('/pages', function () {
+    return view('client.pages.index');
+})->name('client.pages');
+
 
 // ADMIN ROUTES
 Route::prefix('admin')

@@ -1,4 +1,4 @@
-<x-client-layout>
+<x-guest-layout>
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -30,16 +30,21 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
+
+            <a class="mr-4 underline text-sm text-primary hover:text-primary/70 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                href="{{ route('register') }}">
+                {{ __('Daftar') }}
+            </a>
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-primary hover:text-primary/70 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                     href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                    {{ __('Lupa password ?') }}
                 </a>
             @endif
 
             <x-primary-button class="ms-3">
-                {{ __('Log in') }}
+                {{ __('Masuk') }}
             </x-primary-button>
         </div>
     </form>
-</x-client-layout>
+</x-guest-layout>
