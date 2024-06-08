@@ -33,7 +33,8 @@
         <a href="{{ route('client.home') }}" class="ml-2 sm:mr-2">
             <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="60px" class="">
         </a>
-        <div class="tooltip tooltip-primary tooltip tooltip-primary-bottom tooltip tooltip-primary-secondary" data-tip="Daftar Kategori">
+        <div class="tooltip tooltip-primary tooltip tooltip-primary-bottom tooltip tooltip-primary-secondary"
+            data-tip="Daftar Kategori">
             <div tabindex="0" role="button" class="btn btn-ghost outline-none text-lg"
                 onclick="menuKategori.showModal()">
                 <span class="fa fa-list"></span> <span class="hidden sm:inline">Kategori</span>
@@ -137,9 +138,21 @@
                         </label>
                     </button>
                 </div>
-                <li><a href="{{ route('client.profile') }}" class="py-2"><span class="fa fa-user"></span><span>Profil</span></a></li>
+                <li><a href="{{ route('client.profile') }}" class="py-2"><span
+                            class="fa fa-user"></span><span>Profil</span></a></li>
                 <div class="divider my-0"></div>
-                <li><a class="py-2"><span class="fa fa-person-running"></span><span>Keluar</span></a></li>
+                <li>
+                    @if (auth()->check())
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button class="flex">
+                            <span class="fa fa-person-running mr-2"></span><span>Keluar</span>
+                        </button>
+                    </form>
+                    @else
+                        <a href="{{ route('login') }}"><span>Masuk</span><span class="fa fa-right-to-bracket"></span></a>
+                    @endif
+                </li>
             </ul>
         </div>
     </div>

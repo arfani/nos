@@ -30,7 +30,6 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-
             <a class="mr-4 underline text-sm text-primary hover:text-primary/70 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                 href="{{ route('register') }}">
                 {{ __('Daftar') }}
