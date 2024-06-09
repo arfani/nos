@@ -33,7 +33,7 @@
         <a href="{{ route('client.home') }}" class="ml-2 sm:mr-2">
             <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="60px" class="">
         </a>
-        <div class="tooltip tooltip-primary tooltip tooltip-primary-bottom tooltip tooltip-primary-secondary"
+        <div class="tooltip tooltip-primary tooltip-right"
             data-tip="Daftar Kategori">
             <div tabindex="0" role="button" class="btn btn-ghost outline-none text-lg"
                 onclick="menuKategori.showModal()">

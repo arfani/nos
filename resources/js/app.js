@@ -1,5 +1,6 @@
 import './bootstrap';
 import './client/home';
+import './client/countdown';
 
 import Alpine from 'alpinejs';
 

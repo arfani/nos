@@ -28,12 +28,16 @@ Route::get('/lelang', function () {
     return view('client.lelang.index');
 })->name('client.lelang');
 
-Route::get('/product', function () {
+Route::get('/products', function () {
     return view('client.product.index');
+})->name('client.products');
+
+Route::get('/product/{product_id}', function () {
+    return view('client.product.detail');
 })->name('client.product');
 
-Route::get('/pages', function () {
-    return view('client.pages.index');
+Route::get('/page/{name}', function ($name) {
+    return view('client.pages.index', compact('name'));
 })->name('client.pages');
 
 

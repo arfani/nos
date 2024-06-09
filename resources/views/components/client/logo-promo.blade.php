@@ -1,0 +1,1 @@
+<i class="fa fa-tags absolute top-3 right-3 text-red-500 text-2xl"></i>

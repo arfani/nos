@@ -1,4 +1,7 @@
 <x-client-layout>
+    @push('styles')
+        @vite(['resources/css/client/home.css'])
+    @endpush
     {{-- HERO --}}
     <div class="hero bg-base-200 mb-6">
         <div class="hero-content flex-col sm:flex-row-reverse lg:mx-10">
@@ -33,7 +36,7 @@
 
     {{-- NOTICE --}}
     <div
-        class="runtext-container overflow-x-hidden bg-warning/50 text-warning-content shadow-sm mb-14 sm:-ml-[33px] sm:w-screen">
+        class="runtext-container overflow-x-hidden bg-info text-info-content shadow-sm mb-14 sm:-ml-[33px] sm:w-screen">
         <a href="/barang/reagen-ed">
             <div class="main-runtext">
                 <div class="marquee">
@@ -51,29 +54,36 @@
 
     {{-- PROMO --}}
     <div class="promo mb-14">
-        <h2 class="text-center text-3xl uppercase font-bold tracking-wider">Spesial Promo</h2>
+        <h2 class="text-center text-3xl uppercase font-bold tracking-wider">Spesial Promo <i
+                class="fa fa-tags text-red-500 text-2xl pb-1"></i></h2>
         <div class="swiper promoSwiper w-full pt-5">
             <div class="w-full text-center mt-2 mb-6">
-                <a href="{{ route('client.promo') }}" class="btn btn-primary btn-sm btn-ghost">Lihat Semua</a>
+                <a href="{{ route('client.promo') }}" class="btn btn-primary btn-sm btn-ghost tracking-wider">Lihat Semua</a>
             </div>
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <img src="{{ Storage::url('public/mocks/a.jpg') }}" />
+                    <x-client.logo-promo />
                 </div>
                 <div class="swiper-slide">
                     <img src="{{ Storage::url('public/mocks/b.jpg') }}" />
+                    <x-client.logo-promo />
                 </div>
                 <div class="swiper-slide">
                     <img src="{{ Storage::url('public/mocks/c.jpg') }}" />
+                    <x-client.logo-promo />
                 </div>
                 <div class="swiper-slide">
                     <img src="{{ Storage::url('public/mocks/d.jpg') }}" />
+                    <x-client.logo-promo />
                 </div>
                 <div class="swiper-slide">
                     <img src="{{ Storage::url('public/mocks/e.jpg') }}" />
+                    <x-client.logo-promo />
                 </div>
                 <div class="swiper-slide">
                     <img src="{{ Storage::url('public/mocks/f.jpg') }}" />
+                    <x-client.logo-promo />
                 </div>
             </div>
             <div class="swiper-pagination"></div>
@@ -83,69 +93,52 @@
 
     {{-- LELANG --}}
     <div class="lelang mb-14 bg-base-300 pt-10 pb-12">
-        <h2 class="text-center mb-10 text-3xl uppercase font-bold tracking-wider">Barang Lelang</h2>
+        <h2 class="text-center mb-10 text-3xl uppercase font-bold tracking-wider">Barang Lelang <i
+                class="fa fa-hammer fa-flip-horizontal text-blue-500"></i></h2>
 
         <div class="flex flex-col lg:flex-row items-center">
             <div class="swiper lelangSwiper mb-10 lg:mb-0 !w-60 !h-60">
                 <div class="swiper-wrapper lg:mx-24">
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
-                        {{-- <div class="grid grid-flow-col gap-5 text-center auto-cols-max verti">
-                            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                                <span class="countdown font-mono">
-                                    <span style="--value:15;"></span>
-                                </span>
-                                days
-                            </div>
-                            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                                <span class="countdown font-mono">
-                                    <span style="--value:10;"></span>
-                                </span>
-                                hours
-                            </div>
-                            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                                <span class="countdown font-mono">
-                                    <span style="--value:24;"></span>
-                                </span>
-                                min
-                            </div>
-                            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                                <span class="countdown font-mono">
-                                    <span style="--value:49;"></span>
-                                </span>
-                                sec
-                            </div>
-                        </div> --}}
+                        <x-client.countdown endtime="2024-06-10T15:00:00Z" />
                         <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="" srcset="">
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
+                        <x-client.countdown endtime="2024-06-09T15:00:00Z" />
                         <img src="{{ Storage::url('public/mocks/a.jpg') }}" alt="" srcset="">
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
-                        <img src="{{ Storage::url('public/mocks/b.jpg') }}" alt="" srcset="">
-                    </div>
-                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
+                        <x-client.countdown endtime="2024-06-22T15:00:00Z" />
                         <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="" srcset="">
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
+                        <x-client.countdown endtime="2024-06-25T15:00:00Z" />
                         <img src="{{ Storage::url('public/mocks/d.jpg') }}" alt="" srcset="">
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
-                        <img src="{{ Storage::url('public/mocks/e.jpg') }}" alt="" srcset="">
+                        <x-client.countdown endtime="2024-06-20T15:00:00Z" />
+                        <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="" srcset="">
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
+                        <x-client.countdown endtime="2024-06-01T15:00:00Z" />
                         <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="" srcset="">
+                    </div>
+                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
+                        <x-client.countdown endtime="2024-06-02T15:00:00Z" />
+                        <img src="{{ Storage::url('public/mocks/b.jpg') }}" alt="" srcset="">
                     </div>
                 </div>
             </div>
 
             <div class="text-center flex-1 lg:ml-32 lg:mr-8">
                 <h1 class="text-xl sm:text-2xl font-bold">Jangan Lewatkan !</h1>
-                <p class="py-4">Segera checkout barang-barang yang kami lelang sebelum terlambat !! Lorem ipsum dolor,
+                <p class="py-4">Segera checkout barang-barang yang kami lelang sebelum terlambat !! Lorem ipsum
+                    dolor,
                     sit
                     amet consectetur adipisicing elit. Debitis rerum, cumque quidem nam mollitia aperiam suscipit
                     voluptatem fugit earum ipsa ducimus provident excepturi ullam ipsum unde ratione, dolore voluptates
                     non?</p>
-                <a href="{{ route('client.lelang') }}" class="btn btn-primary">Lihat Semua</a>
+                <a href="{{ route('client.lelang') }}" class="btn btn-primary tracking-wider">Lihat Semua</a>
             </div>
         </div>
     </div>
@@ -172,7 +165,8 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/b.jpg') }}" alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="Shoes" class="rounded-xl" />
+                    <x-client.logo-promo />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -201,48 +195,7 @@
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
                     <img src="{{ Storage::url('public/mocks/d.jpg') }}" alt="Shoes" class="rounded-xl" />
-                </figure>
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions">
-                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
-                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card w-72 bg-base-200 shadow-xl mb-8">
-                <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/e.jpg') }}" alt="Shoes" class="rounded-xl" />
-                </figure>
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions">
-                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
-                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card w-72 bg-base-200 shadow-xl mb-8">
-                <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/b.jpg') }}" alt="Shoes" class="rounded-xl" />
-                </figure>
-                <div class="card-body items-center text-center">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions">
-                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
-                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card w-72 bg-base-200 shadow-xl mb-8">
-                <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="Shoes" class="rounded-xl" />
+                    <x-client.logo-lelang />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -257,6 +210,7 @@
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
                     <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="Shoes" class="rounded-xl" />
+                    <x-client.logo-promo />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -270,7 +224,53 @@
             </div>
             <div class="card w-72 bg-base-200 shadow-xl mb-8">
                 <figure class="px-10 pt-10">
-                    <img src="{{ Storage::url('public/mocks/d.jpg') }}" alt="Shoes" class="rounded-xl" />
+                    <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="Shoes" class="rounded-xl" />
+                    <x-client.logo-lelang />
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h2 class="card-title">Shoes!</h2>
+                    <p>If a dog chews shoes whose shoes does he choose?</p>
+                    <div class="card-actions">
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card w-72 bg-base-200 shadow-xl mb-8">
+                <figure class="px-10 pt-10">
+                    <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="Shoes" class="rounded-xl" />
+                    <x-client.logo-promo />
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h2 class="card-title">Shoes!</h2>
+                    <p>If a dog chews shoes whose shoes does he choose?</p>
+                    <div class="card-actions">
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card w-72 bg-base-200 shadow-xl mb-8">
+                <figure class="px-10 pt-10">
+                    <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="Shoes" class="rounded-xl" />
+                    <x-client.logo-lelang />
+                </figure>
+                <div class="card-body items-center text-center">
+                    <h2 class="card-title">Shoes!</h2>
+                    <p>If a dog chews shoes whose shoes does he choose?</p>
+                    <div class="card-actions">
+                        <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
+                            <button class="btn btn-circle btn-primary"><i class="fa fa-opencart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card w-72 bg-base-200 shadow-xl mb-8">
+                <figure class="px-10 pt-10">
+                    <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="Shoes" class="rounded-xl" />
+                    <x-client.logo-promo />
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Shoes!</h2>
@@ -299,29 +299,11 @@
         </div>
 
         <div class="w-full text-center my-2">
-            <a href="{{ route('client.product') }}" class="btn btn-primary btn-ghost">Lihat Semua Produk</a>
+            <a href="{{ route('client.products') }}" class="btn btn-primary btn-ghost tracking-wider">Lihat Semua Produk</a>
         </div>
-
     </div>
 
-    {{-- FEATURES --}}
-    <div class="features bg-base-200 rounded shadow-md py-10 mb-14 flex">
-        <ul class="steps steps-vertical sm:steps-horizontal mx-auto">
-            <li data-content="★" class="step step-primary">
-                Support CS
-            </li>
-            <li data-content="★" class="step step-primary">
-                Free Ongkir wilayah Jakaakarta
-            </li>
-            <li data-content="★" class="step step-primary">
-                Barang Original
-            </li>
-            <li data-content="★" class="step step-primary">
-                Bergaransi
-            </li>
-        </ul>
-    </div>
-
+    <x-client.features />
 
     {{-- TESTIMONIAL --}}
     <div class="testimonial mb-14 pt-10">
