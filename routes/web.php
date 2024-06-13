@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 // CLIENT ROUTES
-Route::get('/', function () {
-    return view('client.index');
-})->name('client.home');
+Route::get('/', [ClientController::class, 'home'])->name('client.home');
 
 Route::get('/notification', function () {
     return view('client.notification.index');

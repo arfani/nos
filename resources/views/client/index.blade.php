@@ -2,6 +2,40 @@
     @push('styles')
         @vite(['resources/css/client/home.css'])
     @endpush
+    @if (session('status') == 'email-is-verified')
+        <div x-data="{ show: false }" x-show="show" x-init="setTimeout(() => show = true, 100)
+        setTimeout(() => show = false, 5000)" @click="show = false"
+            x-transition:enter="transition ease-out duration-300 transform"
+            x-transition:enter-start="translate-x-full opacity-0" x-transition:enter-end="translate-x-0 opacity-100"
+            x-transition:leave="transition ease-in duration-300 transform"
+            x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-full opacity-0"
+            role="alert" class="alert alert-warning w-fit fixed right-10 z-50">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                class="stroke-current shrink-0 w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Email Anda sudah terverifikasi</span>
+        </div>
+    @endif
+
+    @if (session('status') == 'verify-email-success')
+        <div x-data="{ show: false }" x-show="show" x-init="setTimeout(() => show = true, 100)
+        setTimeout(() => show = false, 5000)" @click="show = false"
+            x-transition:enter="transition ease-out duration-300 transform"
+            x-transition:enter-start="translate-x-full opacity-0" x-transition:enter-end="translate-x-0 opacity-100"
+            x-transition:leave="transition ease-in duration-300 transform"
+            x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-full opacity-0"
+            role="alert" class="alert alert-warning w-fit fixed right-10 z-50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Email Anda berhasil diverifikasi</span>
+        </div>
+    @endif
+
     {{-- HERO --}}
     <div class="hero bg-base-200 mb-6">
         <div class="hero-content flex-col sm:flex-row-reverse lg:mx-10">
@@ -58,7 +92,8 @@
                 class="fa fa-tags text-red-500 text-2xl pb-1"></i></h2>
         <div class="swiper promoSwiper w-full pt-5">
             <div class="w-full text-center mt-2 mb-6">
-                <a href="{{ route('client.promo') }}" class="btn btn-primary btn-sm btn-ghost tracking-wider">Lihat Semua</a>
+                <a href="{{ route('client.promo') }}" class="btn btn-primary btn-sm btn-ghost tracking-wider">Lihat
+                    Semua</a>
             </div>
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -299,7 +334,8 @@
         </div>
 
         <div class="w-full text-center my-2">
-            <a href="{{ route('client.products') }}" class="btn btn-primary btn-ghost tracking-wider">Lihat Semua Produk</a>
+            <a href="{{ route('client.products') }}" class="btn btn-primary btn-ghost tracking-wider">Lihat Semua
+                Produk</a>
         </div>
     </div>
 
