@@ -8,24 +8,24 @@
         <span class="countdown font-mono days">
             <span style="--value:0;"></span>
         </span>
-        days
+        hari
     </div>
     <div class="flex flex-col p-2 bg-neutral rounded text-neutral-content">
         <span class="countdown font-mono hours">
             <span style="--value:0;"></span>
         </span>
-        hours
+        jam
     </div>
     <div class="flex flex-col p-2 bg-neutral rounded text-neutral-content">
         <span class="countdown font-mono minutes">
             <span style="--value:0;"></span>
         </span>
-        min
+        menit
     </div>
     <div class="flex flex-col p-2 bg-neutral rounded text-neutral-content">
         <span class="countdown font-mono seconds">
             <span style="--value:0;"></span>
         </span>
-        sec
+        detik
     </div>
 </div>

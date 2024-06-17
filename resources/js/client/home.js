@@ -7,7 +7,7 @@ import 'swiper/css/bundle';
 Swiper.use([Autoplay, EffectCards, Thumbs, Navigation, EffectCoverflow, EffectCube]);
 
 const heroSwiper = new Swiper('.heroSwiper', {
-  autoplay: true,
+  autoplay: {delay: 1500},
   loop: true,
 });
 
@@ -33,7 +33,7 @@ var promoSwiper = new Swiper(".promoSwiper", {
   pagination: {
     el: ".swiper-pagination",
   },
-  autoplay: { delay: 1000 },
+  autoplay: { delay: 2000 },
   loop: true,
 });
 
