@@ -4,10 +4,10 @@
             <img src="{{ $product["img"] }}" alt="Shoes" class="rounded-xl" />
         </a>
 
-        @if ($product["lelang"])
-            <x-client.logo-lelang :endtime="$product["lelang"]["endtime"]" />
+        @if ($product["lelang"]["active"])
+            <x-client.logo-lelang :endtime='$product["lelang"]["endtime"]' />
         @else
-            @if ($product->promo)
+            @if ($product["promo"]["active"])
                 <x-client.logo-promo />
             @endif
         @endif
