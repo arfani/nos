@@ -104,8 +104,45 @@
         </div>
     @endif
 
+    {{-- NOTICE --}}
+    <div class="notice mb-6" x-data="{
+        noticeMessage: '{{ $notice->message }}',
+        noticeKey: 'noticeDismissed_{{ $notice->updated_at }}',
+        previousNoticeKey: localStorage.getItem('currentNoticeKey'),
+        showNotice: true,
+        initialize() {
+            this.cleanOldNotice();
+            this.showNotice = !localStorage.getItem(this.noticeKey);
+            localStorage.setItem('currentNoticeKey', this.noticeKey);
+            console.log(this.noticeMessage);
+        },
+        dismissNotice() {
+            localStorage.setItem(this.noticeKey, 'true');
+            this.showNotice = false;
+        },
+        cleanOldNotice() {
+            if (this.previousNoticeKey && this.previousNoticeKey !== this.noticeKey) {
+                localStorage.removeItem(this.previousNoticeKey);
+            }
+        }
+    }" x-init="initialize()" x-show="showNotice">
+        <div role="alert" class="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                class="stroke-info shrink-0 w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span x-text="noticeMessage"></span>
+            <div>
+                <button class="btn btn-sm" @click="dismissNotice"><i class="fa fa-xmark"></i></button>
+                <a href="{{ $notice->link }}" class="btn btn-sm btn-primary"
+                    x-show="'{{ $notice->link }}' !== ''">Lihat</a>
+            </div>
+        </div>
+    </div>
+
     {{-- HERO --}}
-    <div class="hero bg-base-200 mb-6">
+    <div class="hero bg-base-200 mb-14">
         <div class="hero-content flex-col sm:flex-row-reverse lg:mx-10">
             <div class="!w-60 sm:!w-80 swiper heroSwiper">
                 <div class="swiper-wrapper">
@@ -134,24 +171,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    {{-- NOTICE --}}
-    <div
-        class="runtext-container overflow-x-hidden bg-info text-info-content shadow-sm mb-14 sm:-ml-[33px] sm:w-screen">
-        <a href="/barang/reagen-ed">
-            <div class="main-runtext">
-                <div class="marquee">
-                    <div class="holder">
-                        <div class="text-container">
-                            <p class="leading-10">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
     </div>
 
     {{-- PROMO --}}

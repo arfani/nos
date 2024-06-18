@@ -10,3 +10,13 @@
     src: local('Open Sauce One'), url('/public/fonts/OpenSauceOne.woff') format('woff');
   }
 }
+
+@layer components {
+  .my-input {
+      @apply border-transparent border-b border-b-primary bg-transparent
+  }
+
+  .my-input:focus {
+      @apply border-transparent border-b-primary outline-none ring-transparent
+  }
+}

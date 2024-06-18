@@ -13,10 +13,7 @@
         @include('layouts.admin.menu')
     </div>
     <div class="flex-1">
-        <a class="btn btn-ghost text-lg" href="{{ route('client.home') }}" target="_blank">
-            <span @class(['font-serif'])>DSComputer</span>
-            <i class="fa fa-external-link text-sm"></i>
-        </a>
+        <span class="font-serif btn btn-ghost text-lg sm:text-xl !pl-0 sm:!pl-[1rem] cursor-auto">DSComputer <a href="{{ route('client.home') }}">go</a></span>
     </div>
     <div class="flex-none">
         <button class="btn btn-ghost btn-circle">
@@ -34,9 +31,6 @@
                 </div>
             </div>
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                <div class="mx-auto mb-3">
-                    @include('components_custom.dark-mode')
-                </div>
                 <li class="font-bold"><a>{{ auth()->user()->username }}</a></li>
                 <div class="divider my-0"></div>
                 <li><a>Logout</a></li>

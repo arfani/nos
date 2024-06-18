@@ -13,11 +13,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+
+        $this->call([
+            LevelSeeder::class,
+            NoticeSeeder::class,
+        ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'level_id' => 1
+        ]);
+        
+        User::factory()->create([
+            'name' => 'Member User',
+            'email' => 'member@example.com',
+            'level_id' => 2
         ]);
     }
 }

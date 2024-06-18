@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -43,11 +44,13 @@ Route::get('/page/{name}', function ($name) {
 
 // ADMIN ROUTES
 Route::prefix('admin')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'can:is-admin'])
     ->group(function () {
         Route::get('/', function () {
             return view('admin.index');
         })->name('admin.dashboard');
+
+        Route::resource('notice', NoticeController::class)->only('index', 'update');
     });
 
 // Route::middleware('auth')->group(function () {
