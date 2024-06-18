@@ -1,66 +1,70 @@
-@props(['products' => [
-    [
-        'name' => 'Product test 1',
-        'slug' => 'product_test_1',
-        'img' => Storage::url('public/mocks/a.jpg'),
-        'price' => 10000,
-        'promo' => [
-            'active' => false,
-            'discount' => 20,
+@props([
+    'products' => [
+        [
+            'name' => 'Product test 1',
+            'slug' => 'product_test_1',
+            'img' => Storage::url('public/mocks/a.jpg'),
+            'price' => 10000,
+            'promo' => [
+                'active' => false,
+                'discount' => 20,
+            ],
+            'variants' => true,
+            'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
+            'description' => 'lorem ipsum lorem amet ipsum',
+            'stock' => 200,
+            'lelang' => [
+                'active' => false,
+                'endtime' => now()->addDays(3),
+                'bidStart' => 100000,
+                'bidIncrement' => 5000,
+                'ketentuan' => 'lorem ipsum dolor amet set',
+            ],
         ],
-        'variants' => true,
-        'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
-        'description' => 'lorem ipsum lorem amet ipsum',
-        'stock' => 200,
-        'lelang' => [
-            'active' => false,
-            'endtime' => now()->addDays(3),
-            'bidStart' => 100000,
-            'bidIncrement' => 5000,
-            'ketentuan' => 'lorem ipsum dolor amet set'
-        ]
-],[
-        'name' => 'Product test 2',
-        'slug' => 'product_test_2',
-        'img' => Storage::url('public/mocks/b.jpg'),
-        'price' => 10000,
-        'promo' => [
-            'active' => true,
-            'discount' => 20,
+        [
+            'name' => 'Product test 2',
+            'slug' => 'product_test_2',
+            'img' => Storage::url('public/mocks/b.jpg'),
+            'price' => 10000,
+            'promo' => [
+                'active' => true,
+                'discount' => 20,
+            ],
+            'variants' => true,
+            'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
+            'description' => 'lorem ipsum lorem amet ipsum',
+            'stock' => 200,
+            'lelang' => [
+                'active' => false,
+                'endtime' => now()->addDays(3),
+                'bidStart' => 100000,
+                'bidIncrement' => 5000,
+                'ketentuan' => 'lorem ipsum dolor amet set',
+            ],
         ],
-        'variants' => true,
-        'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
-        'description' => 'lorem ipsum lorem amet ipsum',
-        'stock' => 200,
-        'lelang' => [
-            'active' => false,
-            'endtime' => now()->addDays(3),
-            'bidStart' => 100000,
-            'bidIncrement' => 5000,
-            'ketentuan' => 'lorem ipsum dolor amet set'
-        ]
-],[
-        'name' => 'Product test 3',
-        'slug' => 'product_test_3',
-        'img' => Storage::url('public/mocks/c.jpg'),
-        'price' => 10000,
-        'promo' => [
-            'active' => false,
-            'discount' => 20,
+        [
+            'name' => 'Product test 3',
+            'slug' => 'product_test_3',
+            'img' => Storage::url('public/mocks/c.jpg'),
+            'price' => 10000,
+            'promo' => [
+                'active' => false,
+                'discount' => 20,
+            ],
+            'variants' => true,
+            'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
+            'description' => 'lorem ipsum lorem amet ipsum',
+            'stock' => 200,
+            'lelang' => [
+                'active' => true,
+                'endtime' => now()->addDays(3),
+                'bidStart' => 100000,
+                'bidIncrement' => 5000,
+                'ketentuan' => 'lorem ipsum dolor amet set',
+            ],
         ],
-        'variants' => true,
-        'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
-        'description' => 'lorem ipsum lorem amet ipsum',
-        'stock' => 200,
-        'lelang' => [
-            'active' => true,
-            'endtime' => now()->addDays(3),
-            'bidStart' => 100000,
-            'bidIncrement' => 5000,
-            'ketentuan' => 'lorem ipsum dolor amet set'
-        ]
-    ,]
-]])
+    ],
+])
 
 <x-client-layout>
     @push('styles')
@@ -212,37 +216,37 @@
                 <div class="swiper-wrapper lg:mx-24">
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(2)" />
-                                <a href="{{ route('client.product', 'test') }}">
+                        <a href="{{ route('client.product', 'test') }}">
                             <img src="{{ Storage::url('public/mocks/a.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(2)" />
-                                <a href="{{ route('client.product', 'test') }}">
+                        <a href="{{ route('client.product', 'test') }}">
                             <img src="{{ Storage::url('public/mocks/b.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(2)" />
-                                <a href="{{ route('client.product', 'test') }}">
+                        <a href="{{ route('client.product', 'test') }}">
                             <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(7)" />
-                                <a href="{{ route('client.product', 'test') }}">
+                        <a href="{{ route('client.product', 'test') }}">
                             <img src="{{ Storage::url('public/mocks/d.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(4)" />
-                                <a href="{{ route('client.product', 'test') }}">
+                        <a href="{{ route('client.product', 'test') }}">
                             <img src="{{ Storage::url('public/mocks/e.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(5)" />
-                                <a href="{{ route('client.product', 'test') }}">
+                        <a href="{{ route('client.product', 'test') }}">
                             <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
@@ -269,7 +273,7 @@
 
         <div class="flex flex-wrap justify-around">
             @foreach ($products as $item)
-            <x-client.product-item :product="$item" />
+                <x-client.product-item :product="$item" />
             @endforeach
         </div>
 
@@ -477,6 +481,47 @@
             <div class="collapse-content pt-2">
                 <p>hello</p>
             </div>
+        </div>
+    </div>
+
+    {{-- BRANDS --}}
+    <div class="brands my-20">
+        <h2 class="text-center text-3xl uppercase font-bold tracking-wider mb-10">Brand Kami</h2>
+
+        <div class="swiper brandsSwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="{{ Storage::url('public/mocks/brands/a.webp') }}" alt="brand's logo">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Storage::url('public/mocks/brands/b.webp') }}" alt="brand's logo">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Storage::url('public/mocks/brands/c.webp') }}" alt="brand's logo">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Storage::url('public/mocks/brands/d.webp') }}" alt="brand's logo">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Storage::url('public/mocks/brands/e.webp') }}" alt="brand's logo">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Storage::url('public/mocks/brands/f.webp') }}" alt="brand's logo">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Storage::url('public/mocks/brands/g.webp') }}" alt="brand's logo">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Storage::url('public/mocks/brands/h.webp') }}" alt="brand's logo">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Storage::url('public/mocks/brands/i.webp') }}" alt="brand's logo">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Storage::url('public/mocks/brands/j.webp') }}" alt="brand's logo">
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
         </div>
     </div>
 </x-client-layout>
