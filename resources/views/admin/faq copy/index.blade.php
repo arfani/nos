@@ -16,7 +16,7 @@
             @endif
 
             <div class="flex">
-                <a href="{{ route('kegiatan.create') }}"
+                <a href="{{ route('faq.create') }}"
                     class="bg-primary text-primary-content rounded px-4 py-2 mb-4 inline-block">
                     <i class="fa fa-plus"></i>
                 </a>
@@ -39,17 +39,17 @@
                         </div>
                         <div class="tooltip" data-tip="Cari Berdasarkan">
                             <select id="search-by" class="my-input mr-2">
-                                <option value="nama" @isset($validated['nama']) selected @endisset>Nama
+                                <option value="question" @isset($validated['question']) selected @endisset>Pertanyaan
                                 </option>
-                                <option value="mak" @isset($validated['kode']) selected @endisset>MAK
+                                <option value="answer" @isset($validated['answer']) selected @endisset>Jawaban
                                 </option>
                             </select>
                         </div>
                         <div class="inline-block my-input whitespace-nowrap">
                             <input type="text" id="search"
                                 class="border-transparent focus:outline-none focus:ring-0 focus:border-transparent bg-transparent"
-                                @isset($validated['nama'])value="{{ $validated['nama'] }}" @endisset
-                                @isset($validated['mak'])value="{{ $validated['mak'] }}" @endisset>
+                                @isset($validated['question'])value="{{ $validated['question'] }}" @endisset
+                                @isset($validated['answer'])value="{{ $validated['answer'] }}" @endisset>
                             <button type="submit"
                                 class="bg-primary/70 hover:bg-primary border border-primary py-1 px-2 rounded-full cursor-pointer hover:scale-105 text-primary-content">
                                 <i class="fas fa-search"></i>
@@ -64,9 +64,8 @@
                     <tr
                         class="text-left border-b leading-9 bg-primary text-primary-content border-b-yellow-100 [&>th]:p-2">
                         <th class="text-center">No</th>
-                        <th>Nama</th>
-                        <th>MAK</th>
-                        <th>Maksud Tugas</th>
+                        <th>Pertanyaan</th>
+                        <th>Jawaban</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -75,12 +74,11 @@
                         <tr
                             class="border-b odd:bg-white/5 odd:text-accent-content [&>td]:p-2 hover:bg-primary hover:text-primary-content">
                             <td class="text-center">{{ ++$indexNumber }}</td>
-                            <td>{{ $item->kegiatan }}</td>
-                            <td>{{ $item->mak }}</td>
-                            <td>{{ $item->maksud_tugas }}</td>
+                            <td>{{ $item->question }}</td>
+                            <td>{{ $item->answer }}</td>
                             <td class="flex justify-evenly">
                                 <div class="tooltip" data-tip="Delete">
-                                    <form action="{{ route('kegiatan.destroy', $item->id) }}" method="post"
+                                    <form action="{{ route('faq.destroy', $item->id) }}" method="post"
                                         class="inline-block">
                                         @csrf
                                         @method('delete')
@@ -91,13 +89,13 @@
                                     </form>
                                 </div>
                                 <div class="tooltip" data-tip="Edit">
-                                    <a href="{{ route('kegiatan.edit', $item->id) }}" class="mx-2"
+                                    <a href="{{ route('faq.edit', $item->id) }}" class="mx-2"
                                         data-tooltip-target="tooltip-edit-{{ $item->id }}">
                                         <i class="fa fa-pen text-blue-600"></i>
                                     </a>
                                 </div>
                                 <div class="tooltip" data-tip="Lihat">
-                                    <a href="{{ route('kegiatan.show', $item->id) }}"
+                                    <a href="{{ route('faq.show', $item->id) }}"
                                         data-tooltip-target="tooltip-show-{{ $item->id }}">
                                         <i class="fa fa-eye text-teal-600"></i>
                                     </a>
@@ -134,7 +132,7 @@
                 const searchBy = document.getElementById('search-by')
 
                 function updateSearchInpurAttr() {
-                    searchInput.setAttribute('placeholder', `Cari berdasarkan ${searchBy.value}`)
+                    searchInput.setAttribute('placeholder', `Cari berdasarkan ${searchBy.options[searchBy.selectedIndex].text}`)
                     searchInput.setAttribute('name', searchBy.value)
                 }
 
@@ -144,13 +142,6 @@
                     searchInput.value = null
                     searchInput.focus()
                 })
-
-                // const toast = document.querySelector('.toast');
-                // if (toast) {
-                //     setTimeout(() => {
-                //         toast.classList.add('hidden');
-                //     }, 5000);
-                // }
                 // END UPDATE SEARCH INPUT PLACEHOLDER
             })()
         </script>

@@ -126,16 +126,16 @@
             }
         }
     }" x-init="initialize()" x-show="showNotice">
-        <div role="alert" class="alert">
+        <div role="alert" class="alert bg-primary text-primary-content py-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                class="stroke-info shrink-0 w-6 h-6">
+                class="stroke-black animate-pulse shrink-0 w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <span x-text="noticeMessage"></span>
-            <div>
-                <button class="btn btn-sm" @click="dismissNotice"><i class="fa fa-xmark"></i></button>
-                <a href="{{ $notice->link }}" class="btn btn-sm btn-primary"
+            <div class="flex gap-1">
+                <button class="btn btn-sm btn-secondary" @click="dismissNotice"><i class="fa fa-xmark"></i></button>
+                <a href="{{ $notice->link }}" class="btn btn-sm btn-secondary"
                     x-show="'{{ $notice->link }}' !== ''">Lihat</a>
             </div>
         </div>
@@ -472,37 +472,19 @@
     <div class="faq mb-10">
         <h2 class="text-center text-3xl uppercase font-bold tracking-wider mb-10">Yang Sering ditanyakan</h2>
 
-        <div class="collapse collapse-arrow bg-base-200 w-fit mx-9 mb-1">
-            <input type="radio" name="faq" checked="checked" />
-            <div class="collapse-title text-xl font-medium bg-base-300">
-                Click to open this one and close others
-            </div>
-            <div class="collapse-content pt-2">
-                <p>hello Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima illum deserunt tenetur,
-                    architecto repudiandae minus. Earum ut, eveniet non neque quidem, rem eos dicta sint, ex iure id
-                    quae ea?</p>
-            </div>
-        </div>
+        @foreach ($faqs as $item)
         <div class="collapse collapse-arrow bg-base-200 w-fit mx-9 mb-1">
             <input type="radio" name="faq" />
             <div class="collapse-title text-xl font-medium bg-base-300">
-                Click to open this one and close others
+               {{ $item->question }}
             </div>
             <div class="collapse-content pt-2">
-                <p>hello</p>
+                <p>{{ $item->answer }}</p>
             </div>
         </div>
-        <div class="collapse collapse-arrow bg-base-200 w-fit mx-9 mb-1">
-            <input type="radio" name="faq" />
-            <div class="collapse-title text-xl font-medium bg-base-300">
-                Click to open this one and close othersthis one and close othersthis one and close others
-            </div>
-            <div class="collapse-content pt-2">
-                <p>hello</p>
-            </div>
-        </div>
+        @endforeach
     </div>
-
+    
     {{-- BRANDS --}}
     <div class="brands my-20">
         <h2 class="text-center text-3xl uppercase font-bold tracking-wider mb-10">Brand Kami</h2>

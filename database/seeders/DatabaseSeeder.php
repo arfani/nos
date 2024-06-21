@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LevelSeeder::class,
             NoticeSeeder::class,
+            FaqSeeder::class,
         ]);
 
         User::factory()->create([

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,7 @@ Route::prefix('admin')
         })->name('admin.dashboard');
 
         Route::resource('notice', NoticeController::class)->only('index', 'update');
+        Route::resource('faq', FaqController::class);
     });
 
 // Route::middleware('auth')->group(function () {

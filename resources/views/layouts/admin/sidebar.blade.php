@@ -14,21 +14,27 @@
          ])>
              Dashboard
          </a>
-         
-         <a href="{{ route('admin.dashboard') }}"
-         @class([
-            'block px-4 py-3 mt-0 text-sm',
-            // 'bg-primary text-primary-content' => Request::RouteIs('admin.dashboard') || Request::is('products/*'),
-        ])>
-        Produk
-        </a>
-        <a href="{{ route('notice.index') }}"
-        @class([
-           'block px-4 py-3 mt-0 text-sm',
-           'bg-primary text-primary-content' => Request::RouteIs('notice.index') || Request::is('products/*'),
-       ])>
-       Notice
-       </a>
+
+         <a href="{{ route('admin.dashboard') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             // 'bg-primary text-primary-content' => Request::RouteIs('admin.dashboard') || Request::is('products/*'),
+         ])>
+             Produk
+         </a>
+         <a href="{{ route('notice.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('notice.index'),
+         ])>
+             Notice
+         </a>
+         <a href="{{ route('faq.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('faq.index') || Request::is('faq/*'),
+         ])>
+             FAQ
+         </a>
 
          {{-- MENU DENGAN SUBMENU --}}
          {{-- <div class="relative">
