@@ -3,7 +3,7 @@
         <div class="sm:mx-6 lg:mx-8 p-6 py-10 bg-secondary text-secondary-content rounded overflow-x-auto">
             @if (Session::get('success'))
                 <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
-                    class="toast toast-top toast-end mt-10">
+                    class="toast toast-top toast-end mt-10 z-10">
                     <div role="alert" class="alert alert-success mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
                             viewBox="0 0 24 24">

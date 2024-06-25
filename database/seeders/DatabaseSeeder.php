@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             LevelSeeder::class,
             NoticeSeeder::class,
             FaqSeeder::class,
+            BrandSeeder::class,
         ]);
 
         User::factory()->create([

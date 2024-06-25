@@ -1,22 +1,16 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('menu.barang') }}
-
-        </h2>
-    </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-secondary text-secondary-content overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 [&>div]:mb-2">
-                    <h2 class="text-2xl uppercase mb-4">Data <b>{{$data->kegiatan}}</b></h2>
+                    <h2 class="text-2xl uppercase mb-4">Data <b>{{$data->name}}</b></h2>
 
-                    <div>Nama : <strong>{{$data->kegiatan}}</strong></div>
-                    <div>MAK : <strong>{{$data->mak}}</strong></div>
-                    <div>Maksud Tugas : <strong>{{$data->maksud_tugas}}</strong></div>
+                    <div>Nama : <strong>{{$data->name}}</strong></div>
+                    <div>Logo : <img src="{{Storage::url($data->logo)}}" alt="logo {{ $data->logo }}" width="150"></img></div>
+                    <div>Link : <strong>{{$data->link}}</strong></div>
 
-                    <a href="{{route('kegiatan.index')}}" class="py-2 px-4 bg-gray-500 text-gray-50 text-center mt-6 rounded inline-block">{{__('Kembali')}}</a>
+                    <a href="{{route('brand.index')}}" class="py-2 px-4 bg-gray-500 text-gray-50 text-center mt-6 rounded inline-block">{{__('Kembali')}}</a>
                 </div>
             </div>
         </div>

@@ -42,7 +42,7 @@
                     <div class="chat-image avatar">
                         <div class="w-10 rounded-full">
                             <img alt="Tailwind CSS chat bubble component"
-                                src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                src="{{ Storage::url('mocks/me.jpg') }}" />
                         </div>
                     </div>
                     <div class="chat-header">
@@ -59,7 +59,7 @@
                     <div class="chat-image avatar">
                         <div class="w-10 rounded-full">
                             <img alt="Tailwind CSS chat bubble component"
-                                src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                src="{{ Storage::url('mocks/me.jpg') }}" />
                         </div>
                     </div>
                     <div class="chat-header">
@@ -75,7 +75,7 @@
                     <div class="chat-image avatar">
                         <div class="w-10 rounded-full">
                             <img alt="Tailwind CSS chat bubble component"
-                                src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                src="{{ Storage::url('mocks/me.jpg') }}" />
                         </div>
                     </div>
                     <div class="chat-header">
@@ -91,7 +91,7 @@
                     <div class="chat-image avatar">
                         <div class="w-10 rounded-full">
                             <img alt="Tailwind CSS chat bubble component"
-                                src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                src="{{ Storage::url('mocks/me.jpg') }}" />
                         </div>
                     </div>
                     <div class="chat-header">
@@ -117,7 +117,7 @@
                     <div class="chat-image avatar">
                         <div class="w-10 rounded-full">
                             <img alt="Tailwind CSS chat bubble component"
-                                src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                src="{{ Storage::url('mocks/me.jpg') }}" />
                         </div>
                     </div>
                     <div class="chat-header">
@@ -134,7 +134,7 @@
                     <div class="chat-image avatar">
                         <div class="w-10 rounded-full">
                             <img alt="Tailwind CSS chat bubble component"
-                                src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                src="{{ Storage::url('mocks/me.jpg') }}" />
                         </div>
                     </div>
                     <div class="chat-header">
@@ -150,7 +150,7 @@
                     <div class="chat-image avatar">
                         <div class="w-10 rounded-full">
                             <img alt="Tailwind CSS chat bubble component"
-                                src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                src="{{ Storage::url('mocks/me.jpg') }}" />
                         </div>
                     </div>
                     <div class="chat-header">
@@ -166,7 +166,7 @@
                     <div class="chat-image avatar">
                         <div class="w-10 rounded-full">
                             <img alt="Tailwind CSS chat bubble component"
-                                src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                src="{{ Storage::url('mocks/me.jpg') }}" />
                         </div>
                     </div>
                     <div class="chat-header">

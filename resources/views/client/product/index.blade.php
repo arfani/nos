@@ -3,12 +3,12 @@
 
     <div class="flex flex-wrap justify-around">
 
-        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('public/mocks/a.jpg')" :promo="true" />
-        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('public/mocks/b.jpg')" />
-        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('public/mocks/c.jpg')" :lelang="true" :endtime="now()->addDays(3)" />
-        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('public/mocks/d.jpg')" :promo="true" />
-        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('public/mocks/e.jpg')" :promo="true" />
-        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('public/mocks/f.jpg')" :lelang="true" :endtime="now()->addDays(6)" />
+        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('mocks/a.jpg')" :promo="true" />
+        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('mocks/b.jpg')" />
+        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('mocks/c.jpg')" :lelang="true" :endtime="now()->addDays(3)" />
+        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('mocks/d.jpg')" :promo="true" />
+        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('mocks/e.jpg')" :promo="true" />
+        <x-client.product-item :url="route('client.product', 'test')" :img="Storage::url('mocks/f.jpg')" :lelang="true" :endtime="now()->addDays(6)" />
     </div>
 
     <div class="w-full text-center my-2">

@@ -3,7 +3,7 @@
     [[
         'name' => 'Product test 3',
         'slug' => 'product_test_3',
-        'img' => Storage::url('public/mocks/a.jpg'),
+        'img' => Storage::url('mocks/a.jpg'),
         'price' => 10000,
         'promo' => [
             'active' => false,
@@ -23,7 +23,7 @@
     ],[
         'name' => 'Product test 3',
         'slug' => 'product_test_3',
-        'img' => Storage::url('public/mocks/b.jpg'),
+        'img' => Storage::url('mocks/b.jpg'),
         'price' => 10000,
         'promo' => [
             'active' => false,
@@ -43,7 +43,7 @@
     ],[
         'name' => 'Product test 3',
         'slug' => 'product_test_3',
-        'img' => Storage::url('public/mocks/c.jpg'),
+        'img' => Storage::url('mocks/c.jpg'),
         'price' => 10000,
         'promo' => [
             'active' => false,
@@ -63,7 +63,7 @@
     ],[
         'name' => 'Product test 3',
         'slug' => 'product_test_3',
-        'img' => Storage::url('public/mocks/d.jpg'),
+        'img' => Storage::url('mocks/d.jpg'),
         'price' => 10000,
         'promo' => [
             'active' => false,
@@ -83,7 +83,7 @@
     ],[
         'name' => 'Product test 3',
         'slug' => 'product_test_3',
-        'img' => Storage::url('public/mocks/e.jpg'),
+        'img' => Storage::url('mocks/e.jpg'),
         'price' => 10000,
         'promo' => [
             'active' => false,

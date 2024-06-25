@@ -3,69 +3,69 @@
     <div class="swiper mySwiper2">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/a.jpg') }}" />
+                <img src="{{ Storage::url('mocks/a.jpg') }}" />
                 <x-client.logo-lelang :endtime="$product['lelang']['endtime']" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/b.jpg') }}" />
+                <img src="{{ Storage::url('mocks/b.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/c.jpg') }}" />
+                <img src="{{ Storage::url('mocks/c.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/d.jpg') }}" />
+                <img src="{{ Storage::url('mocks/d.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/e.jpg') }}" />
+                <img src="{{ Storage::url('mocks/e.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/f.jpg') }}" />
+                <img src="{{ Storage::url('mocks/f.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/c.jpg') }}" />
+                <img src="{{ Storage::url('mocks/c.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/d.jpg') }}" />
+                <img src="{{ Storage::url('mocks/d.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/e.jpg') }}" />
+                <img src="{{ Storage::url('mocks/e.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/a.jpg') }}" />
+                <img src="{{ Storage::url('mocks/a.jpg') }}" />
             </div>
         </div>
     </div>
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/a.jpg') }}" />
+                <img src="{{ Storage::url('mocks/a.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/b.jpg') }}" />
+                <img src="{{ Storage::url('mocks/b.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/c.jpg') }}" />
+                <img src="{{ Storage::url('mocks/c.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/d.jpg') }}" />
+                <img src="{{ Storage::url('mocks/d.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/e.jpg') }}" />
+                <img src="{{ Storage::url('mocks/e.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/f.jpg') }}" />
+                <img src="{{ Storage::url('mocks/f.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/c.jpg') }}" />
+                <img src="{{ Storage::url('mocks/c.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/d.jpg') }}" />
+                <img src="{{ Storage::url('mocks/d.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/e.jpg') }}" />
+                <img src="{{ Storage::url('mocks/e.jpg') }}" />
             </div>
             <div class="swiper-slide">
-                <img src="{{ Storage::url('public/mocks/a.jpg') }}" />
+                <img src="{{ Storage::url('mocks/a.jpg') }}" />
             </div>
         </div>
     </div>

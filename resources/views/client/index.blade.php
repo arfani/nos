@@ -3,7 +3,7 @@
         [
             'name' => 'Product test 1',
             'slug' => 'product_test_1',
-            'img' => Storage::url('public/mocks/a.jpg'),
+            'img' => Storage::url('mocks/a.jpg'),
             'price' => 10000,
             'promo' => [
                 'active' => false,
@@ -24,7 +24,7 @@
         [
             'name' => 'Product test 2',
             'slug' => 'product_test_2',
-            'img' => Storage::url('public/mocks/b.jpg'),
+            'img' => Storage::url('mocks/b.jpg'),
             'price' => 10000,
             'promo' => [
                 'active' => true,
@@ -45,7 +45,7 @@
         [
             'name' => 'Product test 3',
             'slug' => 'product_test_3',
-            'img' => Storage::url('public/mocks/c.jpg'),
+            'img' => Storage::url('mocks/c.jpg'),
             'price' => 10000,
             'promo' => [
                 'active' => false,
@@ -148,15 +148,15 @@
                 <div class="swiper-wrapper">
                     <!-- Slides -->
                     <div class="swiper-slide rounded-box mask mask-squircle">
-                        <img src="{{ Storage::url('public/sliders/a.jpg') }}" class="w-full"
+                        <img src="{{ Storage::url('sliders/a.jpg') }}" class="w-full"
                             alt="Tailwind CSS Carousel component" />
                     </div>
                     <div class="swiper-slide rounded-box mask mask-squircle">
-                        <img src="{{ Storage::url('public/sliders/b.jpg') }}" class="w-full"
+                        <img src="{{ Storage::url('sliders/b.jpg') }}" class="w-full"
                             alt="Tailwind CSS Carousel component" />
                     </div>
                     <div class="swiper-slide rounded-box mask mask-squircle">
-                        <img src="{{ Storage::url('public/sliders/c.jpg') }}" class="w-full"
+                        <img src="{{ Storage::url('sliders/c.jpg') }}" class="w-full"
                             alt="Tailwind CSS Carousel component" />
                     </div>
                 </div>
@@ -186,37 +186,37 @@
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
-                        <img src="{{ Storage::url('public/mocks/a.jpg') }}" />
+                        <img src="{{ Storage::url('mocks/a.jpg') }}" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
-                        <img src="{{ Storage::url('public/mocks/b.jpg') }}" />
+                        <img src="{{ Storage::url('mocks/b.jpg') }}" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
-                        <img src="{{ Storage::url('public/mocks/c.jpg') }}" />
+                        <img src="{{ Storage::url('mocks/c.jpg') }}" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
-                        <img src="{{ Storage::url('public/mocks/d.jpg') }}" />
+                        <img src="{{ Storage::url('mocks/d.jpg') }}" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
-                        <img src="{{ Storage::url('public/mocks/e.jpg') }}" />
+                        <img src="{{ Storage::url('mocks/e.jpg') }}" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
-                        <img src="{{ Storage::url('public/mocks/f.jpg') }}" />
+                        <img src="{{ Storage::url('mocks/f.jpg') }}" />
                     </a>
                 </div>
             </div>
@@ -236,37 +236,37 @@
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(2)" />
                         <a href="{{ route('client.product', 'test') }}">
-                            <img src="{{ Storage::url('public/mocks/a.jpg') }}" alt="" srcset="">
+                            <img src="{{ Storage::url('mocks/a.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(2)" />
                         <a href="{{ route('client.product', 'test') }}">
-                            <img src="{{ Storage::url('public/mocks/b.jpg') }}" alt="" srcset="">
+                            <img src="{{ Storage::url('mocks/b.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(2)" />
                         <a href="{{ route('client.product', 'test') }}">
-                            <img src="{{ Storage::url('public/mocks/c.jpg') }}" alt="" srcset="">
+                            <img src="{{ Storage::url('mocks/c.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(7)" />
                         <a href="{{ route('client.product', 'test') }}">
-                            <img src="{{ Storage::url('public/mocks/d.jpg') }}" alt="" srcset="">
+                            <img src="{{ Storage::url('mocks/d.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(4)" />
                         <a href="{{ route('client.product', 'test') }}">
-                            <img src="{{ Storage::url('public/mocks/e.jpg') }}" alt="" srcset="">
+                            <img src="{{ Storage::url('mocks/e.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(5)" />
                         <a href="{{ route('client.product', 'test') }}">
-                            <img src="{{ Storage::url('public/mocks/f.jpg') }}" alt="" srcset="">
+                            <img src="{{ Storage::url('mocks/f.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                 </div>
@@ -317,7 +317,7 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                        src="{{ Storage::url('mocks/me.jpg') }}" />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -334,7 +334,7 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                        src="{{ Storage::url('mocks/me.jpg') }}" />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -351,7 +351,7 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                        src="{{ Storage::url('mocks/me.jpg') }}" />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -368,7 +368,7 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                        src="{{ Storage::url('mocks/me.jpg') }}" />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -382,7 +382,7 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                        src="{{ Storage::url('mocks/me.jpg') }}" />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -399,7 +399,7 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                        src="{{ Storage::url('mocks/me.jpg') }}" />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -416,7 +416,7 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                        src="{{ Storage::url('mocks/me.jpg') }}" />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -433,7 +433,7 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                        src="{{ Storage::url('mocks/me.jpg') }}" />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -450,7 +450,7 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                                        src="{{ Storage::url('mocks/me.jpg') }}" />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -473,54 +473,34 @@
         <h2 class="text-center text-3xl uppercase font-bold tracking-wider mb-10">Yang Sering ditanyakan</h2>
 
         @foreach ($faqs as $item)
-        <div class="collapse collapse-arrow bg-base-200 w-fit mx-9 mb-1">
-            <input type="radio" name="faq" />
-            <div class="collapse-title text-xl font-medium bg-base-300">
-               {{ $item->question }}
+            <div class="collapse collapse-arrow bg-base-200 w-fit mx-9 mb-1">
+                <input type="radio" name="faq" />
+                <div class="collapse-title text-xl font-medium bg-base-300">
+                    {{ $item->question }}
+                </div>
+                <div class="collapse-content pt-2">
+                    <p>{{ $item->answer }}</p>
+                </div>
             </div>
-            <div class="collapse-content pt-2">
-                <p>{{ $item->answer }}</p>
-            </div>
-        </div>
         @endforeach
     </div>
-    
+
     {{-- BRANDS --}}
     <div class="brands my-20">
         <h2 class="text-center text-3xl uppercase font-bold tracking-wider mb-10">Brand Kami</h2>
 
         <div class="swiper brandsSwiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url('public/mocks/brands/a.webp') }}" alt="brand's logo">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url('public/mocks/brands/b.webp') }}" alt="brand's logo">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url('public/mocks/brands/c.webp') }}" alt="brand's logo">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url('public/mocks/brands/d.webp') }}" alt="brand's logo">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url('public/mocks/brands/e.webp') }}" alt="brand's logo">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url('public/mocks/brands/f.webp') }}" alt="brand's logo">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url('public/mocks/brands/g.webp') }}" alt="brand's logo">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url('public/mocks/brands/h.webp') }}" alt="brand's logo">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url('public/mocks/brands/i.webp') }}" alt="brand's logo">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url('public/mocks/brands/j.webp') }}" alt="brand's logo">
-                </div>
+                @foreach ($brands as $item)
+                    <div class="swiper-slide">
+                        <a
+                            @isset($item->link)
+                        href="{{ $item->link }}"
+                    @endisset>
+                            <img src="{{ Storage::url($item->logo) }}" alt="logo {{ $item->name }}">
+                        </a>
+                    </div>
+                @endforeach
             </div>
             <div class="swiper-pagination"></div>
         </div>

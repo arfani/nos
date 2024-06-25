@@ -45,14 +45,7 @@ class FaqController extends Controller
         Faq::create($validated);
 
         return redirect()->route('faq.index')
-            ->with('success', 'Baq berhasil !! ditambahkan!');
-    }
-
-    public function show(Faq $faq)
-    {
-        $data = $faq;
-
-        return view('admin.faq.show', compact('data'));
+            ->with('success', 'FAQ berhasil ditambahkan!');
     }
 
     public function edit(Faq $faq)
@@ -69,7 +62,7 @@ class FaqController extends Controller
         $faq->update($validated);
 
         return redirect()->route('faq.index')
-            ->with('success', 'Baq berhasil !! diubah!');
+            ->with('success', 'FAQ berhasil diubah!');
     }
 
     public function destroy(Faq $faq)

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\NoticeController;
@@ -52,7 +53,8 @@ Route::prefix('admin')
         })->name('admin.dashboard');
 
         Route::resource('notice', NoticeController::class)->only('index', 'update');
-        Route::resource('faq', FaqController::class);
+        Route::resource('faq', FaqController::class)->except('show');
+        Route::resource('brand', BrandController::class);
     });
 
 // Route::middleware('auth')->group(function () {

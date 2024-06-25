@@ -31,9 +31,16 @@
          <a href="{{ route('faq.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
              'bg-primary text-primary-content' =>
-                 Request::RouteIs('faq.index') || Request::is('faq/*'),
+                 Request::RouteIs('faq.index') || Request::is('admin/faq/*'),
          ])>
              FAQ
+         </a>
+         <a href="{{ route('brand.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('brand.index') || Request::is('admin/brand/*'),
+         ])>
+             Brand
          </a>
 
          {{-- MENU DENGAN SUBMENU --}}

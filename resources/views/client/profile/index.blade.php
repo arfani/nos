@@ -5,7 +5,7 @@
             <figure class="px-10 pt-10 pb-2">
                 <div class="avatar">
                     <div class="w-full rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                        <img src="{{ Storage::url('public/mocks/me.jpg') }}" />
+                        <img src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}" alt="profile picture" />
                     </div>
                 </div>
             </figure>

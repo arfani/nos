@@ -1,7 +1,7 @@
 @props(['product' => [
         'name' => 'Product test 1',
         'slug' => 'product_test_1',
-        'img' => Storage::url('public/mocks/a.jpg'),
+        'img' => Storage::url('mocks/a.jpg'),
         'price' => 10000,
         'promo' => [
             'active' => true,
