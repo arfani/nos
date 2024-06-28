@@ -42,6 +42,13 @@
          ])>
              Brand
          </a>
+         <a href="{{ route('admin-member.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('admin-member.index') || Request::is('admin/member/*'),
+         ])>
+             Member
+         </a>
 
          {{-- MENU DENGAN SUBMENU --}}
          {{-- <div class="relative">
@@ -78,8 +85,16 @@
          </div> --}}
          {{-- MENU DENGAN SUBMENU END --}}
 
-         <div class="divider divider-neutral mt-4 mb-0 text-xs">PENGATURAN</div>
+         <div class="divider divider-neutral mt-4 mb-1 text-xs">PENGATURAN</div>
 
-         <a href="#" class="block px-4 py-3 mt-0 text-sm hover:bg-primary-content/20">Profil</a>
+         <a href="{{ route('admin-profile.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('admin-profile.index') || Request::is('admin/profile/*'),
+         ])>
+             Profile
+         </a>
+
+         {{-- <a href="#" class="block px-4 py-3 mt-0 text-sm hover:bg-primary-content/20">Profil</a> --}}
      </nav>
  </div>

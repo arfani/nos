@@ -22,14 +22,32 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Admin User',
+            'name' => 'Admin',
             'email' => 'admin@example.com',
+            'hp' => '081907123123',
+            'img' => 'mocks/me.jpg',
+            'fullname' => 'Administrator bin Fulan',
+            'birthday' => now(),
+            'gender' => 'm',
+            'status-pernikahan' => 'menikah',  
+            'status' => 'living life',
+            'occupation' => 'Pengusaha',
+            'education' => 'S1',
             'level_id' => 1
         ]);
         
         User::factory()->create([
-            'name' => 'Member User',
+            'name' => 'Member',
             'email' => 'member@example.com',
+            'hp' => '081907123123',
+            'img' => 'mocks/me.jpg',
+            'fullname' => 'Member bin Fulan',
+            'birthday' => now(),
+            'gender' => 'm',
+            'status-pernikahan' => 'menikah',  
+            'status' => 'living life',
+            'occupation' => 'Pengusaha',
+            'education' => 'S1',
             'level_id' => 2
         ]);
     }

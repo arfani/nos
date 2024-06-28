@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FaqController;
@@ -55,6 +57,12 @@ Route::prefix('admin')
         Route::resource('notice', NoticeController::class)->only('index', 'update');
         Route::resource('faq', FaqController::class)->except('show');
         Route::resource('brand', BrandController::class);
+
+        Route::get('profile', [AdminProfileController::class, 'index'])->name('admin-profile.index');
+        Route::get('member', [MemberController::class, 'index'])->name('admin-member.index');
+        Route::get('member/{user}', [MemberController::class, 'show'])->name('admin-member.show');
+        Route::put('member-banned/{user}', [MemberController::class, 'ban'])->name('admin-member.ban');
+        Route::put('member-unbanned/{user}', [MemberController::class, 'unban'])->name('admin-member.unban');
     });
 
 // Route::middleware('auth')->group(function () {

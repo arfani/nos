@@ -19,13 +19,16 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('level_id')->constrained()->default(2);
+            $table->string('hp');
             $table->string('img')->nullable();
             $table->string('fullname')->nullable();
             $table->string('birthday')->nullable();
             $table->string('gender')->nullable();
+            $table->string('status-pernikahan')->nullable();
             $table->string('status')->nullable();
             $table->string('occupation')->nullable();
             $table->string('education')->nullable();
+            $table->boolean('banned')->default(false);
             $table->timestamps();
         });
 
