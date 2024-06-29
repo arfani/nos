@@ -23,7 +23,7 @@ Route::get('/cart', function () {
 
 Route::get('/profile', function () {
     return view('client.profile.index');
-})->name('client.profile');
+})->name('client.profile')->middleware('auth');
 
 Route::get('/promo', function () {
     return view('client.promo.index');
@@ -63,14 +63,13 @@ Route::prefix('admin')
         Route::get('member/{user}', [MemberController::class, 'show'])->name('admin-member.show');
         Route::put('member-banned/{user}', [MemberController::class, 'ban'])->name('admin-member.ban');
         Route::put('member-unbanned/{user}', [MemberController::class, 'unban'])->name('admin-member.unban');
-    });
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
+        
+            //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+                Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+                Route::post('/update-photo', [ProfileController::class, 'update_photo'])->name('profile.update_photo');
+            //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+            
+        });
 require __DIR__ . '/auth.php';
 
 Route::get('testing', function(){

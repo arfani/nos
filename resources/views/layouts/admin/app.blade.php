@@ -18,11 +18,11 @@
         @include('layouts.admin.navbar')
         <!-- Page Content -->
         <main class="py-12">
-            <div class="overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-base-200 mx-2 sm:mx-4 lg:mx-6 rounded">
+            {{-- <div class="overflow-hidden shadow-sm sm:rounded-lg"> --}}
+                {{-- <div class="p-6 bg-base-200 mx-2 sm:mx-4 lg:mx-6 rounded"> --}}
                     {{ $slot }}
-                </div>
-            </div>
+                {{-- </div> --}}
+            {{-- </div> --}}
         </main>
         {{-- <button class="btn btn-primary themeSetter" to="coffee">coffee</button>
         <button class="btn btn-primary themeSetter" to="autumn">autumn</button> --}}
