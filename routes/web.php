@@ -10,6 +10,8 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SosmedController;
 use App\Http\Controllers\TestimonialController;
+use App\Models\Feature;
+use App\Models\Sosmed;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -25,23 +27,35 @@ Route::get('/cart', function () {
 })->name('client.cart');
 
 Route::get('/profile', function () {
-    return view('client.profile.index');
+    $sosmed = Sosmed::all();
+    return view('client.profile.index', compact('sosmed'));
 })->name('client.profile')->middleware('auth');
 
 Route::get('/promo', function () {
-    return view('client.promo.index');
+    $sosmed = Sosmed::all();
+    $features = Feature::all();
+    
+    return view('client.promo.index', compact('sosmed', 'features'));
 })->name('client.promo');
 
 Route::get('/lelang', function () {
-    return view('client.lelang.index');
+    $sosmed = Sosmed::all();
+    $features = Feature::all();
+
+    return view('client.lelang.index', compact('sosmed', 'features'));
 })->name('client.lelang');
 
 Route::get('/products', function () {
-    return view('client.product.index');
+    $sosmed = Sosmed::all();
+
+    return view('client.product.index', compact('sosmed'));
 })->name('client.products');
 
 Route::get('/product/{product_id}', function () {
-    return view('client.product.detail');
+    $sosmed = Sosmed::all();
+    $features = Feature::all();
+
+    return view('client.product.detail', compact('sosmed', 'features'));
 })->name('client.product');
 
 Route::get('/page/{name}', function ($name) {

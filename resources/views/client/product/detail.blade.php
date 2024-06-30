@@ -20,10 +20,10 @@
         ]
         ]])
 
-<x-client-layout>
+<x-client-layout :sosmed="$sosmed">
     <x-client.product-detail :product="$product" />
 
-    <x-client.features />
+    <x-client.features :features="$features" />
     @push('scripts')
         @vite(['resources/css/client/detail-product.css', 'resources/js/client/detail-product.js'])
     @endpush

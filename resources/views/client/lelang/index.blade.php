@@ -103,7 +103,7 @@
     ],]
 ])
 
-<x-client-layout>
+<x-client-layout :sosmed="$sosmed">
     <h2 class="text-center mb-10 text-3xl uppercase font-bold tracking-wider">BARANG LELANG <i
             class="fa fa-hammer fa-flip-horizontal text-blue-500 text-2xl pb-1"></i></h2>
 
@@ -117,5 +117,5 @@
         <a href="" class="btn btn-primary btn-ghost tracking-wider">Lainnya</a>
     </div>
 
-    <x-client.features />
+    <x-client.features :features="$features" />
 </x-client-layout>
