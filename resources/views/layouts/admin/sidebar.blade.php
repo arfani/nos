@@ -49,6 +49,13 @@
          ])>
              Member
          </a>
+         <a href="{{ route('feature.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('feature.index') || Request::is('admin/feature/*'),
+         ])>
+             Feature
+         </a>
 
          {{-- MENU DENGAN SUBMENU --}}
          {{-- <div class="relative">

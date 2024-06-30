@@ -114,7 +114,6 @@
             this.cleanOldNotice();
             this.showNotice = !localStorage.getItem(this.noticeKey);
             localStorage.setItem('currentNoticeKey', this.noticeKey);
-            console.log(this.noticeMessage);
         },
         dismissNotice() {
             localStorage.setItem(this.noticeKey, 'true');
@@ -302,7 +301,7 @@
         </div>
     </div>
 
-    <x-client.features />
+    <x-client.features :features="$features" />
 
     {{-- TESTIMONIAL --}}
     <div class="testimonial mb-14 pt-10">
@@ -317,7 +316,8 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('mocks/me.jpg') }}" />
+                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
+                                        />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -334,7 +334,8 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('mocks/me.jpg') }}" />
+                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
+                                        />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -351,7 +352,8 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('mocks/me.jpg') }}" />
+                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
+                                        />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -368,7 +370,8 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('mocks/me.jpg') }}" />
+                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
+                                        />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -382,7 +385,8 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('mocks/me.jpg') }}" />
+                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
+                                        />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -399,7 +403,8 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('mocks/me.jpg') }}" />
+                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
+                                        />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -416,7 +421,8 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('mocks/me.jpg') }}" />
+                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
+                                        />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -433,7 +439,8 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('mocks/me.jpg') }}" />
+                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
+                                        />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">
@@ -450,7 +457,8 @@
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
                                     <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ Storage::url('mocks/me.jpg') }}" />
+                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
+                                        />
                                 </div>
                             </div>
                             <div class="chat-header text-primary">

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             NoticeSeeder::class,
             FaqSeeder::class,
             BrandSeeder::class,
+            FeatureSeeder::class,
         ]);
 
         User::factory()->create([

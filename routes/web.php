@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -57,21 +58,27 @@ Route::prefix('admin')
         Route::resource('notice', NoticeController::class)->only('index', 'update');
         Route::resource('faq', FaqController::class)->except('show');
         Route::resource('brand', BrandController::class);
+        Route::resource('feature', FeatureController::class);
 
         Route::get('profile', [AdminProfileController::class, 'index'])->name('admin-profile.index');
         Route::get('member', [MemberController::class, 'index'])->name('admin-member.index');
         Route::get('member/{user}', [MemberController::class, 'show'])->name('admin-member.show');
         Route::put('member-banned/{user}', [MemberController::class, 'ban'])->name('admin-member.ban');
         Route::put('member-unbanned/{user}', [MemberController::class, 'unban'])->name('admin-member.unban');
-        
-            //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-                Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-                Route::post('/update-photo', [ProfileController::class, 'update_photo'])->name('profile.update_photo');
-            //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-            
-        });
+
+        //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    });
+
+// untuk update profile photo admin & member
+Route::post('/update-photo', [ProfileController::class, 'update_photo'])
+    ->middleware(['auth', 'verified'])
+    ->name('profile.update_photo');
+
 require __DIR__ . '/auth.php';
 
-Route::get('testing', function(){
+Route::get('testing', function () {
     return view('testing');
 });

@@ -105,9 +105,9 @@
     }
 </style>
 
-<a class="fancy" href="{{ route('login') }}">
+<a class="fancy" href="{{ auth()->check() ? route('client.products') : route('login') }}">
     <span class="top-key"></span>
-    <span class="text">MASUK | DAFTAR</span>
+    <span class="text">{{ auth()->check() ? 'LIHAT PRODUK' : 'MASUK | DAFTAR' }}</span>
     <span class="bottom-key-1"></span>
     <span class="bottom-key-2"></span>
 </a>
