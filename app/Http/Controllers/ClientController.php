@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Faq;
 use App\Models\Feature;
 use App\Models\Notice;
+use App\Models\Sosmed;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -15,12 +16,14 @@ class ClientController extends Controller
         $faqs = Faq::all();
         $brands = Brand::all();
         $features = Feature::all();
+        $sosmed = Sosmed::all();
         
         return view('client.index', compact(
             'notice',
             'faqs',
             'brands',
             'features',
+            'sosmed',
         ));
     }
 }

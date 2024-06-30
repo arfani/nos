@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             FaqSeeder::class,
             BrandSeeder::class,
             FeatureSeeder::class,
+            SosmedSeeder::class,
         ]);
 
         User::factory()->create([

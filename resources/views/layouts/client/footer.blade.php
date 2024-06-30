@@ -30,15 +30,11 @@
     </aside>
     <nav class="md:place-self-center md:justify-self-end">
         <div class="grid grid-flow-col gap-1">
-            <a class="btn btn-circle bg-base-100 btn-sm">
-                <img src="{{ Storage::url('mocks/tokopedia.png') }}" alt="tokopedia's logo" width="20" height="20">
+            @foreach ($sosmed as $item)
+            <a href="{{ $item->url }}" class="btn btn-circle bg-base-100 btn-sm">
+                <img src="{{ Storage::url($item->logo) }}" alt="{{ $item->name.'s logo' }}" width="20" height="20">
             </a>
-            <a class="btn btn-circle bg-base-100 btn-sm">
-                <img src="{{ Storage::url('mocks/shopee.png') }}" alt="shopee's logo" width="20" height="20">
-            </a>
-            <a class="btn btn-circle bg-base-100 btn-sm">
-                <img src="{{ Storage::url('mocks/blibli.png') }}" alt="blibli's logo" width="20" height="20">
-            </a>
+            @endforeach
         </div>
     </nav>
 </footer>

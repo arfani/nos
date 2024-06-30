@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreBrandRequest;
-use App\Http\Requests\UpdateBrandRequest;
-use App\Models\Brand;
+use App\Http\Requests\StoreSosmedRequest;
+use App\Http\Requests\UpdateSosmedRequest;
+use App\Models\Sosmed;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class BrandController extends Controller
+class SosmedController extends Controller
 {
     public function index(Request $request):View
     {
@@ -17,7 +17,7 @@ class BrandController extends Controller
             'name' => ['string', 'nullable'],
         ]);
 
-        $data = Brand::latest();
+        $data = Sosmed::latest();
 
         if (isset($validated["name"])) {
             $data = $data->where('name', 'like', '%' . $validated["name"] . '%');
@@ -28,86 +28,86 @@ class BrandController extends Controller
         $data = $data->paginate($numb_per_page)->appends(array_merge($validated, ['numb_per_page' => $numb_per_page]));
         $indexNumber = (request()->input('page', 1) - 1) * $numb_per_page;
 
-        return view('admin.brand.index', compact('data', 'indexNumber', 'validated', 'numb_per_page'));
+        return view('admin.sosmed.index', compact('data', 'indexNumber', 'validated', 'numb_per_page'));
     }
 
     public function create()
     {
-        return view('admin.brand.form');
+        return view('admin.sosmed.form');
     }
 
-    public function store(StoreBrandRequest $request)
+    public function store(StoreSosmedRequest $request)
     {
         $validated = $request->validated();
 
-        $newData = Brand::create($validated);
+        $newData = Sosmed::create($validated);
 
         if (isset($validated["logo"])) {
             $filename = 'brand-' . uniqid() . '.webp';
-            $path = 'brands/' . $filename;
+            $path = 'somed/' . $filename;
             Storage::put($path, file_get_contents($validated["logo"]));
 
             $newData->logo = $path;
             $newData->save();
         }
 
-        return redirect()->route('brand.index')
-            ->with('success', 'Brand berhasil ditambahkan!');
+        return redirect()->route('sosmed.index')
+            ->with('success', 'Sosmed berhasil ditambahkan!');
     }
 
-    public function show(Brand $brand)
+    public function show(Sosmed $sosmed)
     {
-        $data = $brand;
+        $data = $sosmed;
 
-        return view('admin.brand.show', compact('data'));
+        return view('admin.sosmed.show', compact('data'));
     }
 
-    public function edit(Brand $brand)
+    public function edit(Sosmed $sosmed)
     {
-        $data = $brand;
+        $data = $sosmed;
 
-        return view('admin.brand.form', compact('data'));
+        return view('admin.sosmed.form', compact('data'));
     }
 
-    public function update(UpdateBrandRequest $request, Brand $brand)
+    public function update(UpdateSosmedRequest $request, Sosmed $sosmed)
     {
         $validated = $request->validated();
 
-        $brand->name = $validated["name"];
-        $brand->link = $validated["link"];
+        $sosmed->name = $validated["name"];
+        $sosmed->url = $validated["url"];
 
         if (isset($validated["logo"])) {
             // remove old logo
-            if(isset($brand->logo)){
-                Storage::delete($brand->logo);
+            if(isset($sosmed->logo)){
+                Storage::delete($sosmed->logo);
             }
 
             $filename = 'brand-' . uniqid() . '.webp';
-            $path = 'brands/' . $filename;
+            $path = 'somed/' . $filename;
             Storage::put($path, file_get_contents($validated["logo"]));
 
-            $brand->logo = $path;
+            $sosmed->logo = $path;
         }
         
-        $brand->save();
+        $sosmed->save();
         
-        return redirect()->route('brand.index')
+        return redirect()->route('sosmed.index')
             ->with('success', 'Berhasil diubah!');
     }
 
-    public function destroy(Brand $brand)
+    public function destroy(Sosmed $sosmed)
     {
-        $brand->delete();
+        $sosmed->delete();
 
-        if (isset($brand->logo)) {
-            Storage::delete($brand->logo);
+        if (isset($sosmed->logo)) {
+            Storage::delete($sosmed->logo);
         }
 
-        return redirect()->route('brand.index')
+        return redirect()->route('sosmed.index')
             ->with('success', 'Berhasil dihapus !!');
     }
 
-    // function getById(Brand $brand) {
-    //     return $brand;
+    // function getById(Sosmed $sosmed) {
+    //     return $sosmed;
     // }
 }

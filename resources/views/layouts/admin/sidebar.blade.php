@@ -56,6 +56,13 @@
          ])>
              Feature
          </a>
+         <a href="{{ route('sosmed.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('sosmed.index') || Request::is('admin/sosmed/*'),
+         ])>
+             Sosmed
+         </a>
 
          {{-- MENU DENGAN SUBMENU --}}
          {{-- <div class="relative">

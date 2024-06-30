@@ -1,3 +1,5 @@
+@props(['sosmed'])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -24,8 +26,7 @@
     <main class="pt-28 pb-4 px-4 transition-all">
         {{ $slot }}
     </main>
-    
-    @include('layouts.client.footer')
+    @include('layouts.client.footer', ['sosmed' => $sosmed])
 
     <script>
         // This will hide the loading screen once the DOM is fully loaded

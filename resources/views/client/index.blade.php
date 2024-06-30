@@ -66,7 +66,7 @@
     ],
 ])
 
-<x-client-layout>
+<x-client-layout :sosmed="$sosmed">
     @push('styles')
         @vite(['resources/css/client/home.css'])
     @endpush
