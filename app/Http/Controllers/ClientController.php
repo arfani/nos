@@ -7,6 +7,7 @@ use App\Models\Faq;
 use App\Models\Feature;
 use App\Models\Notice;
 use App\Models\Sosmed;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -17,6 +18,7 @@ class ClientController extends Controller
         $brands = Brand::all();
         $features = Feature::all();
         $sosmed = Sosmed::all();
+        $testimonials = Testimonial::where('show', true)->get();
         
         return view('client.index', compact(
             'notice',
@@ -24,6 +26,7 @@ class ClientController extends Controller
             'brands',
             'features',
             'sosmed',
+            'testimonials',
         ));
     }
 }

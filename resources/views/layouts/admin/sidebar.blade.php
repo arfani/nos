@@ -63,6 +63,13 @@
          ])>
              Sosmed
          </a>
+         <a href="{{ route('testimonial.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('testimonial.index') || Request::is('admin/testimonial/*'),
+         ])>
+             Testimonial
+         </a>
 
          {{-- MENU DENGAN SUBMENU --}}
          {{-- <div class="relative">

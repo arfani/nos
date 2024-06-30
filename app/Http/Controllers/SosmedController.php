@@ -43,7 +43,7 @@ class SosmedController extends Controller
         $newData = Sosmed::create($validated);
 
         if (isset($validated["logo"])) {
-            $filename = 'brand-' . uniqid() . '.webp';
+            $filename = 'sosmed-' . uniqid() . '.webp';
             $path = 'somed/' . $filename;
             Storage::put($path, file_get_contents($validated["logo"]));
 
@@ -82,7 +82,7 @@ class SosmedController extends Controller
                 Storage::delete($sosmed->logo);
             }
 
-            $filename = 'brand-' . uniqid() . '.webp';
+            $filename = 'sosmed-' . uniqid() . '.webp';
             $path = 'somed/' . $filename;
             Storage::put($path, file_get_contents($validated["logo"]));
 

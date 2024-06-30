@@ -311,165 +311,25 @@
 
             <div class="swiper testimonialSwiper mb-10 lg:mb-0 !w-3/4 !my-6">
                 <div class="swiper-wrapper !my-10">
+                    @foreach ($testimonials as $item)
                     <div class="swiper-slide !bg-transparent">
                         <div class="chat chat-start">
                             <div class="chat-image avatar">
                                 <div class="w-10 rounded-full">
-                                    <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
+                                    <img alt="profile photo"
+                                        src="{{ isset($item->img) ? Storage::url($item->img) : asset('assets/images/image-not-found.webp') }}"
                                         />
                                 </div>
                             </div>
-                            <div class="chat-header text-primary">
-                                Obi-Wan Kenobi
+                            <div class="chat-header text-primary ml-2">
+                                {{ $item->name }}
                             </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur possimus,
-                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
-                                consectetur alias exercitationem, veniam saepe.</div>
+                            <div class="chat-bubble bg-secondary text-secondary-content">
+                                {{ $item->message }}
+                            </div>
                         </div>
                     </div>
-                    <div class="swiper-slide !bg-transparent">
-                        <div class="chat chat-start">
-                            <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
-                                    <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
-                                        />
-                                </div>
-                            </div>
-                            <div class="chat-header text-primary">
-                                Obi-Wan Kenobi
-                            </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur possimus,
-                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
-                                consectetur alias exercitationem, veniam saepe.</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide !bg-transparent">
-                        <div class="chat chat-start">
-                            <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
-                                    <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
-                                        />
-                                </div>
-                            </div>
-                            <div class="chat-header text-primary">
-                                Obi-Wan Kenobi
-                            </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Incidunt reprehenderit laboriosam aperiam quam possimus,
-                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
-                                consectetur alias exercitationem, veniam saepe.</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide !bg-transparent">
-                        <div class="chat chat-start">
-                            <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
-                                    <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
-                                        />
-                                </div>
-                            </div>
-                            <div class="chat-header text-primary">
-                                Obi-Wan Kenobi
-                            </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipspe.</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide !bg-transparent">
-                        <div class="chat chat-start">
-                            <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
-                                    <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
-                                        />
-                                </div>
-                            </div>
-                            <div class="chat-header text-primary">
-                                Obi-Wan Kenobi
-                            </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Incidunt reprehenderit laboriosam aperiam quam possimus,
-                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
-                                consectetur alias exercitationem, veniam saepe.</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide !bg-transparent">
-                        <div class="chat chat-start">
-                            <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
-                                    <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
-                                        />
-                                </div>
-                            </div>
-                            <div class="chat-header text-primary">
-                                Obi-Wan Kenobi
-                            </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Incidunt reprehenderit laboriosam aperiam quam possimus,
-                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
-                                consectetur alias exercitationem, veniam saepe.</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide !bg-transparent">
-                        <div class="chat chat-start">
-                            <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
-                                    <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
-                                        />
-                                </div>
-                            </div>
-                            <div class="chat-header text-primary">
-                                Obi-Wan Kenobi
-                            </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Incidunt reprehenderit laboriosam aperiam quam possimus,
-                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
-                                consectetur alias exercitationem, veniam saepe.</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide !bg-transparent">
-                        <div class="chat chat-start">
-                            <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
-                                    <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
-                                        />
-                                </div>
-                            </div>
-                            <div class="chat-header text-primary">
-                                Obi-Wan Kenobi
-                            </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Incidunt reprehenderit laboriosam aperiam quam possimus,
-                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
-                                consectetur alias exercitationem, veniam saepe.</div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide !bg-transparent">
-                        <div class="chat chat-start">
-                            <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
-                                    <img alt="Tailwind CSS chat bubble component"
-                                        src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
-                                        />
-                                </div>
-                            </div>
-                            <div class="chat-header text-primary">
-                                Obi-Wan Kenobi
-                            </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Incidunt reprehenderit laboriosam aperiam quam possimus,
-                                iusto numquam optio tempora accusantium excepturi perferendis itaque, amet sit libero
-                                consectetur alias exercitationem, veniam saepe.</div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SosmedController;
+use App\Http\Controllers\TestimonialController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -61,6 +62,7 @@ Route::prefix('admin')
         Route::resource('brand', BrandController::class);
         Route::resource('feature', FeatureController::class);
         Route::resource('sosmed', SosmedController::class);
+        Route::resource('testimonial', TestimonialController::class);
 
         Route::get('profile', [AdminProfileController::class, 'index'])->name('admin-profile.index');
         Route::get('member', [MemberController::class, 'index'])->name('admin-member.index');
