@@ -58,9 +58,35 @@ Route::get('/product/{product_id}', function () {
     return view('client.product.detail', compact('sosmed', 'features'));
 })->name('client.product');
 
-Route::get('/page/{name}', function ($name) {
-    return view('client.pages.index', compact('name'));
-})->name('client.pages');
+Route::get('/about-us', function () {
+    $sosmed = Sosmed::all();
+
+    return view('client.pages.about-us', compact('sosmed'));
+})->name('client.about-us');
+
+Route::get('/contact', function () {
+    $sosmed = Sosmed::all();
+
+    return view('client.pages.contact', compact('sosmed'));
+})->name('client.contact');
+
+Route::get('/how-to-order', function () {
+    $sosmed = Sosmed::all();
+
+    return view('client.pages.how-to-order', compact('sosmed'));
+})->name('client.how-to-order');
+
+Route::get('/how-to-return', function () {
+    $sosmed = Sosmed::all();
+
+    return view('client.pages.how-to-return', compact('sosmed'));
+})->name('client.how-to-return');
+
+Route::get('/payment-method', function () {
+    $sosmed = Sosmed::all();
+
+    return view('client.pages.payment-method', compact('sosmed'));
+})->name('client.payment-method');
 
 
 // ADMIN ROUTES
