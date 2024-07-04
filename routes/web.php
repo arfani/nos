@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FeatureController;
@@ -11,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SosmedController;
 use App\Http\Controllers\TestimonialController;
 use App\Models\Feature;
+use App\Models\Page;
 use App\Models\Sosmed;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -58,36 +61,11 @@ Route::get('/product/{product_id}', function () {
     return view('client.product.detail', compact('sosmed', 'features'));
 })->name('client.product');
 
-Route::get('/about-us', function () {
-    $sosmed = Sosmed::all();
-
-    return view('client.pages.about-us', compact('sosmed'));
-})->name('client.about-us');
-
-Route::get('/contact', function () {
-    $sosmed = Sosmed::all();
-
-    return view('client.pages.contact', compact('sosmed'));
-})->name('client.contact');
-
-Route::get('/how-to-order', function () {
-    $sosmed = Sosmed::all();
-
-    return view('client.pages.how-to-order', compact('sosmed'));
-})->name('client.how-to-order');
-
-Route::get('/how-to-return', function () {
-    $sosmed = Sosmed::all();
-
-    return view('client.pages.how-to-return', compact('sosmed'));
-})->name('client.how-to-return');
-
-Route::get('/payment-method', function () {
-    $sosmed = Sosmed::all();
-
-    return view('client.pages.payment-method', compact('sosmed'));
-})->name('client.payment-method');
-
+Route::get('/how-to-order',[PageController::class, 'howToOrder'])->name('client.how-to-order');
+Route::get('/how-to-return',[PageController::class, 'howToReturn'])->name('client.how-to-return');
+Route::get('/payment-method',[PageController::class, 'paymentMethod'])->name('client.payment-method');
+Route::get('/about-us',[PageController::class, 'aboutUs'])->name('client.about-us');
+Route::get('/contact',[PageController::class, 'contact'])->name('client.contact');
 
 // ADMIN ROUTES
 Route::prefix('admin')
@@ -114,6 +92,23 @@ Route::prefix('admin')
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+        // PAGES ADMIN
+        Route::prefix('pages')->group(function(){
+            Route::get('how-to-order', [AdminPageController::class, 'howToOrder'])->name('admin.how-to-order');
+            Route::patch('how-to-order/{page}', [AdminPageController::class, 'howToOrderUpdate'])->name('admin.how-to-order-update');
+
+            Route::get('how-to-return', [AdminPageController::class, 'howToReturn'])->name('admin.how-to-return');
+            Route::patch('how-to-return/{page}', [AdminPageController::class, 'howToReturnUpdate'])->name('admin.how-to-return-update');
+            
+            Route::get('payment-method', [AdminPageController::class, 'paymentMethod'])->name('admin.payment-method');
+            Route::patch('payment-method/{page}', [AdminPageController::class, 'paymentMethodUpdate'])->name('admin.payment-method-update');
+            
+            Route::get('about-us', [AdminPageController::class, 'aboutUs'])->name('admin.about-us');
+            Route::patch('about-us/{page}', [AdminPageController::class, 'aboutUsUpdate'])->name('admin.about-us-update');
+            
+            Route::get('contact', [AdminPageController::class, 'contact'])->name('admin.contact');
+            Route::patch('contact/{page}', [AdminPageController::class, 'contactUpdate'])->name('admin.contact-update');
+        });
     });
 
 // untuk update profile photo admin & member

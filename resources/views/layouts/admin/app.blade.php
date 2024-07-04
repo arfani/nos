@@ -30,43 +30,6 @@
     </div>
     @stack('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const sidebar = document.getElementById('sidebar');
-            const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
-            const burgerIcon = document.getElementById('burgerIcon');
-            const closeIcon = document.getElementById('closeIcon');
-            const masterBtn = document.getElementById('masterBtn');
-            const submenuMaster = document.getElementById('submenuMaster');
-            const caretIconMaster = document.getElementById('caretIconMaster');
-            const mainContent = document.getElementById('mainContent');
-            const navbar = document.getElementById('navbar');
-
-            // Toggle sidebar
-            toggleSidebarBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('sidebar-hidden');
-                sidebar.classList.toggle('sidebar-visible');
-                mainContent.classList.toggle('content-shift');
-                navbar.classList.toggle('navbar-shift');
-                burgerIcon.classList.toggle('hidden');
-                closeIcon.classList.toggle('hidden');
-                toggleSidebarBtn.classList.toggle('active');
-            });
-
-            // Toggle submenuMaster with animation
-            masterBtn.addEventListener('click', () => {
-                submenuMaster.classList.toggle('submenu-visible');
-                caretIconMaster.classList.toggle('rotate-180');
-            });
-
-
-            // Check URL for active submenu
-            // const path = window.location.hash;
-            // if (path.startsWith('#settings')) {
-            //     submenu.classList.add('submenu-visible');
-            //     caretIconMaster.classList.add('rotate-180');
-            // }
-        });
-
         // THEME SETTER DILETAKAN DISINI (BUKAN DI FILE JS PADA FOLDER resources/js) AGAR TIDAK BLINK DARI MODE DARK KE MODE LIGHT SAAT DALAM MODE LIGHT MUNGKIN KARENA LANGSUNG TERLOAD
         // DOM elements
         const themeSetter = document.querySelector(".themeSetter");
