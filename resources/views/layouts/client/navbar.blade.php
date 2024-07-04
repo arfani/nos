@@ -56,7 +56,7 @@
         </button>
 
         {{-- notifications --}}
-        <div class="dropdown dropdown-end">
+        <!-- <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
                 <div class="indicator">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         {{-- cart --}}
         <div class="dropdown dropdown-end">
