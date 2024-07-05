@@ -133,9 +133,9 @@
             </svg>
             <span x-text="noticeMessage"></span>
             <div class="flex gap-1">
-                <button class="btn btn-sm btn-secondary" @click="dismissNotice"><i class="fa fa-xmark"></i></button>
                 <a href="{{ $notice->link }}" class="btn btn-sm btn-secondary"
                     x-show="'{{ $notice->link }}' !== ''">Lihat</a>
+                    <button class="btn btn-sm btn-circle bg-transparent outline-none border-0 hover:text-primary text-primary-content" @click="dismissNotice"><i class="fa fa-xmark"></i></button>
             </div>
         </div>
     </div>
@@ -185,36 +185,66 @@
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
+                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                         <img src="{{ Storage::url('mocks/a.jpg') }}" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
+                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                         <img src="{{ Storage::url('mocks/b.jpg') }}" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
+                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                         <img src="{{ Storage::url('mocks/c.jpg') }}" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
+                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                         <img src="{{ Storage::url('mocks/d.jpg') }}" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
+                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                         <img src="{{ Storage::url('mocks/e.jpg') }}" />
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <x-client.logo-promo />
                     <a href="{{ route('client.product', 'test') }}">
+                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                         <img src="{{ Storage::url('mocks/f.jpg') }}" />
                     </a>
                 </div>
@@ -235,38 +265,68 @@
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(2)" />
                         <a href="{{ route('client.product', 'test') }}">
+                            <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                             <img src="{{ Storage::url('mocks/a.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(2)" />
                         <a href="{{ route('client.product', 'test') }}">
+                            <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                             <img src="{{ Storage::url('mocks/b.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(2)" />
                         <a href="{{ route('client.product', 'test') }}">
+                            <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                             <img src="{{ Storage::url('mocks/c.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(7)" />
                         <a href="{{ route('client.product', 'test') }}">
+                            <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                             <img src="{{ Storage::url('mocks/d.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(4)" />
                         <a href="{{ route('client.product', 'test') }}">
+                            <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
                             <img src="{{ Storage::url('mocks/e.jpg') }}" alt="" srcset="">
                         </a>
                     </div>
                     <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
                         <x-client.countdown :endtime="now()->addDays(5)" />
-                        <a href="{{ route('client.product', 'test') }}">
-                            <img src="{{ Storage::url('mocks/f.jpg') }}" alt="" srcset="">
-                        </a>
+                            <a href="{{ route('client.product', 'test') }}">
+                                <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
+                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                Rp. 200.000
+                            </div>
+                        </div>
+                                <img src="{{ Storage::url('mocks/f.jpg') }}" alt="" srcset="" class="block">
+                            </a>
                     </div>
                 </div>
             </div>

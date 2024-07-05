@@ -1,17 +1,17 @@
 <footer class="footer p-10 bg-base-200 text-base-content">
     <nav class="md:mx-auto">
-        <h6 class="footer-title">Belanja</h6>
+        <h6 class="footer-title tracking-widest">Belanja</h6>
         <a class="link link-hover" href="{{ route('client.how-to-order') }}">Cara belanja</a>
         <a class="link link-hover" href="{{ route('client.how-to-return') }}">Cara Pengembalian</a>
         <a class="link link-hover" href="{{ route('client.payment-method') }}">Metode Pembayaran</a>
     </nav>
     <nav class="md:mx-auto">
-        <h6 class="footer-title">Link bermanfaat</h6>
+        <h6 class="footer-title tracking-widest">Link bermanfaat</h6>
         <a class="link link-hover" href="{{ route('client.promo') }}">Promo</a>
         <a class="link link-hover" href="{{ route('client.lelang') }}">Lelang</a>
     </nav>
     <nav class="md:mx-auto">
-        <h6 class="footer-title">Cari tahu</h6>
+        <h6 class="footer-title tracking-widest">Cari tahu</h6>
         <a class="link link-hover" href="{{ route('client.about-us') }}">Tentang kami</a>
         <a class="link link-hover" href="{{ route('client.contact') }}">Kontak kami</a>
     </nav>

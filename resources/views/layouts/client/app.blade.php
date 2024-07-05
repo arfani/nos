@@ -13,6 +13,8 @@
     @stack('styles')
 
     <script src="https://kit.fontawesome.com/8e04c6a931.js" crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body class="antialiased">
