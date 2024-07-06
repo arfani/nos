@@ -10,7 +10,7 @@
     transform: translateX(0);
 }
 
-.submenuMaster {
+.submenuPages {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out, opacity .5s ease-out;

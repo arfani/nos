@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FaqController;
@@ -81,6 +82,7 @@ Route::prefix('admin')
         Route::resource('feature', FeatureController::class);
         Route::resource('sosmed', SosmedController::class);
         Route::resource('testimonial', TestimonialController::class);
+        Route::resource('category', CategoryController::class)->except('show');
 
         Route::get('profile', [AdminProfileController::class, 'index'])->name('admin-profile.index');
         Route::get('member', [MemberController::class, 'index'])->name('admin-member.index');

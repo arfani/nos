@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             SosmedSeeder::class,
             TestimonialSeeder::class,
             PageSeeder::class,
+            CategorySeeder::class,
         ]);
 
         User::factory()->create([
