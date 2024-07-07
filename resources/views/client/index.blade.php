@@ -66,7 +66,7 @@
     ],
 ])
 
-<x-client-layout :sosmed="$sosmed">
+<x-client-layout>
     @push('styles')
         @vite(['resources/css/client/home.css'])
     @endpush
@@ -361,7 +361,7 @@
         </div>
     </div>
 
-    <x-client.features :features="$features" />
+    <x-client.features />
 
     {{-- TESTIMONIAL --}}
     <div class="testimonial mb-14 pt-10">

@@ -24,11 +24,11 @@
     </div>
 
     @include('layouts.client.navbar')
-<!-- Page Content -->
+    <!-- Page Content -->
     <main class="pt-28 pb-4 px-4 transition-all">
         {{ $slot }}
     </main>
-    @include('layouts.client.footer', ['sosmed' => $sosmed])
+    @include('layouts.client.footer')
 
     <script>
         // This will hide the loading screen once the DOM is fully loaded
@@ -69,7 +69,7 @@
 
         function setTheme(theme) {
             html.setAttribute('data-theme', theme)
-            
+
             if (theme == 'nord') {
                 html.classList.remove('dark')
                 themeSetter.checked = false

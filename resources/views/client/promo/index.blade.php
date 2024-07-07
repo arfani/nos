@@ -128,7 +128,7 @@
         ],
     ],
 ])
-<x-client-layout :sosmed="$sosmed">
+<x-client-layout>
     <h2 class="text-center mb-10 text-3xl uppercase font-bold tracking-wider">SPESIAL PROMO <i
             class="fa fa-tags text-red-500 text-2xl pb-1"></i></h2>
 
@@ -142,5 +142,5 @@
         <a href="" class="btn btn-primary btn-ghost tracking-wider">Lainnya</a>
     </div>
 
-    <x-client.features :features="$features" />
+    <x-client.features />
 </x-client-layout>

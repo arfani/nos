@@ -12,6 +12,16 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    function index(): View
+    {
+        return view('client.profile.index');
+    }
+
+    function indexAdmin(): View
+    {
+        return view('admin.profile.index');
+    }
+
     /**
      * Display the user's profile form.
      */

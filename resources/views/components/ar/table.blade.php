@@ -1,4 +1,4 @@
-<div class="sm:mx-6 lg:mx-8 p-6 py-10">
+<div class="sm:mx-6 lg:mx-8">
     @if (Session::get('success'))
         <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
             class="toast toast-top toast-end mt-10">

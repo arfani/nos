@@ -107,7 +107,4 @@ class SosmedController extends Controller
             ->with('success', 'Berhasil dihapus !!');
     }
 
-    // function getById(Sosmed $sosmed) {
-    //     return $sosmed;
-    // }
 }

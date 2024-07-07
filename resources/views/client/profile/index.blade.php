@@ -1,4 +1,4 @@
-<x-client-layout :sosmed="$sosmed">
+<x-client-layout>
     <div class="flex flex-col sm:flex-row items-center sm:items-start p-4 gap-8 sm:gap-2" x-data="data()">
 
         {{-- alert --}}

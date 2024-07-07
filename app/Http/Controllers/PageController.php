@@ -1,15 +1,52 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\Sosmed;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    function howToOrder(): View
+    function howToOrder()
+    {
+        $page = Page::where('name', 'how_to_order')->first();
+
+        return view('client.page.index', compact('page'));
+    }
+
+    function howToReturn()
+    {
+        $page = Page::where('name', 'how_to_return')->first();
+
+        return view('client.page.index', compact('page'));
+    }
+
+    function paymentMethod()
+    {
+        $page = Page::where('name', 'payment_method')->first();
+
+        return view('client.page.index', compact('page'));
+    }
+
+    function aboutUs()
+    {
+        $page = Page::where('name', 'about_us')->first();
+
+        return view('client.page.index', compact('page'));
+    }
+
+    function contact()
+    {
+        $page = Page::where('name', 'contact')->first();
+
+        return view('client.page.index', compact('page'));
+    }
+
+    // FOR ADMIN CRUD
+    function howToOrderAdmin(): View
     {
         $form_name = 'Cara Belanja';
         $data = Page::where('name', 'how_to_order')->first();
@@ -18,7 +55,7 @@ class PageController extends Controller
         return view('admin.page.index', compact('data', 'form_name', 'update_route'));
     }
 
-    function howToOrderUpdate(Request $request, Page $page)
+    function howToOrderUpdateAdmin(Request $request, Page $page)
     {
         $page->title = $request->title;
         $page->content = $request->content;
@@ -27,7 +64,7 @@ class PageController extends Controller
         return redirect()->route('admin.how-to-order')->with('success', 'Data berhasil diupdate');
     }
 
-    function howToReturn(): View
+    function howToReturnAdmin(): View
     {
         $form_name = 'Cara Pengembalian';
         $data = Page::where('name', 'how_to_return')->first();
@@ -36,7 +73,7 @@ class PageController extends Controller
         return view('admin.page.index', compact('data', 'form_name', 'update_route'));
     }
 
-    function howToReturnUpdate(Request $request, Page $page)
+    function howToReturnUpdateAdmin(Request $request, Page $page)
     {
         $page->title = $request->title;
         $page->content = $request->content;
@@ -44,8 +81,8 @@ class PageController extends Controller
 
         return redirect()->route('admin.how-to-return')->with('success', 'Data berhasil diupdate');
     }
-    
-    function paymentMethod(): View
+
+    function paymentMethodAdmin(): View
     {
         $form_name = 'Metode Pembayaran';
         $data = Page::where('name', 'payment_method')->first();
@@ -54,7 +91,7 @@ class PageController extends Controller
         return view('admin.page.index', compact('data', 'form_name', 'update_route'));
     }
 
-    function paymentMethodUpdate(Request $request, Page $page)
+    function paymentMethodUpdateAdmin(Request $request, Page $page)
     {
         $page->title = $request->title;
         $page->content = $request->content;
@@ -63,7 +100,7 @@ class PageController extends Controller
         return redirect()->route('admin.payment-method')->with('success', 'Data berhasil diupdate');
     }
 
-    function aboutUs(): View
+    function aboutUsAdmin(): View
     {
         $form_name = 'Tentang Kami';
         $data = Page::where('name', 'about_us')->first();
@@ -72,7 +109,7 @@ class PageController extends Controller
         return view('admin.page.index', compact('data', 'form_name', 'update_route'));
     }
 
-    function aboutUsUpdate(Request $request, Page $page)
+    function aboutUsUpdateAdmin(Request $request, Page $page)
     {
         $page->title = $request->title;
         $page->content = $request->content;
@@ -80,8 +117,8 @@ class PageController extends Controller
 
         return redirect()->route('admin.about-us')->with('success', 'Data berhasil diupdate');
     }
-    
-    function contact(): View
+
+    function contactAdmin(): View
     {
         $form_name = 'Kontak Kami';
         $data = Page::where('name', 'contact')->first();
@@ -90,7 +127,7 @@ class PageController extends Controller
         return view('admin.page.index', compact('data', 'form_name', 'update_route'));
     }
 
-    function contactUpdate(Request $request, Page $page)
+    function contactUpdateAdmin(Request $request, Page $page)
     {
         $page->title = $request->title;
         $page->content = $request->content;

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="boxes grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+    <div class="boxes grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mx-8">
         <div class="card bg-primary text-primary-content">
             <div class="card-body">
                 <h2 class="card-title">Produk</h2>

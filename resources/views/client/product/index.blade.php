@@ -66,7 +66,7 @@
     ],
 ])
 
-<x-client-layout :sosmed="$sosmed">
+<x-client-layout>
     <h2 class="text-center mb-10 text-3xl uppercase font-bold tracking-wider">PRODUK KAMI</h2>
 
     <div class="flex flex-wrap justify-around">
@@ -78,4 +78,6 @@
     <div class="w-full text-center my-2">
         <a href="" class="btn btn-primary btn-ghost tracking-wider">Lainnya</a>
     </div>
+
+    <x-client.features />
 </x-client-layout>
