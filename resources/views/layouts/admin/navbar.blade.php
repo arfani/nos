@@ -34,13 +34,20 @@
                         />
                 </div>
             </div>
-            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                <div class="mx-auto mb-3">
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box">
+                <div class="mx-auto">
                     @include('components_custom.dark-mode')
                 </div>
                 <li class="font-bold"><a>{{ auth()->user()->username }}</a></li>
                 <div class="divider my-0"></div>
-                <li><a>Logout</a></li>
+                <li>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button class="flex">
+                            <span class="fa fa-person-running mr-2"></span><span>Keluar</span>
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>

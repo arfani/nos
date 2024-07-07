@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\MemberController;
-use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
@@ -30,7 +29,7 @@ Route::get('/product/{product_id}', [ProductController::class, 'productById'])->
 Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
 
 // PROFILE
-Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile')->middleware('auth');
+Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile')->middleware('auth', 'can:is-member');
 
 // MEMBER PAGES
 Route::get('/how-to-order', [PageController::class, 'howToOrder'])->name('client.how-to-order');

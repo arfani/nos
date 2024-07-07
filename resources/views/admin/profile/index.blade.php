@@ -59,18 +59,23 @@
 
             {{-- RIGHT SIDE --}}
             <div class="flex-1 bg-base-200 shadow-xl card">
-                <div x-data="{ activeTab: 1 }">
+                <div x-data="{ activeTabAdmin: parseInt(localStorage.getItem('activeTabAdmin')) || 1 }" @load.window="activeTabAdmin = parseInt(localStorage.getItem('activeTabAdmin')) || 1">
                     <div class="flex bg-base-300 rounded-t-2xl">
-                        <button class="uppercase px-8 py-3 -mb-px text-sm rounded-t-2xl"
-                            :class="activeTab === 1 ? 'border-base-200 bg-base-200' : 'text-gray-600'"
-                            @click="activeTab = 1">
+                        <button class="uppercase px-8 py-3 -mb-px text-sm rounded-t-2xl tracking-wider"
+                            :class="activeTabAdmin === 1 ? 'border-base-200 bg-base-200' : 'text-gray-600'"
+                            @click="activeTabAdmin = 1; localStorage.setItem('activeTabAdmin', 1)">
                             Biodata
+                        </button>
+                        <button class="uppercase px-8 py-3 -mb-px text-sm rounded-t-2xl tracking-wider"
+                            :class="activeTabAdmin === 2 ? 'border-base-200 bg-base-200' : 'text-gray-600'"
+                            @click="activeTabAdmin = 2; localStorage.setItem('activeTabAdmin', 2)">
+                            Keamanan
                         </button>
                     </div>
 
                     <!-- Tab Contents -->
                     <div class="p-6 bg-base-200 rounded text-sm">
-                        <div x-show="activeTab === 1">
+                        <div x-show="activeTabAdmin === 1">
                             <h2 class="font-bold uppercase mb-2">Data Diri</h2>
 
                             <div class="flex gap-2 leading-10">
@@ -299,6 +304,58 @@
                             </div>
 
                         </div>
+
+                        
+                    <div x-show="activeTabAdmin === 2">
+                        <section>
+                            <header>
+                                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                    {{ __('Update Password') }}
+                                </h2>
+                        
+                                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                    {{ __('Ensure your account is using a long, random password to stay secure.') }}
+                                </p>
+                            </header>
+                        
+                            <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+                                @csrf
+                                @method('put')
+                        
+                                <div>
+                                    <x-input-label for="update_password_current_password" :value="__('Current Password')" />
+                                    <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
+                                    <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+                                </div>
+                        
+                                <div>
+                                    <x-input-label for="update_password_password" :value="__('New Password')" />
+                                    <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+                                    <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+                                </div>
+                        
+                                <div>
+                                    <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
+                                    <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+                                    <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+                                </div>
+                        
+                                <div class="flex items-center gap-4">
+                                    <x-primary-button>{{ __('Save') }}</x-primary-button>
+                        
+                                    @if (session('status') === 'password-updated')
+                                        <p
+                                            x-data="{ show: true }"
+                                            x-show="show"
+                                            x-transition
+                                            x-init="setTimeout(() => show = false, 2000)"
+                                            class="text-sm text-gray-600 dark:text-gray-400"
+                                        >{{ __('Saved.') }}</p>
+                                    @endif
+                                </div>
+                            </form>
+                        </section>
+                    </div>
                     </div>
                 </div>
             </div>

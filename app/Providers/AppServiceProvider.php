@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,7 +27,9 @@ class AppServiceProvider extends ServiceProvider
         });
         
         Gate::define('is-member', function (User $user) {
-            return $user->level_id == 2;
+            return $user->level_id == 2 ? 
+            Response::allow()
+            : Response::deny('Halaman ini khusus untuk Member.');
         });
     }
 }
