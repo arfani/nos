@@ -24,6 +24,7 @@ Route::get('/lelang', [ClientController::class, 'lelang'])->name('client.lelang'
 // PRODUCTS
 Route::get('/products', [ProductController::class, 'allProducts'])->name('client.products');
 Route::get('/product/{product_id}', [ProductController::class, 'productById'])->name('client.product');
+Route::get('/products/category/{category}', [ProductController::class, 'productsByCategory'])->name('client.productsByCategory');
 
 // CART
 Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
