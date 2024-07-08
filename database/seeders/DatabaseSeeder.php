@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Admin',
+            'username' => 'admin1',
             'email' => 'admin@example.com',
             'hp' => '081907123123',
             'img' => 'mocks/me.jpg',
@@ -43,6 +44,7 @@ class DatabaseSeeder extends Seeder
         
         User::factory()->create([
             'name' => 'Member',
+            'username' => 'member1',
             'email' => 'member@example.com',
             'hp' => '081907123123',
             'img' => 'mocks/me.jpg',

@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name'); //call name
+            $table->string('username');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
             $table->foreignId('level_id')->default(2)->constrained();
             $table->string('hp')->nullable();
             $table->string('img')->nullable();
@@ -29,6 +28,8 @@ return new class extends Migration
             $table->string('occupation')->nullable();
             $table->string('education')->nullable();
             $table->boolean('banned')->default(false);
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
 

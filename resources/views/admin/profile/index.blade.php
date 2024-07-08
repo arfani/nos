@@ -37,6 +37,9 @@
                 </figure>
                 <div class="card-body items-center text-center">
                     <h2 class="card-title" x-text="user.fullname"></h2>
+                    <div class="tooltip flex gap-2 mb-2" data-tip="Username">
+                       <i class="fa fa-user"></i> <p class="text-sm" x-text="user.username"></p>
+                    </div>
 
                     <p x-show="!isEditingStatus" x-text="user.status"></p>
                     <div @click.outside="cancelEditingStatus">

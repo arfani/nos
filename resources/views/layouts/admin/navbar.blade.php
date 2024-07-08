@@ -38,7 +38,7 @@
                 <div class="mx-auto">
                     @include('components_custom.dark-mode')
                 </div>
-                <li class="font-bold"><a>{{ auth()->user()->username }}</a></li>
+                <li class="font-bold mt-3"><a>{{ auth()->user()->username }}</a></li>
                 <div class="divider my-0"></div>
                 <li>
                     <form action="{{ route('logout') }}" method="post">
