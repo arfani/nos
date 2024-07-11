@@ -14,6 +14,20 @@
             Tersimpan !
         </div>
 
+        @if (Session::get('success'))
+            <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
+                class="toast toast-top toast-end mt-10 z-20">
+                <div role="alert" class="alert alert-success mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{{ Session::get('success') }}</span>
+                </div>
+            </div>
+        @endif
+
         {{-- LEFT SIDE --}}
         <div class="card w-80 bg-base-200 shadow-xl">
             <figure class="px-10 pt-10 pb-2">
@@ -114,7 +128,8 @@
                             <div @click.outside="cancelEditingName">
                                 <input x-show="isEditingName" type="text" x-model="tempName" class="my-input"
                                     autocomplete="off" x-ref="nameInput"
-                                    @keydown.enter="isEditingName = !isEditingName; saveName()" x-init="$watch('isEditingName', value => {
+                                    @keydown.enter="isEditingName = !isEditingName; saveName()"
+                                    x-init="$watch('isEditingName', value => {
                                         if (value) {
                                             tempName = user.name
                                         }
@@ -306,45 +321,44 @@
                     </div>
 
                     <div x-show="activeTab === 2">
-                        <button class="btn btn-primary mb-4 btn-sm"><i class="fas fa-plus"></i> Tambah</button>
+                        <button class="btn btn-primary mb-4 btn-sm"
+                            @click.prevent="$dispatch('open-modal', {data: null, name: 'address-form-store'})"><i
+                                class="fas fa-plus"></i></button>
 
-                        <div class="alamat bg-base-300 p-4 rounded mb-3 shadow-lg">
-                            <h2 class="font-bold text-base mb-2">Rumah <span
-                                    class="badge badge-primary badge-xs badge-outline p-2">utama</span></h2>
-                            <address>Jalan Beo No. 22 Karang Kemong, Cakranegara Barat, Mataram, Lombok, NTB.</address>
-                            <p>( Pas Gapura Masjid Nurul Yaqin Karang Kemong )</p>
+                        @foreach (auth()->user()->address as $item)
+                            <div class="alamat bg-base-300 p-4 rounded mb-3 shadow-lg">
+                                <h2 class="font-bold text-base mb-2">
+                                    {{ $item->name }}
+                                    @if ($item->isMain)
+                                        <span class="badge badge-primary badge-xs badge-outline p-2">utama</span>
+                                    @endif
+                                </h2>
+                                <address>
+                                    {{ $item->address }}
+                                </address>
+                                <p x-data="{ note: '{{ $item->noteForCurrier }}' }" x-text="'('+note+')'" x-show="note"></p>
 
-                            <div class="flex gap-2 leading-relaxed mt-2">
-                                <span class="opacity-75">Penerima :</span><span>Abdullah</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="flex gap-2">
-                                    <span class="opacity-75">HP :</span><span>081907456710</span>
+                                <div class="flex gap-2 leading-relaxed mt-2">
+                                    <span class="opacity-75">Penerima :</span><span>{{ $item->recipient }}</span>
                                 </div>
-                                <button class="btn btn-primary ml-auto btn-sm"><i class="fas fa-pencil"></i></button>
-                            </div>
-                        </div>
-
-                        <div class="alamat bg-base-300 p-4 rounded mb-3 shadow-lg">
-                            <h2 class="font-bold text-base mb-2">Kantor</h2>
-                            <address>Jalan Beo No. 22 Karang Kemong, Cakranegara Barat, Mataram, Lombok, NTB.
-                            </address>
-                            <p>( Pas Gapura Masjid Nurul Yaqin Karang Kemong )</p>
-
-                            <div class="flex gap-2 leading-relaxed mt-2">
-                                <span class="opacity-75">Penerima :</span><span>Abdullah</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="flex gap-2">
-                                    <span class="opacity-75">HP :</span><span>081907456710</span>
-                                </div>
-                                <div class="ml-auto">
-                                    <button class="btn btn-error btn-sm"><i class="fas fa-trash"></i></button>
-                                    <button class="btn btn-primary btn-sm"><i class="fas fa-pencil"></i></button>
+                                <div class="flex items-center">
+                                    <div class="flex gap-2">
+                                        <span class="opacity-75">HP :</span><span>{{ $item->hp }}</span>
+                                    </div>
+                                    <div class="ml-auto">
+                                        @if (!$item->isMain)
+                                            <button type="button" class="btn btn-error btn-sm"
+                                                @click.prevent="$dispatch('open-modal', {data: '{{ $item }}', name: 'confirm-address-deletion'})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endif
+                                        <button class="btn btn-primary btn-sm"
+                                            @click.prevent="$dispatch('open-modal', {data: '{{ $item }}', name: 'address-form-update'})"><i
+                                                class="fas fa-pencil"></i></button>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
+                        @endforeach
                     </div>
 
                     <div x-show="activeTab === 3">
@@ -588,4 +602,10 @@
                 }
             </script>
         @endpush
+
+        @include('client.profile.modal-address-store')
+        @include('client.profile.modal-address-update')
+        @include('client.profile.modal-address-delete-confirm')
+
+
 </x-client-layout>

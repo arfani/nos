@@ -31,6 +31,9 @@ Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
 
 // PROFILE
 Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile')->middleware('auth', 'can:is-member');
+Route::post('/profile/address', [ProfileController::class, 'store_address'])->name('profile.store_address');
+Route::patch('/profile/address/{address}', [ProfileController::class, 'update_address'])->name('profile.update_address');
+Route::delete('/profile/address/{address}', [ProfileController::class, 'destroy_address'])->name('profile.destroy_address');
 
 // MEMBER PAGES
 Route::get('/how-to-order', [PageController::class, 'howToOrder'])->name('client.how-to-order');

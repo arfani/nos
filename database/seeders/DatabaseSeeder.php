@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             LevelSeeder::class,
+            UserSeeder::class,
             NoticeSeeder::class,
             FaqSeeder::class,
             BrandSeeder::class,
@@ -24,38 +25,7 @@ class DatabaseSeeder extends Seeder
             TestimonialSeeder::class,
             PageSeeder::class,
             CategorySeeder::class,
-        ]);
-
-        User::factory()->create([
-            'name' => 'Admin',
-            'username' => 'admin1',
-            'email' => 'admin@example.com',
-            'hp' => '081907123123',
-            'img' => 'mocks/me.jpg',
-            'fullname' => 'Administrator bin Fulan',
-            'birthday' => now(),
-            'gender' => 'm',
-            'status-pernikahan' => 'menikah',  
-            'status' => 'living life',
-            'occupation' => 'Pengusaha',
-            'education' => 'S1',
-            'level_id' => 1
-        ]);
-        
-        User::factory()->create([
-            'name' => 'Member',
-            'username' => 'member1',
-            'email' => 'member@example.com',
-            'hp' => '081907123123',
-            'img' => 'mocks/me.jpg',
-            'fullname' => 'Member bin Fulan',
-            'birthday' => now(),
-            'gender' => 'm',
-            'status-pernikahan' => 'menikah',  
-            'status' => 'living life',
-            'occupation' => 'Pengusaha',
-            'education' => 'S1',
-            'level_id' => 2
+            AddressSeeder::class,
         ]);
     }
 }
