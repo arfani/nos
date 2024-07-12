@@ -4,6 +4,7 @@
             'name' => 'Product test 1',
             'slug' => 'product_test_1',
             'img' => Storage::url('mocks/a.jpg'),
+            'stock' => 200,
             'price' => 10000,
             'promo' => [
                 'active' => false,
@@ -12,7 +13,6 @@
             'variants' => true,
             'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
             'description' => 'lorem ipsum lorem amet ipsum',
-            'stock' => 200,
             'lelang' => [
                 'active' => false,
                 'endtime' => now()->addDays(3),

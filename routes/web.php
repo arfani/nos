@@ -59,6 +59,7 @@ Route::prefix('admin')
         Route::resource('sosmed', SosmedController::class);
         Route::resource('testimonial', TestimonialController::class);
         Route::resource('category', CategoryController::class)->except('show');
+        Route::resource('product', ProductController::class);
 
         Route::get('profile', [ProfileController::class, 'indexAdmin'])->name('admin-profile.index');
         Route::get('member', [MemberController::class, 'index'])->name('admin-member.index');

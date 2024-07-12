@@ -16,7 +16,7 @@
              Dashboard
          </a>
 
-         <a href="{{ route('admin.dashboard') }}" @class([
+         <a href="{{ route('product.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm', // 'bg-primary text-primary-content'=> Request::RouteIs('admin.dashboard') || Request::is('products/*'),
          ])>
              Produk
