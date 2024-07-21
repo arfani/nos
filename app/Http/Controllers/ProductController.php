@@ -110,7 +110,20 @@ class ProductController extends Controller
 
             // CATEGORIES (many to many)
             if (isset($validated["categories"])) {
-                $newProduct->category()->attach($validated["categories"]);
+                $categoryIds = [];
+
+                foreach ($validated["categories"] as $categoryId) {
+                    $category = Category::find($categoryId);
+
+                    if (!$category) {
+                        // If the category does not exist, create it with the ID as the name
+                        $category = Category::create(['name' => $categoryId]);
+                    }
+
+                    $categoryIds[] = $category->id;
+                }
+
+                $newProduct->category()->attach($categoryIds);
             }
         });
 
@@ -136,6 +149,7 @@ class ProductController extends Controller
 
     function update(UpdateProductRequest $request, Product $product)
     {
+        // dd($request->all());
         $validated = $request->validated();
 
         $product->name = $validated["name"];
@@ -146,7 +160,7 @@ class ProductController extends Controller
 
             // HAPUS DULU PRODUCT VARIAN KEMUDIAN SIMPAN DENGAN YANG BARU (INI JIKA TANPA VARIANT)
             ProductVariant::where('product_id', $product->id)->delete();
-            
+
             $newProductVariant = new ProductVariant();
             $newProductVariant->product_id = $product->id;
             $newProductVariant->stock = $validated["stock"];
@@ -157,12 +171,24 @@ class ProductController extends Controller
             $newProductVariant->save();
 
             // CATEGORIES (many to many)
-            $product->category()->detach();
             if (isset($validated["categories"])) {
-                $product->category()->attach($validated["categories"]);
+                $categoryIds = [];
+
+                foreach ($validated["categories"] as $categoryId) {
+                    $category = Category::find($categoryId);
+
+                    if (!$category) {
+                        // If the category does not exist, create it with the ID as the name
+                        $category = Category::create(['name' => $categoryId]);
+                    }
+
+                    $categoryIds[] = $category->id;
+                }
+
+                $product->category()->sync($categoryIds);
             }
         });
-        
+
         return redirect()->route('product.index')
             ->with('success', 'Berhasil diubah!');
     }

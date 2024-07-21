@@ -51,7 +51,7 @@
                                         <label for="sku" class="font-semibold mb-2">SKU</label>
                                         <input type="text" id="sku" name="sku"
                                             class="my-input bg-primary/5 rounded"
-                                            value="{{ old('sku', isset($data) ? $data->sku : '') }}">
+                                            value="{{ old('sku', isset($data) ? $data->product_variant[0]->sku : '') }}">
                                     </div>
                                 </div>
 
@@ -60,19 +60,19 @@
                                         <label for="stock" class="font-semibold mb-2">Stok</label>
                                         <input type="number" id="stock" name="stock" min="0"
                                             class="my-input bg-primary/5 rounded"
-                                            value="{{ old('stock', isset($data) ? $data->stock : '') }}">
+                                            value="{{ old('stock', isset($data) ? $data->product_variant[0]->stock : '') }}">
                                     </div>
                                     <div class="flex flex-col mb-4">
                                         <label for="price" class="font-semibold mb-2">Harga</label>
                                         <input type="number" id="price" name="price" min="0"
-                                            step="1000" class="my-input bg-primary/5 rounded"
-                                            value="{{ old('price', isset($data) ? $data->price : '') }}">
+                                            class="my-input bg-primary/5 rounded"
+                                            value="{{ old('price', isset($data) ? $data->product_variant[0]->price : '') }}">
                                     </div>
                                     <div class="flex flex-col mb-4">
                                         <label for="weight" class="font-semibold mb-2">Berat</label>
                                         <input type="number" id="weight" name="weight" min="0"
-                                            step="1000" class="my-input bg-primary/5 rounded"
-                                            value="{{ old('weight', isset($data) ? $data->weight : '') }}">
+                                            class="my-input bg-primary/5 rounded"
+                                            value="{{ old('weight', isset($data) ? $data->product_variant[0]->weight : '') }}">
                                     </div>
 
                                     <div class="flex flex-col mb-4 items-center">
@@ -200,8 +200,8 @@
                         </template>
 
                         {{-- CATEGORIES --}}
-                        <div class="flex flex-col flex-1">
-                            <label for="categories" class="font-semibold mb-2">Kategori</label>
+                        <div class="flex flex-col flex-1 text-black">
+                            <label for="categories" class="font-semibold mb-2 text-base-content">Kategori</label>
                             <select name="categories[]" id="categories" multiple="multiple">
                                 <option></option>
                                 @foreach ($categories as $category)
@@ -257,6 +257,7 @@
                 
                 $("#categories").select2({
                     theme: "classic",
+                    tags: true,
                     placeholder: "Pilih kategori"
                 })
 
