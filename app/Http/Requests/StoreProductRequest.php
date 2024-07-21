@@ -32,6 +32,7 @@ class StoreProductRequest extends FormRequest
             'sku' => ['nullable', 'string'],
             'active' => ['required', 'boolean'],
             'desc' => ['nullable', 'string'],
+            'categories' => ['nullable'],
         ];
     }
 

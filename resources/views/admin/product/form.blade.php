@@ -1,3 +1,5 @@
+{{-- NOTE : $data adalah DATA PRODUK --}}
+{{-- {{ dd($data->category->pluck('id')) }} --}}
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-base-300 text-base-content overflow-hidden shadow-sm sm:rounded-lg">
@@ -78,6 +80,7 @@
                                         <div class="flex">
                                             @include('components_custom.toggle-active-product', [
                                                 'name' => 'active',
+                                                'checked' => isset($data) ? ($data->product_variant[0]->active ? 'checked' : '') : 'checked'
                                             ])
                                         </div>
                                     </div>
@@ -183,10 +186,10 @@
                                                             class="my-input bg-primary/5 rounded">
                                                     </td>
                                                     <td>
-                                                        @include(
+                                                        {{-- @include(
                                                             'components_custom.toggle-active-product',
                                                             ['name' => 'active_variant[]']
-                                                        )
+                                                        ) --}}
                                                     </td>
                                                 </tr>
                                             </template>
@@ -202,7 +205,15 @@
                             <select name="categories[]" id="categories" multiple="multiple">
                                 <option></option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" 
+                                        @isset($data)
+                                        @foreach ($data->category->pluck("id") as $currentCategoryId)
+                                        @if ($currentCategoryId === $category->id)
+                                        selected
+                                        @endif
+                                        @endforeach
+                                        @endisset
+                                        >{{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>

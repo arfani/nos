@@ -69,10 +69,9 @@
         stroke-dashoffset: 25;
     }
 </style>
-
 <div class="checkbox-wrapper-51">
     <input type="hidden" value="0" name="{{ $name }}">
-    <input id="active" type="checkbox" value="1" name="{{ $name }}" checked>
+    <input id="active" type="checkbox" value="1" name="{{ $name }}" {{ $checked }}>
     <label class="toggle" for="active">
         <span>
             <svg viewBox="0 0 10 10" height="10px" width="10px">

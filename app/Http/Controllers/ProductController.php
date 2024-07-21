@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
+use App\Models\CategoryProduct;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Variant;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -87,23 +89,30 @@ class ProductController extends Controller
 
     function store(StoreProductRequest $request)
     {
-        dd($request->all());
+        // dd($request->validated());
         $validated = $request->validated();
 
         $newProduct = new Product();
         $newProduct->name = $validated["name"];
         $newProduct->slug = Str::of($validated["name"])->slug('-')->value;
 
-        $newProduct->save();
+        DB::transaction(function () use ($newProduct, $validated) {
+            $newProduct->save();
 
-        $newProductVariant = new ProductVariant();
-        $newProductVariant->product_id = $newProduct->id;
-        $newProductVariant->stock = $validated["stock"];
-        $newProductVariant->price = $validated["price"];
-        $newProductVariant->weight = $validated["weight"];
-        $newProductVariant->sku = $validated["sku"];
-        $newProductVariant->active = $validated["active"];
-        $newProductVariant->save();
+            $newProductVariant = new ProductVariant();
+            $newProductVariant->product_id = $newProduct->id;
+            $newProductVariant->stock = $validated["stock"];
+            $newProductVariant->price = $validated["price"];
+            $newProductVariant->weight = $validated["weight"];
+            $newProductVariant->sku = $validated["sku"];
+            $newProductVariant->active = $validated["active"];
+            $newProductVariant->save();
+
+            // CATEGORIES (many to many)
+            if (isset($validated["categories"])) {
+                $newProduct->category()->attach($validated["categories"]);
+            }
+        });
 
         return redirect()->route('product.index')
             ->with('success', 'Berhasil ditambahkan!');
@@ -129,8 +138,31 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
 
-        $product->update($validated);
+        $product->name = $validated["name"];
+        $product->slug = Str::of($validated["name"])->slug('-')->value;
 
+        DB::transaction(function () use ($product, $validated) {
+            $product->save();
+
+            // HAPUS DULU PRODUCT VARIAN KEMUDIAN SIMPAN DENGAN YANG BARU (INI JIKA TANPA VARIANT)
+            ProductVariant::where('product_id', $product->id)->delete();
+            
+            $newProductVariant = new ProductVariant();
+            $newProductVariant->product_id = $product->id;
+            $newProductVariant->stock = $validated["stock"];
+            $newProductVariant->price = $validated["price"];
+            $newProductVariant->weight = $validated["weight"];
+            $newProductVariant->sku = $validated["sku"];
+            $newProductVariant->active = $validated["active"];
+            $newProductVariant->save();
+
+            // CATEGORIES (many to many)
+            $product->category()->detach();
+            if (isset($validated["categories"])) {
+                $product->category()->attach($validated["categories"]);
+            }
+        });
+        
         return redirect()->route('product.index')
             ->with('success', 'Berhasil diubah!');
     }
