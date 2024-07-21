@@ -78,6 +78,9 @@
         ( <span class="animate-pulse">PROMO !!!</span> )
     </h1>
 
+    <div class="divider">Deskripsi</div>
+    <p>{{ $product['description'] ?? 'No description' }}</p>
+    
     <div class="divider">
         Harga <i class="fa fa-tags text-red-500 text-2xl"></i>
     </div>
@@ -117,9 +120,6 @@
             </div>
         @endforeach
     @endif
-
-    <div class="divider">Deskripsi</div>
-    <p>{{ $product['description'] ?? 'No description' }}</p>
 </div>
 
 <div

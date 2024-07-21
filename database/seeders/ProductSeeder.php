@@ -16,36 +16,31 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'Product satu',
             'slug' => 'product_satu',
-            'stock' => 100,
-            'price' => 100000,
+            'description' => 'Description of Product satu'
         ]);
         
         Product::create([
             'name' => 'Product dua',
             'slug' => 'product_dua',
-            'stock' => 200,
-            'price' => 200000,
+            'description' => 'Description of Product dua'
         ]);
         
         Product::create([
             'name' => 'Product tiga',
             'slug' => 'product_tiga',
-            'stock' => 300,
-            'price' => 300000,
+            'description' => 'Description of Product tiga'
         ]);
         
         Product::create([
             'name' => 'Product empat',
             'slug' => 'product_empat',
-            'stock' => 400,
-            'price' => 400000,
+            'description' => 'Description of Product empat'
         ]);
         
         Product::create([
             'name' => 'Product lima',
             'slug' => 'product_lima',
-            'stock' => 500,
-            'price' => 500000,
+            'description' => 'Description of Product lima'
         ]);
     }
 }

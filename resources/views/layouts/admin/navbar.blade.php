@@ -34,7 +34,7 @@
                         />
                 </div>
             </div>
-            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box">
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[9999] p-2 shadow bg-base-100 rounded-box">
                 <div class="mx-auto">
                     @include('components_custom.dark-mode')
                 </div>

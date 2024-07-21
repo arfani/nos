@@ -5,21 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Models\Variant;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    function index(Request $request) : View {
+    function index(Request $request): View
+    {
         $queryParams = [
             'name' => ['string', 'nullable'],
         ];
 
         $validated = $request->validate($queryParams);
 
-        $data = Product::latest();
+        $data = Product::with("product_variant")->latest();
 
         if (isset($validated["name"])) {
             $data = $data->where('name', 'like', '%' . $validated["name"] . '%');
@@ -40,10 +44,29 @@ class ProductController extends Controller
         ];
 
         $rows = $data->map(function ($item) {
+            $stock = 0; // Initialize stock to 0
+            $prices = []; // Initialize an empty array to hold prices
+
+            foreach ($item->product_variant as $pv) {
+                $stock += $pv->stock;
+                $prices[] = $pv->price; // Add each price to the array
+            }
+
+            // Get the minimum and maximum prices from the prices array
+            $minPrice = !empty($prices) ? min($prices) : 0;
+            $maxPrice = !empty($prices) ? max($prices) : 0;
+
+            // Format the price based on the number of prices
+            if (count($prices) === 1) {
+                $priceFormatted = 'Rp. ' . number_format($minPrice, 0, ',', '.');
+            } else {
+                $priceFormatted = 'Rp. ' . number_format($minPrice, 0, ',', '.') . ' - Rp. ' . number_format($maxPrice, 0, ',', '.');
+            }
+
             return [
                 'name' => $item->name,
-                'stock' => $item->stock,
-                'price' => 'Rp.' . number_format($item->price, 0, ',', '.'),
+                'stock' => $stock,
+                'price' => $priceFormatted,
                 'id' => $item->id,
             ];
         });
@@ -54,17 +77,33 @@ class ProductController extends Controller
     }
 
 
-    function create() : View{
-        return view('admin.product.form');
+    function create(): View
+    {
+        $variants = Variant::limit(2)->get();
+        $categories = Category::all();
+
+        return view('admin.product.form', compact('variants', 'categories'));
     }
 
- function store(StoreProductRequest $request)
+    function store(StoreProductRequest $request)
     {
+        dd($request->all());
         $validated = $request->validated();
 
-        $validated["slug"] = Str::of($validated["name"])->slug('-')->value;
+        $newProduct = new Product();
+        $newProduct->name = $validated["name"];
+        $newProduct->slug = Str::of($validated["name"])->slug('-')->value;
 
-        Product::create($validated);
+        $newProduct->save();
+
+        $newProductVariant = new ProductVariant();
+        $newProductVariant->product_id = $newProduct->id;
+        $newProductVariant->stock = $validated["stock"];
+        $newProductVariant->price = $validated["price"];
+        $newProductVariant->weight = $validated["weight"];
+        $newProductVariant->sku = $validated["sku"];
+        $newProductVariant->active = $validated["active"];
+        $newProductVariant->save();
 
         return redirect()->route('product.index')
             ->with('success', 'Berhasil ditambahkan!');
@@ -80,8 +119,10 @@ class ProductController extends Controller
     function edit(Product $product)
     {
         $data = $product;
+        $variants = Variant::limit(2)->get();
+        $categories = Category::all();
 
-        return view('admin.product.form', compact('data'));
+        return view('admin.product.form', compact('data', 'variants', 'categories'));
     }
 
     function update(UpdateProductRequest $request, Product $product)
@@ -111,7 +152,7 @@ class ProductController extends Controller
     {
         return view('client.product.detail');
     }
-    
+
     function productsByCategory($category): View
     {
         // get prduct where category is $category and then pass to view

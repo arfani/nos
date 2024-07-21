@@ -28,6 +28,16 @@ class StoreProductRequest extends FormRequest
             'name' => ['required', Rule::unique(Product::class)],
             'stock' => ['nullable', 'numeric'],
             'price' => ['nullable', 'numeric'],
+            'weight' => ['nullable', 'numeric'],
+            'sku' => ['nullable', 'string'],
+            'active' => ['required', 'boolean'],
+            'desc' => ['nullable', 'string'],
+        ];
+    }
+
+    function messages() {
+        return [
+            'name.unique' => 'Nama produk ini sudah ada.'
         ];
     }
 }
