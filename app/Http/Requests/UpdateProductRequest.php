@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -29,7 +30,7 @@ class UpdateProductRequest extends FormRequest
             'stock' => ['nullable', 'numeric'],
             'price' => ['nullable', 'numeric'],
             'weight' => ['nullable', 'numeric'],
-            'sku' => ['nullable', 'string'],
+            'sku' => ['nullable', 'string', Rule::unique(ProductVariant::class)->ignore($this->product)],
             'active' => ['required', 'boolean'],
             'desc' => ['nullable', 'string'],
             'categories' => ['nullable'],
