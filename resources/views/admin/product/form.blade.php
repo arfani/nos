@@ -1,5 +1,5 @@
 {{-- NOTE : $data adalah DATA PRODUK --}}
-{{-- {{ dd($data->category->pluck('id')) }} --}}
+{{-- {{ dd(@json($data->product_pictures)) }} --}}
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-base-300 text-base-content overflow-hidden shadow-sm sm:rounded-lg">
@@ -23,7 +23,7 @@
                 @endif
 
                 <form action="{{ isset($data) ? route('product.update', $data) : route('product.store') }}"
-                    method="POST" id="main">
+                    method="POST" id="main" enctype="multipart/form-data">
                     @csrf
                     @isset($data)
                         @method('PUT')
@@ -80,7 +80,11 @@
                                         <div class="flex">
                                             @include('components_custom.toggle-active-product', [
                                                 'name' => 'active',
-                                                'checked' => isset($data) ? ($data->product_variant[0]->active ? 'checked' : '') : 'checked'
+                                                'checked' => isset($data)
+                                                    ? ($data->product_variant[0]->active
+                                                        ? 'checked'
+                                                        : '')
+                                                    : 'checked',
                                             ])
                                         </div>
                                     </div>
@@ -205,18 +209,32 @@
                             <select name="categories[]" id="categories" multiple="multiple">
                                 <option></option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}" 
+                                    <option value="{{ $category->id }}"
                                         @isset($data)
-                                        @foreach ($data->category->pluck("id") as $currentCategoryId)
+                                        @foreach ($data->category->pluck('id') as $currentCategoryId)
                                         @if ($currentCategoryId === $category->id)
                                         selected
                                         @endif
                                         @endforeach
-                                        @endisset
-                                        >{{ $category->name }}</option>
+                                        @endisset>
+                                        {{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
+
+                        {{-- PICTURES --}}
+                        <div class="flex flex-col flex-1">
+                            <label for="product_pictures" class="font-semibold mb-2 text-base-content">Foto
+                                Produk</label>
+                            <div class="tooltip text-left w-fit" data-tip="Bisa memilih beberapa gambar">
+                                <input type="file" name="product_pictures[]" id="product_pictures" multiple />
+                            </div>
+                        </div>
+                        {{-- PICTURES PREVIEW --}}
+                        <div class="flex gap-2 flex-1 flex-wrap pic-preview-container">
+                        </div>
+
+                        <input type="hidden" name="deleted_pictures" id="deleted_pictures">
 
                         <div class="grid grid-cols-2 gap-2">
                             <a href="{{ route('product.index') }}"
@@ -254,12 +272,87 @@
                     tags: true,
                     placeholder: "Input nilai varian disini"
                 })
-                
+
                 $("#categories").select2({
                     theme: "classic",
                     tags: true,
                     placeholder: "Pilih kategori"
                 })
+
+                //pictures preview
+                const pictures = document.querySelector('#product_pictures')
+                const picPreviewContainer = document.querySelector('.pic-preview-container')
+                const deletedPicturesInput = document.querySelector('#deleted_pictures');
+
+                let deletedPictures = [];
+
+                // Fungsi untuk menampilkan gambar
+                function displayPicture(src, id = null) {
+                    const pictureWrapper = document.createElement('div');
+                    pictureWrapper.classList.add('picture-wrapper');
+
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.classList.add('border', 'border-primary', 'border-dashed', 'max-w-52');
+                    pictureWrapper.appendChild(img);
+
+                    if (id !== null) {
+                        const removeBtn = document.createElement('button');
+                        removeBtn.innerHTML = '<i class="fa fa-trash text-error"></i>';
+                        removeBtn.classList.add('remove-btn');
+                        removeBtn.addEventListener('click', function() {
+                            picPreviewContainer.removeChild(pictureWrapper);
+                            deletedPictures.push(id);
+                            deletedPicturesInput.value = JSON.stringify(deletedPictures);
+                        });
+                        pictureWrapper.appendChild(removeBtn);
+                    }
+
+                    picPreviewContainer.appendChild(pictureWrapper);
+                }
+
+                pictures.addEventListener('change', function(e) {
+                    picPreviewContainer.innerHTML = ''
+
+                    const files = Array.from(e.target.files);
+
+                    // Memproses setiap file yang dipilih
+                    files.forEach(file => {
+                        const oFReader = new FileReader();
+                        oFReader.readAsDataURL(file);
+
+                        oFReader.onload = function(oFREvent) {
+                            // // Membuat elemen img baru
+                            // const img = document.createElement('img');
+                            // img.src = oFREvent.target.result;
+                            // img.style.maxWidth = '200px'; // Atur lebar maksimum gambar jika perlu
+                            // img.style.margin = '10px'; // Atur margin gambar jika perlu
+                            // img.classList.add('border', 'border-primary', 'border-dashed')
+
+                            // // Menambahkan gambar ke container pratinjau
+                            // picPreviewContainer.appendChild(img);
+                            displayPicture(oFREvent.target.result);
+                        }
+                    }) //end forEach
+                })
+
+                @isset($data)
+                    const currentPictures = @json($data->product_pictures);
+
+                    currentPictures.forEach(picture => {
+                        const path = '{{ Storage::url('') }}' + picture.path
+                        // const img = document.createElement('img');
+                        // img.src = path;
+                        // img.style.maxWidth = '200px'; // Atur lebar maksimum gambar jika perlu
+                        // img.style.margin = '10px'; // Atur margin gambar jika perlu
+                        // img.classList.add('border', 'border-primary', 'border-dashed')
+
+                        // // Menambahkan gambar ke container pratinjau
+                        // picPreviewContainer.appendChild(img);
+                        displayPicture(path, picture.id); // Pastikan properti 'path' dan 'id' benar
+
+                    });
+                @endisset
 
             })
 
@@ -353,7 +446,7 @@
                         });
                     }
                 }));
-            });
+            }); //END ALPINEJS
         </script>
     @endpush
 

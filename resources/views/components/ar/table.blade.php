@@ -164,12 +164,12 @@
 
                 function updateSearchInpurAttr() {
                     searchInput.setAttribute('placeholder',
-                        `Cari berdasarkan ${searchBy.options[searchBy.selectedIndex].text}`)
-                    searchInput.setAttribute('name', searchBy.value)
+                        `Cari berdasarkan ${searchBy ? searchBy.options[searchBy.selectedIndex].text : "nama"}`)
+                    searchInput.setAttribute('name', searchBy && searchBy.value)
                 }
 
                 updateSearchInpurAttr()
-                searchBy.addEventListener('change', function() {
+                searchBy && searchBy.addEventListener('change', function() {
                     updateSearchInpurAttr()
                     searchInput.value = null
                     searchInput.focus()

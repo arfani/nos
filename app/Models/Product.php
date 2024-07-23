@@ -23,6 +23,11 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class);
     }
+    
+    public function product_pictures(): HasMany
+    {
+        return $this->hasMany(ProductPicture::class);
+    }
 
     /**
      * The category that belong to the Product

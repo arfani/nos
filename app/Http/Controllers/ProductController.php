@@ -8,15 +8,19 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\CategoryProduct;
 use App\Models\Product;
+use App\Models\ProductPicture;
 use App\Models\ProductVariant;
 use App\Models\Variant;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    public $picture_folder = 'product_pictures/';
+
     function index(Request $request): View
     {
         $queryParams = [
@@ -92,15 +96,15 @@ class ProductController extends Controller
         // dd($request->validated());
         $validated = $request->validated();
 
-        $newProduct = new Product();
-        $newProduct->name = $validated["name"];
-        $newProduct->slug = Str::of($validated["name"])->slug('-')->value;
+        $new_product = new Product();
+        $new_product->name = $validated["name"];
+        $new_product->slug = Str::of($validated["name"])->slug('-')->value;
 
-        DB::transaction(function () use ($newProduct, $validated) {
-            $newProduct->save();
+        DB::transaction(function () use ($new_product, $validated) {
+            $new_product->save();
 
             $newProductVariant = new ProductVariant();
-            $newProductVariant->product_id = $newProduct->id;
+            $newProductVariant->product_id = $new_product->id;
             $newProductVariant->stock = $validated["stock"];
             $newProductVariant->price = $validated["price"];
             $newProductVariant->weight = $validated["weight"];
@@ -123,7 +127,21 @@ class ProductController extends Controller
                     $categoryIds[] = $category->id;
                 }
 
-                $newProduct->category()->attach($categoryIds);
+                $new_product->category()->attach($categoryIds);
+            }
+
+            // PICTURES
+            if (isset($validated["product_pictures"])) {
+                foreach ($validated["product_pictures"] as $product_picture) {
+                    $filename = $new_product->slug . '-' . uniqid() . '.webp';
+                    $path = $this->picture_folder . $filename;
+                    Storage::put($path, file_get_contents($product_picture));
+
+                    $newPicture = new ProductPicture();
+                    $newPicture->product_id = $new_product->id;
+                    $newPicture->path = $path;
+                    $newPicture->save();
+                }
             }
         });
 
@@ -186,6 +204,33 @@ class ProductController extends Controller
                 }
 
                 $product->category()->sync($categoryIds);
+            }
+
+            // PICTURES
+            if (isset($validated["product_pictures"])) {
+
+                // ProductPicture::where('product_id', $product->id)->delete();
+
+                // TAMBAH GAMBAR
+                foreach ($validated["product_pictures"] as $product_picture) {
+                    $filename = $product->slug . '-' . uniqid() . '.webp';
+                    $path = $this->picture_folder . $filename;
+                    Storage::put($path, file_get_contents($product_picture));
+
+                    $newPicture = new ProductPicture();
+                    $newPicture->product_id = $product->id;
+                    $newPicture->path = $path;
+                    $newPicture->save();
+                }
+            }
+
+
+            if (isset($validated["deleted_pictures"])) {
+                // HAPUS GAMBAR YANG DIHAPUS CLIENT BERDASARKAN ID
+                $deletedPictures = json_decode($validated['deleted_pictures'], true);
+                if (!empty($deletedPictures)) {
+                    ProductPicture::destroy($deletedPictures);
+                }
             }
         });
 
