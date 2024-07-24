@@ -233,6 +233,9 @@
                         {{-- PICTURES PREVIEW --}}
                         <div class="flex gap-2 flex-1 flex-wrap pic-preview-container">
                         </div>
+                        {{-- PICTURES PREVIEW ON EDIT --}}
+                        <div class="flex gap-2 flex-1 flex-wrap pic-preview-container-on-edit">
+                        </div>
 
                         <input type="hidden" name="deleted_pictures" id="deleted_pictures">
 
@@ -281,13 +284,13 @@
 
                 //pictures preview
                 const pictures = document.querySelector('#product_pictures')
-                const picPreviewContainer = document.querySelector('.pic-preview-container')
                 const deletedPicturesInput = document.querySelector('#deleted_pictures');
 
                 let deletedPictures = [];
 
                 // Fungsi untuk menampilkan gambar
-                function displayPicture(src, id = null) {
+                function displayPicture(src, id = null, containerClassname) {
+                const picPreviewContainer = document.querySelector(containerClassname)
                     const pictureWrapper = document.createElement('div');
                     pictureWrapper.classList.add('picture-wrapper');
 
@@ -312,7 +315,8 @@
                 }
 
                 pictures.addEventListener('change', function(e) {
-                    picPreviewContainer.innerHTML = ''
+                const picPreviewContainer = document.querySelector('.pic-preview-container')
+                picPreviewContainer.innerHTML = ''
 
                     const files = Array.from(e.target.files);
 
@@ -322,16 +326,7 @@
                         oFReader.readAsDataURL(file);
 
                         oFReader.onload = function(oFREvent) {
-                            // // Membuat elemen img baru
-                            // const img = document.createElement('img');
-                            // img.src = oFREvent.target.result;
-                            // img.style.maxWidth = '200px'; // Atur lebar maksimum gambar jika perlu
-                            // img.style.margin = '10px'; // Atur margin gambar jika perlu
-                            // img.classList.add('border', 'border-primary', 'border-dashed')
-
-                            // // Menambahkan gambar ke container pratinjau
-                            // picPreviewContainer.appendChild(img);
-                            displayPicture(oFREvent.target.result);
+                            displayPicture(oFREvent.target.result, null, '.pic-preview-container');
                         }
                     }) //end forEach
                 })
@@ -341,15 +336,7 @@
 
                     currentPictures.forEach(picture => {
                         const path = '{{ Storage::url('') }}' + picture.path
-                        // const img = document.createElement('img');
-                        // img.src = path;
-                        // img.style.maxWidth = '200px'; // Atur lebar maksimum gambar jika perlu
-                        // img.style.margin = '10px'; // Atur margin gambar jika perlu
-                        // img.classList.add('border', 'border-primary', 'border-dashed')
-
-                        // // Menambahkan gambar ke container pratinjau
-                        // picPreviewContainer.appendChild(img);
-                        displayPicture(path, picture.id); // Pastikan properti 'path' dan 'id' benar
+                        displayPicture(path, picture.id, '.pic-preview-container-on-edit'); // Pastikan properti 'path' dan 'id' benar
 
                     });
                 @endisset
