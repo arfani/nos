@@ -61,9 +61,7 @@
                                 <input type="text" id="search"
                                     class="border-transparent focus:outline-none focus:ring-0 focus:border-transparent bg-transparent"
                                     @foreach (array_keys($queryParams) as $item)
-                                    @isset($validated[$item]) value="{{ $validated[$item] }}" @endisset 
-                                    @endforeach
-                                    >
+                                    @isset($validated[$item]) value="{{ $validated[$item] }}" @endisset @endforeach>
                             </div>
                         @endif
                     @endif
@@ -91,6 +89,17 @@
                         <td>{{ ++$indexNumber }}</td>
                         @foreach ($row as $k => $cell)
                             @if ($k === 'id')
+                                @continue
+                            @endif
+
+                            @if ($k === 'promo')
+                                <td>
+                                    @if ($cell == 1)
+                                        <i class="fa fa-toggle-on"></i>
+                                    @else
+                                        <i class="fa fa-toggle-off text-gray-800"></i>
+                                    @endif
+                                </td>
                                 @continue
                             @endif
 

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CategoryProduct;
 use App\Models\Product;
 use App\Models\ProductPicture;
 use App\Models\ProductVariant;
+use App\Models\Promo;
 use App\Models\Variant;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -19,7 +21,7 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public $picture_folder = 'product_pictures/';
+    public $picture_folder = 'product-pictures/';
 
     function index(Request $request): View
     {
@@ -29,7 +31,7 @@ class ProductController extends Controller
 
         $validated = $request->validate($queryParams);
 
-        $data = Product::with("product_variant")->latest();
+        $data = Product::with("product_variant", "promo")->latest();
 
         if (isset($validated["name"])) {
             $data = $data->where('name', 'like', '%' . $validated["name"] . '%');
@@ -46,6 +48,7 @@ class ProductController extends Controller
             'Nama',
             'Stok',
             'Harga',
+            'Promo',
             'Aksi'
         ];
 
@@ -69,10 +72,13 @@ class ProductController extends Controller
                 $priceFormatted = 'Rp. ' . number_format($minPrice, 0, ',', '.') . ' - Rp. ' . number_format($maxPrice, 0, ',', '.');
             }
 
+            // dd($item->promo->active);
+
             return [
                 'name' => $item->name,
                 'stock' => $stock,
                 'price' => $priceFormatted,
+                'promo' => $item->promo->active ?? null,
                 'id' => $item->id,
             ];
         });
@@ -87,13 +93,13 @@ class ProductController extends Controller
     {
         $variants = Variant::limit(2)->get();
         $categories = Category::all();
+        $brands = Brand::all();
 
-        return view('admin.product.form', compact('variants', 'categories'));
+        return view('admin.product.form', compact('variants', 'categories', 'brands'));
     }
 
     function store(StoreProductRequest $request)
     {
-        // dd($request->validated());
         $validated = $request->validated();
 
         $new_product = new Product();
@@ -143,6 +149,14 @@ class ProductController extends Controller
                     $newPicture->save();
                 }
             }
+
+            // DISCOUNT
+            $discount = $validated["discount"];
+            if ($discount > 0) {
+                $promo = new Promo();
+                $promo->product_id = $new_product->id;
+                $promo->discount = $discount;
+            }
         });
 
         return redirect()->route('product.index')
@@ -161,8 +175,9 @@ class ProductController extends Controller
         $data = $product;
         $variants = Variant::limit(2)->get();
         $categories = Category::all();
+        $brands = Brand::all();
 
-        return view('admin.product.form', compact('data', 'variants', 'categories'));
+        return view('admin.product.form', compact('data', 'variants', 'categories', 'brands'));
     }
 
     function update(UpdateProductRequest $request, Product $product)
@@ -209,8 +224,6 @@ class ProductController extends Controller
             // PICTURES
             if (isset($validated["product_pictures"])) {
 
-                // ProductPicture::where('product_id', $product->id)->delete();
-
                 // TAMBAH GAMBAR
                 foreach ($validated["product_pictures"] as $product_picture) {
                     $filename = $product->slug . '-' . uniqid() . '.webp';
@@ -224,14 +237,27 @@ class ProductController extends Controller
                 }
             }
 
-
+            // HAPUS GAMBAR YANG DIHAPUS CLIENT BERDASARKAN ID JIKA ADA
             if (isset($validated["deleted_pictures"])) {
-                // HAPUS GAMBAR YANG DIHAPUS CLIENT BERDASARKAN ID
                 $deletedPictures = json_decode($validated['deleted_pictures'], true);
                 if (!empty($deletedPictures)) {
                     ProductPicture::destroy($deletedPictures);
                 }
             }
+
+            // UPDATE DISCOUNT
+            $discount = $validated["discount"];
+            $promo = Promo::where('product_id', $product->id)->first();
+            $promo->discount = $discount;
+
+            // toggle promo berdasarkan discount
+            if ($discount > 0) {
+                $promo->active = true;
+            } else {
+                $promo->active = false;
+            }
+
+            $promo->save();
         });
 
         return redirect()->route('product.index')
@@ -240,6 +266,14 @@ class ProductController extends Controller
 
     function destroy(Product $product)
     {
+        $productPictures = ProductPicture::where('product_id', $product->id)->get();
+
+        if ($productPictures) {
+            foreach ($productPictures as $picture) {
+                Storage::delete($picture->path);
+            }
+        }
+
         $product->delete();
 
         return redirect()->route('product.index')

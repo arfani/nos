@@ -30,12 +30,13 @@ class UpdateProductRequest extends FormRequest
             'stock' => ['nullable', 'numeric'],
             'price' => ['nullable', 'numeric'],
             'weight' => ['nullable', 'numeric'],
-            'sku' => ['nullable', 'string', Rule::unique(ProductVariant::class)->ignore($this->product)],
+            'sku' => ['nullable', 'string', Rule::unique(ProductVariant::class)->ignore($this->product->product_variant[0])],
             'active' => ['required', 'boolean'],
             'desc' => ['nullable', 'string'],
             'categories' => ['nullable'],
             'product_pictures' => ['nullable'],
             'deleted_pictures' => ['nullable'],
+            'discount' => ['nullable'],
         ];
     }
 

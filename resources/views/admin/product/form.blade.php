@@ -1,5 +1,4 @@
 {{-- NOTE : $data adalah DATA PRODUK --}}
-{{-- {{ dd(@json($data->product_pictures)) }} --}}
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-base-300 text-base-content overflow-hidden shadow-sm sm:rounded-lg">
@@ -23,17 +22,14 @@
                 @endif
 
                 <form action="{{ isset($data) ? route('product.update', $data) : route('product.store') }}"
-                    method="POST" id="main" enctype="multipart/form-data">
+                    method="POST" id="main" enctype="multipart/form-data" @submit.prevent="submit">
                     @csrf
                     @isset($data)
                         @method('PUT')
                     @endisset
 
                     <div class="form-container flex flex-col gap-4">
-                        <div class="notes">
-                            <span>Catatan :</span>
-                            <x-ar.required-label /> wajib diisi
-                        </div>
+                        <x-ar.note-required-fields />
 
                         <template x-if="!variantMode">
                             <div class="form-content-without-variant">
@@ -47,7 +43,16 @@
                                             value="{{ old('name', isset($data) ? $data->name : '') }}" required
                                             autofocus>
                                     </div>
+                                </div>
+
+                                <div class="flex flex-wrap gap-2">
                                     <div class="flex flex-col mb-4">
+                                        <label for="discount" class="font-semibold mb-2">Discount <div class="tooltip ml-1" data-tip="Promo akan aktif jika ada diskon"><i class="fa fa-circle-exclamation"></i></div></label>
+                                        <input type="number" id="discount" name="discount" min="0"
+                                            class="my-input bg-primary/5 rounded"
+                                            value="{{ old('discount', isset($data) ? $data->promo->discount : 0) }}">
+                                    </div>
+                                    <div class="flex flex-col mb-4 flex-1">
                                         <label for="sku" class="font-semibold mb-2">SKU</label>
                                         <input type="text" id="sku" name="sku"
                                             class="my-input bg-primary/5 rounded"
@@ -60,19 +65,19 @@
                                         <label for="stock" class="font-semibold mb-2">Stok</label>
                                         <input type="number" id="stock" name="stock" min="0"
                                             class="my-input bg-primary/5 rounded"
-                                            value="{{ old('stock', isset($data) ? $data->product_variant[0]->stock : '') }}">
+                                            value="{{ old('stock', isset($data) ? $data->product_variant[0]->stock : 0) }}">
                                     </div>
                                     <div class="flex flex-col mb-4">
                                         <label for="price" class="font-semibold mb-2">Harga</label>
                                         <input type="number" id="price" name="price" min="0"
                                             class="my-input bg-primary/5 rounded"
-                                            value="{{ old('price', isset($data) ? $data->product_variant[0]->price : '') }}">
+                                            value="{{ old('price', isset($data) ? $data->product_variant[0]->price : 0) }}">
                                     </div>
                                     <div class="flex flex-col mb-4">
                                         <label for="weight" class="font-semibold mb-2">Berat</label>
                                         <input type="number" id="weight" name="weight" min="0"
                                             class="my-input bg-primary/5 rounded"
-                                            value="{{ old('weight', isset($data) ? $data->product_variant[0]->weight : '') }}">
+                                            value="{{ old('weight', isset($data) ? $data->product_variant[0]->weight : 0) }}">
                                     </div>
 
                                     <div class="flex flex-col mb-4 items-center">
@@ -97,111 +102,9 @@
                             </div>
                         </template>
 
-                        <template x-if="variantMode">
-                            <div class="form-content-with-variant">
-                                <div class="flex gap-2 flex-col sm:flex-row sm:items-end mb-4">
-                                    <div class="flex flex-col flex-1">
-                                        <label for="name" class="font-semibold mb-2">Nama Produk
-                                            <x-ar.required-label />
-                                        </label>
-                                        <input type="text" id="name" name="name"
-                                            class="my-input bg-primary/5 rounded"
-                                            value="{{ old('name', isset($data) ? $data->name : '') }}" required
-                                            autofocus>
-                                    </div>
-                                </div>
-
-                                <div class="flex flex-col mb-4">
-                                    <label for="desc" class="font-semibold mb-2">Deskripsi</label>
-                                    <textarea name="desc" id="desc" rows="3" class="my-input bg-primary/5 rounded">{{ old('desc', isset($data) ? $data->desc : '') }}</textarea>
-                                </div>
-
-                                <div class="flex flex-col sm:flex-row sm:items-end mb-4 mt-8">
-                                    <div class="flex flex-col flex-1">
-                                        <label for="variant" class="font-semibold mb-2">Tipe Varian</label>
-                                        <select name="variant" id="variant" x-ref="variant">
-                                            <option></option>
-                                            @foreach ($variants as $item)
-                                                <option value="{{ $item->variant }}">{{ $item->variant }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="flex justify-center mx-4">
-                                        @include('components.ar.button-add-variant')
-                                    </div>
-                                </div>
-
-                                <div class="flex flex-col flex-1 text-black mb-4">
-                                    <select multiple="multiple" id="variant_values" x-ref="variant_values"></select>
-                                </div>
-
-                                <!-- Daftar tipe varian yang ditambahkan -->
-                                <div class="variant-list mt-4">
-                                    <template x-for="(values, key) in variants" :key="key">
-                                        <div class="flex items-center mb-2">
-                                            <div class="mr-2 p-1" x-text="key"></div>
-                                            <select x-model="variants[key]" multiple="multiple"
-                                                class="tipe-variant-edit mr-2 bg-gray-200 p-1 rounded"
-                                                @change="editVariantValues(key, $event.target.selectedOptions)"
-                                                x-init="initSelect2($el)" x-effect="updateSelect2($el, variants[key])">
-                                                {{-- <template x-for="option in values" :key="option">
-                                                    <option :value="option" x-text="option"></option>
-                                                </template> --}}
-                                            </select>
-                                            <button @click="removeVariant(key)"
-                                                class="bg-red-500 text-white px-2 py-1 rounded ml-2"><i
-                                                    class="fa fa-trash"></i></button>
-                                        </div>
-                                    </template>
-                                </div>
-
-                                <div
-                                    class="variant-fields-container flex flex-col border border-primary px-4 py-6 overflow-auto rounded">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Varian</th>
-                                                <th>Stok</th>
-                                                <th>Harga</th>
-                                                <th>Berat</th>
-                                                <th>SKU</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <template x-for="combination in variantCombinations"
-                                                :key="combination.join('-')">
-                                                <tr class="text-center">
-                                                    <td x-text="combination.join(' - ')"></td>
-                                                    <td>
-                                                        <input type="number" name="stock_variant[]" min="0"
-                                                            class="my-input bg-primary/5 rounded w-24">
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" name="price_variant[]" min="0"
-                                                            class="my-input bg-primary/5 rounded w-40">
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" name="weight_variant[]" min="0"
-                                                            class="my-input bg-primary/5 rounded">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="sku_variant[]"
-                                                            class="my-input bg-primary/5 rounded">
-                                                    </td>
-                                                    <td>
-                                                        {{-- @include(
-                                                            'components_custom.toggle-active-product',
-                                                            ['name' => 'active_variant[]']
-                                                        ) --}}
-                                                    </td>
-                                                </tr>
-                                            </template>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </template>
+                        {{-- MODE VARIANT --}}
+                        @include('admin.product.form.variant-fields')
+                        {{-- MODE VARIANT END --}}
 
                         {{-- CATEGORIES --}}
                         <div class="flex flex-col flex-1 text-black">
@@ -218,6 +121,23 @@
                                         @endforeach
                                         @endisset>
                                         {{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        {{-- BRAND --}}
+                        <div class="flex flex-col flex-1 text-black">
+                            <label for="brand" class="font-semibold mb-2 text-base-content">Brand</label>
+                            <select name="brand" id="brand">
+                                <option></option>
+                                @foreach ($brands as $brand)
+                                    <option value="{{ $brand->id }}"
+                                        @isset($data)
+                                        @if ($data->brand_id === $brand->id)
+                                        selected
+                                        @endif
+                                        @endisset>
+                                        {{ $brand->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -243,7 +163,8 @@
                             <a href="{{ route('product.index') }}"
                                 class="py-2 px-4 bg-gray-500 text-gray-50 text-center rounded">{{ __('Kembali') }}</a>
                             <button type="submit"
-                                class="py-2 px-4 bg-primary text-primary-content rounded">Simpan</button>
+                                :class="{ 'py-2 px-4 bg-primary text-primary-content rounded': true, 'bg-primary/25 cursor-not-allowed': isSubmitting }"
+                                :disabled="isSubmitting">Simpan</button>
                         </div>
                     </div>
                 </form>
@@ -254,34 +175,9 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
         <script>
             $(function() {
-                const form = document.querySelector('form#main')
-                const submitBtn = document.querySelector('button[type="submit"]')
-
-                form.addEventListener('submit', function() {
-                    submitBtn.setAttribute('disabled', true)
-                })
-
-                $("#variant").select2({
-                    theme: "classic",
-                    tags: true,
-                    allowClear: true,
-                    placeholder: "Pilih varian"
-                })
-
-                $("#variant_values").select2({
-                    theme: "classic",
-                    tags: true,
-                    placeholder: "Input nilai varian disini"
-                })
-
-                $("#categories").select2({
-                    theme: "classic",
-                    tags: true,
-                    placeholder: "Pilih kategori"
-                })
-
                 //pictures preview
                 const pictures = document.querySelector('#product_pictures')
                 const deletedPicturesInput = document.querySelector('#deleted_pictures');
@@ -290,7 +186,7 @@
 
                 // Fungsi untuk menampilkan gambar
                 function displayPicture(src, id = null, containerClassname) {
-                const picPreviewContainer = document.querySelector(containerClassname)
+                    const picPreviewContainer = document.querySelector(containerClassname)
                     const pictureWrapper = document.createElement('div');
                     pictureWrapper.classList.add('picture-wrapper');
 
@@ -315,8 +211,8 @@
                 }
 
                 pictures.addEventListener('change', function(e) {
-                const picPreviewContainer = document.querySelector('.pic-preview-container')
-                picPreviewContainer.innerHTML = ''
+                    const picPreviewContainer = document.querySelector('.pic-preview-container')
+                    picPreviewContainer.innerHTML = ''
 
                     const files = Array.from(e.target.files);
 
@@ -336,104 +232,12 @@
 
                     currentPictures.forEach(picture => {
                         const path = '{{ Storage::url('') }}' + picture.path
-                        displayPicture(path, picture.id, '.pic-preview-container-on-edit'); // Pastikan properti 'path' dan 'id' benar
+                        displayPicture(path, picture.id,
+                            '.pic-preview-container-on-edit'); // Pastikan properti 'path' dan 'id' benar
 
                     });
                 @endisset
-
             })
-
-
-
-            document.addEventListener('alpine:init', () => {
-                Alpine.data('productForm', () => ({
-                    variantMode: false,
-                    variants: {}, // Mulai dengan objek kosong untuk varian dinamis
-                    variantCombinations: [], // Array untuk menyimpan kombinasi varian
-
-                    init() {
-                        this.$watch('variants', () => {
-                            this.generateCombinations();
-                        });
-                    },
-
-                    addVariant() {
-                        let variantKey = this.$refs.variant.value;
-                        let variantValues = Array.from(this.$refs.variant_values.selectedOptions).map(
-                            option => option.value);
-
-                        if (variantKey && variantValues.length) {
-                            this.variants = {
-                                ...this.variants,
-                                [variantKey]: variantValues
-                            };
-
-                            this.$nextTick(() => {
-                                this.generateCombinations();
-                            });
-                        }
-                    },
-                    removeVariant(key) {
-                        delete this.variants[key];
-                        this.generateCombinations();
-                    },
-                    // editVariantKey(oldKey, newKey) {
-                    //     if (newKey && oldKey !== newKey) {
-                    //         this.variants[newKey] = this.variants[oldKey];
-                    //         delete this.variants[oldKey];
-                    //         this.generateCombinations();
-                    //     }
-                    // },
-                    editVariantValues(key, selectedOptions) {
-                        this.variants[key] = Array.from(selectedOptions).map(option => option.value);
-                        this.generateCombinations();
-                    },
-                    generateCombinations() {
-                        let keys = Object.keys(this.variants);
-                        if (keys.length === 0) {
-                            this.variantCombinations = [];
-                            return;
-                        }
-
-                        let combinations = this.variants[keys[0]].map(value => [value]);
-
-                        for (let i = 1; i < keys.length; i++) {
-                            let currentKey = keys[i];
-                            let currentValues = this.variants[currentKey];
-                            let newCombinations = [];
-
-                            for (let combination of combinations) {
-                                for (let value of currentValues) {
-                                    newCombinations.push([...combination, value]);
-                                }
-                            }
-
-                            combinations = newCombinations;
-                        }
-
-                        this.variantCombinations = combinations;
-                    },
-                    initSelect2(el) {
-                        $(el).select2({
-                            theme: 'classic',
-                            tags: true,
-                            placeholder: 'Ubah nilai varian'
-                        });
-                    },
-                    updateSelect2(el, options) {
-                        options && $(el).empty().select2({
-                            theme: 'classic',
-                            tags: true,
-                            placeholder: 'Ubah nilai varian',
-                            data: options.map(option => ({
-                                id: option,
-                                text: option,
-                                selected: true,
-                            }))
-                        });
-                    }
-                }));
-            }); //END ALPINEJS
         </script>
     @endpush
 

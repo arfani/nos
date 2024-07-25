@@ -34,7 +34,8 @@ class StoreProductRequest extends FormRequest
             'active' => ['required', 'boolean'],
             'desc' => ['nullable', 'string'],
             'categories' => ['nullable'],
-            'product_pictures' => ['nullable']
+            'product_pictures' => ['nullable'],
+            'discount' => ['nullable'],
         ];
     }
 

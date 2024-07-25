@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\VariantValue;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -32,6 +30,9 @@ class DatabaseSeeder extends Seeder
             VariantSeeder::class,
             VariantValueSeeder::class,
             ProductDetailSeeder::class,
+            CategoryProductSeeder::class,
+            ProductPictureSeeder::class,
+            PromoSeeder::class,
         ]);
     }
 }

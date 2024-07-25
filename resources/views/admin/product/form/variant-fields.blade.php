@@ -1,0 +1,105 @@
+<template x-if="variantMode">
+    <div class="form-content-with-variant">
+        <div class="flex gap-2 flex-col sm:flex-row sm:items-end mb-4">
+            <div class="flex flex-col flex-1">
+                <label for="name" class="font-semibold mb-2">Nama Produk
+                    <x-ar.required-label />
+                </label>
+                <input type="text" id="name" name="name"
+                    class="my-input bg-primary/5 rounded"
+                    value="{{ old('name', isset($data) ? $data->name : '') }}" required
+                    autofocus>
+            </div>
+        </div>
+
+        <div class="flex flex-col mb-4">
+            <label for="desc" class="font-semibold mb-2">Deskripsi</label>
+            <textarea name="desc" id="desc" rows="3" class="my-input bg-primary/5 rounded">{{ old('desc', isset($data) ? $data->desc : '') }}</textarea>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-end mb-4 mt-8">
+            <div class="flex flex-col flex-1">
+                <label for="variant" class="font-semibold mb-2">Tipe Varian</label>
+                <select name="variant" id="variant" x-ref="variant">
+                    <option></option>
+                    @foreach ($variants as $item)
+                        <option value="{{ $item->variant }}">{{ $item->variant }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="flex justify-center mx-4">
+                @include('components.ar.button-add-variant')
+            </div>
+        </div>
+
+        <div class="flex flex-col flex-1 text-black mb-4">
+            <select multiple="multiple" id="variant_values" x-ref="variant_values"></select>
+        </div>
+
+        <!-- Daftar tipe varian yang ditambahkan -->
+        <div class="variant-list mt-4">
+            <template x-for="(values, key) in variants" :key="key">
+                <div class="flex items-center mb-2">
+                    <div class="mr-2 p-1" x-text="key"></div>
+                    <select x-model="variants[key]" multiple="multiple"
+                        class="tipe-variant-edit mr-2 bg-gray-200 p-1 rounded"
+                        @change="editVariantValues(key, $event.target.selectedOptions)"
+                        x-init="initSelect2($el)" x-effect="updateSelect2($el, variants[key])">
+                        {{-- <template x-for="option in values" :key="option">
+                            <option :value="option" x-text="option"></option>
+                        </template> --}}
+                    </select>
+                    <button @click="removeVariant(key)"
+                        class="bg-red-500 text-white px-2 py-1 rounded ml-2"><i
+                            class="fa fa-trash"></i></button>
+                </div>
+            </template>
+        </div>
+
+        <div
+            class="variant-fields-container flex flex-col border border-primary px-4 py-6 overflow-auto rounded">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Varian</th>
+                        <th>Stok</th>
+                        <th>Harga</th>
+                        <th>Berat</th>
+                        <th>SKU</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="combination in variantCombinations"
+                        :key="combination.join('-')">
+                        <tr class="text-center">
+                            <td x-text="combination.join(' - ')"></td>
+                            <td>
+                                <input type="number" name="stock_variant[]" min="0"
+                                    class="my-input bg-primary/5 rounded w-24">
+                            </td>
+                            <td>
+                                <input type="number" name="price_variant[]" min="0"
+                                    class="my-input bg-primary/5 rounded w-40">
+                            </td>
+                            <td>
+                                <input type="number" name="weight_variant[]" min="0"
+                                    class="my-input bg-primary/5 rounded">
+                            </td>
+                            <td>
+                                <input type="text" name="sku_variant[]"
+                                    class="my-input bg-primary/5 rounded">
+                            </td>
+                            <td>
+                                {{-- @include(
+                                    'components_custom.toggle-active-product',
+                                    ['name' => 'active_variant[]']
+                                ) --}}
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

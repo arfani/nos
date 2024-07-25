@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -14,28 +15,23 @@ class Product extends Model
 
     protected $fillable = ['name', 'slug', 'stock', 'price'];
 
-    /**
-     * Get the product_variant associated with the Product
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
     public function product_variant(): HasMany
     {
         return $this->hasMany(ProductVariant::class);
     }
-    
+
     public function product_pictures(): HasMany
     {
         return $this->hasMany(ProductPicture::class);
     }
 
-    /**
-     * The category that belong to the Product
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
     public function category(): BelongsToMany
     {
         return $this->belongsToMany(Category::class)->withTimestamps();
+    }
+
+    public function promo(): HasOne
+    {
+        return $this->hasOne(Promo::class);
     }
 }

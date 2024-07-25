@@ -26,8 +26,7 @@
                             <div class="flex flex-col mb-4">
                                 <label for="name" class="font-semibold mb-2">Nama</label>
                                 <input type="text" id="name" name="name"
-                                    class="my-input bg-primary/5 rounded w-fit border-transparent border-b border-b-primary 
-            focus:ring-transparent focus:border-transparent focus:border-b-primary"
+                                    class="my-input bg-primary/5 rounded w-fit border-transparent border-b border-b-primary focus:ring-transparent focus:border-transparent focus:border-b-primary"
                                     value="{{ old('name', isset($data) ? $data->name : '') }}" placeholder="example"
                                     required autofocus>
                             </div>
