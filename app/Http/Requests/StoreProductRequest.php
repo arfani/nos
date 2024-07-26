@@ -36,6 +36,9 @@ class StoreProductRequest extends FormRequest
             'categories' => ['nullable'],
             'product_pictures' => ['nullable'],
             'discount' => ['nullable'],
+            'length' => ['nullable'],
+            'width' => ['nullable'],
+            'height' => ['nullable'],
         ];
     }
 

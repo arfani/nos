@@ -33,8 +33,8 @@
 
                         <template x-if="!variantMode">
                             <div class="form-content-without-variant">
-                                <div class="flex flex-wrap gap-2 [&>div]:flex-1">
-                                    <div class="flex flex-col mb-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <div class="flex flex-col mb-4 flex-1">
                                         <label for="name" class="font-semibold mb-2">Nama Produk
                                             <x-ar.required-label />
                                         </label>
@@ -43,14 +43,27 @@
                                             value="{{ old('name', isset($data) ? $data->name : '') }}" required
                                             autofocus>
                                     </div>
+                                    <div class="flex flex-col mb-4">
+                                        <label for="youtube" class="font-semibold mb-2">Youtube ID</label>
+                                        <input type="text" id="youtube" name="youtube"
+                                            class="my-input bg-primary/5 rounded"
+                                            value="{{ old('youtube', isset($data) ? $data->youtube : '') }}" required
+                                            autofocus>
+                                    </div>
                                 </div>
 
-                                <div class="flex flex-wrap gap-2">
+                                <div class="flex flex-wrap gap-2 my-2">
                                     <div class="flex flex-col mb-4">
-                                        <label for="discount" class="font-semibold mb-2">Discount <div class="tooltip ml-1" data-tip="Promo akan aktif jika ada diskon"><i class="fa fa-circle-exclamation"></i></div></label>
-                                        <input type="number" id="discount" name="discount" min="0"
-                                            class="my-input bg-primary/5 rounded"
-                                            value="{{ old('discount', isset($data) ? $data->promo->discount : 0) }}">
+                                        <label for="discount" class="font-semibold mb-2">Discount <div
+                                                class="tooltip ml-1" data-tip="Promo akan aktif jika ada diskon"><i
+                                                    class="fa fa-circle-exclamation animate-pulse"></i></div></label>
+                                        <div class="flex">
+                                            <input type="number" id="discount" name="discount" min="0"
+                                                class="my-input bg-primary/5 rounded-l"
+                                                value="{{ old('discount', isset($data->promo->discount) ? $data->promo->discount : 0) }}">
+                                            <span
+                                                class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">%</span>
+                                        </div>
                                     </div>
                                     <div class="flex flex-col mb-4 flex-1">
                                         <label for="sku" class="font-semibold mb-2">SKU</label>
@@ -69,19 +82,26 @@
                                     </div>
                                     <div class="flex flex-col mb-4">
                                         <label for="price" class="font-semibold mb-2">Harga</label>
-                                        <input type="number" id="price" name="price" min="0"
-                                            class="my-input bg-primary/5 rounded"
-                                            value="{{ old('price', isset($data) ? $data->product_variant[0]->price : 0) }}">
+                                        <div class="flex">
+                                            <span
+                                                class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">Rp</span>
+                                            <input type="number" id="price" name="price" min="0"
+                                                class="my-input bg-primary/5 rounded-r"
+                                                value="{{ old('price', isset($data) ? $data->product_variant[0]->price : 0) }}">
+                                        </div>
                                     </div>
                                     <div class="flex flex-col mb-4">
                                         <label for="weight" class="font-semibold mb-2">Berat</label>
-                                        <input type="number" id="weight" name="weight" min="0"
-                                            class="my-input bg-primary/5 rounded"
-                                            value="{{ old('weight', isset($data) ? $data->product_variant[0]->weight : 0) }}">
+                                        <div class="flex">
+                                            <input type="number" id="weight" name="weight" min="0"
+                                                class="my-input bg-primary/5 rounded"
+                                                value="{{ old('weight', isset($data) ? $data->product_variant[0]->weight : 0) }}">
+                                            <span
+                                                class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">g</span>
+                                        </div>
                                     </div>
-
                                     <div class="flex flex-col mb-4 items-center">
-                                        <label for="price" class="font-semibold mb-2">Status</label>
+                                        <label for="active" class="font-semibold mb-2">Aktif</label>
                                         <div class="flex">
                                             @include('components_custom.toggle-active-product', [
                                                 'name' => 'active',
@@ -93,6 +113,50 @@
                                             ])
                                         </div>
                                     </div>
+                                </div>
+
+                                <div
+                                    class="flex gap-2 flex-wrap border border-primary p-2 my-4 rounded flex-col sm:flex-row">
+                                    <div class="flex flex-col items-center justify-center sm:mx-6">
+                                        <label for="price" class="font-semibold">DIMENSI</label>
+                                    </div>
+
+                                    <div class="flex flex-col mb-4 flex-1">
+                                        <label for="length" class="font-semibold mb-2">Panjang</label>
+                                        <div class="flex">
+                                            <input type="number" id="length" name="length" min="0"
+                                                class="my-input bg-primary/5 rounded-l flex-1" placeholder="Panjang"
+                                                max="1000"
+                                                value="{{ old('stock', isset($data->dimention->length) ? $data->dimention->length : 0) }}">
+                                            <span
+                                                class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-col mb-4 flex-1">
+                                        <label for="width" class="font-semibold mb-2">Lebar</label>
+                                        <div class="flex">
+                                            <input type="number" id="width" name="width" min="0"
+                                                class="my-input bg-primary/5 rounded-l flex-1" placeholder="Lebar"
+                                                max="1000"
+                                                value="{{ old('stock', isset($data->dimention->width) ? $data->dimention->width : 0) }}">
+                                            <span
+                                                class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-col mb-4 flex-1">
+                                        <label for="height" class="font-semibold mb-2">Tinggi</label>
+                                        <div class="flex">
+                                            <input type="number" id="height" name="height" min="0"
+                                                class="my-input bg-primary/5 rounded-l flex-1" placeholder="Tinggi"
+                                                max="1000"
+                                                value="{{ old('stock', isset($data->dimention->height) ? $data->dimention->height : 0) }}">
+                                            <span
+                                                class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="flex flex-col">

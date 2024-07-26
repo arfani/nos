@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->text('description')->nullable();
             $table->foreignId('brand_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('youtube')->nullable()->default(null);
             $table->timestamps();
         });
     }

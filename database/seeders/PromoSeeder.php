@@ -14,7 +14,6 @@ class PromoSeeder extends Seeder
      */
     public function run(): void
     {
-
         $product1 = Product::where('name', 'Product satu')->first();
         $product2 = Product::where('name', 'Product dua')->first();
         $product5 = Product::where('name', 'Product lima')->first();

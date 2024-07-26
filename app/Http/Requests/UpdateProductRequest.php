@@ -37,6 +37,9 @@ class UpdateProductRequest extends FormRequest
             'product_pictures' => ['nullable'],
             'deleted_pictures' => ['nullable'],
             'discount' => ['nullable'],
+            'length' => ['nullable'],
+            'width' => ['nullable'],
+            'height' => ['nullable'],
         ];
     }
 

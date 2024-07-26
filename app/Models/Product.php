@@ -34,4 +34,9 @@ class Product extends Model
     {
         return $this->hasOne(Promo::class);
     }
+
+    public function dimention(): HasOne
+    {
+        return $this->hasOne(Dimention::class);
+    }
 }

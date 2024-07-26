@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CategoryProduct;
+use App\Models\Dimention;
 use App\Models\Product;
 use App\Models\ProductPicture;
 use App\Models\ProductVariant;
@@ -150,13 +151,22 @@ class ProductController extends Controller
                 }
             }
 
-            // DISCOUNT
+            // DISCOUNT (PROMO)
             $discount = $validated["discount"];
             if ($discount > 0) {
                 $promo = new Promo();
                 $promo->product_id = $new_product->id;
                 $promo->discount = $discount;
+                $promo->save();
             }
+
+            // DIMENTION
+            $dimention = new Dimention();
+            $dimention->product_id = $new_product->id;
+            $dimention->length = $validated["length"];
+            $dimention->width = $validated["width"];
+            $dimention->height = $validated["height"];
+            $dimention->save();
         });
 
         return redirect()->route('product.index')
@@ -247,10 +257,10 @@ class ProductController extends Controller
 
             // UPDATE DISCOUNT
             $discount = $validated["discount"];
-            $promo = Promo::where('product_id', $product->id)->first();
+            $promo = Promo::firstOrNew(['product_id' => $product->id]);
             $promo->discount = $discount;
 
-            // toggle promo berdasarkan discount
+            // toggle promo based discount
             if ($discount > 0) {
                 $promo->active = true;
             } else {
@@ -258,6 +268,13 @@ class ProductController extends Controller
             }
 
             $promo->save();
+
+            // DIMENTION
+            $dimention = Dimention::where('product_id', $product->id)->first();
+            $dimention->length = $validated["length"];
+            $dimention->width = $validated["width"];
+            $dimention->height = $validated["height"];
+            $dimention->save();
         });
 
         return redirect()->route('product.index')

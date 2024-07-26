@@ -5,9 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Promo extends Model
+class Dimention extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['product_id'];
 }
