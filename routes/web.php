@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
@@ -14,6 +15,8 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SosmedController;
 use App\Http\Controllers\TestimonialController;
+use App\Models\Detail;
+use App\Models\DetailValue;
 use Illuminate\Support\Facades\Route;
 
 // MEMBER ROUTES
@@ -85,12 +88,9 @@ Route::prefix('admin')
             Route::patch('contact/{page}', [PageController::class, 'contactUpdateAdmin'])->name('admin.contact-update');
         });
 
-
-
-        //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+        Route::patch('auction/{auction}', [AuctionController::class, 'update'])->name('auction.update');
     });
 
 
@@ -107,5 +107,6 @@ Route::get('/notification', [NotificationController::class, 'index'])->name('cli
 require __DIR__ . '/auth.php';
 
 Route::get('testing', function () {
+    
     return view('testing');
 });

@@ -8,6 +8,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * TABEL INI UNTUK MENYAMBUNGKAN ANTARA PRODUK DAN VARIAN (TIDAK ADA HUBUNGAN NYA TABEL INI DENGAN TABEL DETAILS)
      */
     public function up(): void
     {

@@ -47,8 +47,7 @@
                                         <label for="youtube" class="font-semibold mb-2">Youtube ID</label>
                                         <input type="text" id="youtube" name="youtube"
                                             class="my-input bg-primary/5 rounded"
-                                            value="{{ old('youtube', isset($data) ? $data->youtube : '') }}" required
-                                            autofocus>
+                                            value="{{ old('youtube', isset($data) ? $data->youtube : '') }}">
                                     </div>
                                 </div>
 
@@ -159,10 +158,39 @@
 
                                 </div>
 
-                                <div class="flex flex-col">
-                                    <label for="desc" class="font-semibold mb-2">Deskripsi</label>
-                                    <textarea name="desc" id="desc" rows="3" class="my-input bg-primary/5 rounded">{{ old('desc', isset($data) ? $data->desc : '') }}</textarea>
+                                {{-- <div class="flex flex-col">
+                                    <textarea name="description" id="description" rows="3" class="my-input bg-primary/5 rounded">{{ old('description', isset($data) ? $data->description : '') }}</textarea>
+                                </div> --}}
+
+                                <label for="description" class="font-semibold">Deskripsi</label>
+                                <div id="toolbar" class="mt-2 rounded-t">
+                                    <button class="ql-bold"></button>
+                                    <button class="ql-italic"></button>
+                                    <button class="ql-underline"></button>
+                                    <button class="ql-strike"></button>
+                                    <button class="ql-link"></button>
+                                    <button class="ql-image"></button>
+                                    <button class="ql-video"></button>
+                                    <select class="ql-color"></select>
+                                    <select class="ql-background"></select>
+                                    <button class="ql-script" value="sub"></button>
+                                    <button class="ql-script" value="super"></button>
+                                    <button class="ql-blockquote"></button>
+                                    <button class="ql-code-block"></button>
+                                    <button class="ql-list" value="ordered"></button>
+                                    <button class="ql-list" value="bullet"></button>
+                                    <button class="ql-indent" value="-1"></button>
+                                    <button class="ql-indent" value="+1"></button>
+                                    <button class="ql-direction" value="rtl"></button>
+                                    <select class="ql-align"></select>
+                                    <button class="ql-clean"></button>
                                 </div>
+                                {{-- tinggi menggunakan [&>.ql-editor]:min-h-52 agar bisa fokus saat klik diarea editor bagian bawah --}}
+                                <div id="description-editor" class="bg-white text-black rounded-b [&>.ql-editor]:min-h-52">
+                                    {!! old('description', isset($data) ? $data->description : '') !!}
+                                </div>
+
+                                <input type="hidden" id="description" name="description">
                             </div>
                         </template>
 
@@ -223,6 +251,30 @@
 
                         <input type="hidden" name="deleted_pictures" id="deleted_pictures">
 
+                        {{-- PRODUCT DETAILS --}}
+                        <div id="detail-product-container" class="mt-8 flex flex-col gap-4">
+                            <div class="detail-product-item flex gap-2 items-center">
+                                <div class="flex">
+                                    <span
+                                        class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">
+                                        Label
+                                    </span>
+                                    <input type="text" name="detail[]" class="my-input bg-primary/5 rounded-r"
+                                        placeholder="Kondisi">
+                                </div>
+                                <div class="flex">
+                                    <span
+                                        class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">
+                                        Nilai
+                                    </span>
+                                    <input type="text" name="detail-value[]"
+                                        class="my-input bg-primary/5 rounded-r" placeholder="Baru">
+                                </div>
+                                @include('components_custom.remove-detail-product')
+                            </div>
+                        </div>
+                        <button type="button" class="btn add-item-detail"><i class="fa fa-plus"></i> Detail</button>
+
                         <div class="grid grid-cols-2 gap-2">
                             <a href="{{ route('product.index') }}"
                                 class="py-2 px-4 bg-gray-500 text-gray-50 text-center rounded">{{ __('Kembali') }}</a>
@@ -236,9 +288,14 @@
         </div>
     </div>
     @push('scripts')
+        {{-- JQUERY  --}}
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        {{-- SELECT2 --}}
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        {{-- QUILLJS --}}
+        <script src="https://cdn.quilljs.com/1.2.2/quill.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/kensnyder/quill-image-resize-module@3411c9a7/image-resize.min.js"></script>
 
         <script>
             $(function() {
@@ -291,14 +348,63 @@
                     }) //end forEach
                 })
 
-                @isset($data)
+                $('.product-form form').on('click', '.remove-detail-product', function() {
+                    $(this).closest('.detail-product-item').remove()
+                });
+
+                $('.product-form form').on('click', '.add-item-detail', function() {
+                    const detailCont = $('#detail-product-container')
+                    detailCont.append(itemDetail())
+                });
+
+                const itemDetail = (label = '', nilai = '') => `
+                <div class="detail-product-item flex gap-2 items-center">
+                    <div class="flex">
+                        <span
+                            class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">
+                            Label
+                        </span>
+                        <input type="text" name="detail[]" class="my-input bg-primary/5 rounded-r"
+                            placeholder="Satuan / Unit" value="${label}">
+                    </div>
+                    <div class="flex">
+                        <span
+                            class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">
+                            Nilai
+                        </span>
+                        <input type="text" name="detail-value[]"
+                            class="my-input bg-primary/5 rounded-r" placeholder="Roll" value="${nilai}">
+                    </div>
+                    @include('components_custom.remove-detail-product')
+                </div>`;
+
+                const editor = new Quill('#description-editor', {
+                    modules: {
+                        toolbar: {
+                            container: '#toolbar', // Selector for toolbar container
+                        },
+                        imageResize: {
+                            displaySize: true
+                        }
+                    },
+                    theme: 'snow'
+                })
+
+                @isset($data) //jika mode edit
                     const currentPictures = @json($data->product_pictures);
 
                     currentPictures.forEach(picture => {
                         const path = '{{ Storage::url('') }}' + picture.path
                         displayPicture(path, picture.id,
                             '.pic-preview-container-on-edit'); // Pastikan properti 'path' dan 'id' benar
+                    });
 
+                    const detailProducts = @json($data->detail_value);
+
+                    const detailCont = $('#detail-product-container');
+                    detailCont.empty();
+                    detailProducts.forEach(productDetail => {
+                        detailCont.append(itemDetail(productDetail.detail.detail, productDetail.value));
                     });
                 @endisset
             })
@@ -306,10 +412,20 @@
     @endpush
 
     @push('styles')
+        {{-- SELECT2 --}}
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <style>
             .select2 {
                 width: 100% !important;
+            }
+        </style>
+
+        {{-- QUILLJS --}}
+        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+        <style>
+            .ql-toolbar {
+                background-color: oklch(var(--p));
+                color: oklch(var(--pc));
             }
         </style>
     @endpush

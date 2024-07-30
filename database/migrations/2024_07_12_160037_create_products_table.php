@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('slug');
-            $table->text('description')->nullable();
+            $table->longText('description')->nullable();
             $table->foreignId('brand_id')->nullable()->constrained()->nullOnDelete();
             $table->string('youtube')->nullable()->default(null);
             $table->timestamps();

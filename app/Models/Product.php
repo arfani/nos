@@ -39,4 +39,15 @@ class Product extends Model
     {
         return $this->hasOne(Dimention::class);
     }
+    
+    public function detail_value(): HasMany
+    {
+        return $this->hasMany(DetailValue::class);
+    }
+    
+    // LELANG
+    public function auction(): HasOne
+    {
+        return $this->hasOne(Auction::class);
+    }
 }

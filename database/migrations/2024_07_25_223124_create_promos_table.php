@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('promos', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('product_id')->constrained()->onDelete('cascade');
-            $table->tinyInteger('discount');
+            $table->float('discount');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

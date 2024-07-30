@@ -1,4 +1,4 @@
-<div class="sm:mx-6 lg:mx-8">
+<div class="sm:mx-6 lg:mx-8" x-data="productTable">
     @if (Session::get('success'))
         <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
             class="toast toast-top toast-end mt-10">
@@ -102,6 +102,18 @@
                                 </td>
                                 @continue
                             @endif
+                            @if ($k === 'auction')
+                                <td>
+                                    @if ($cell && $cell->active == 1)
+                                        <i class="fa fa-gear hover:rotate-90 duration-1000 cursor-pointer"
+                                            x-on:click="$dispatch('open-modal', {data: '{{ $cell }}', name: 'modal-auction'})"></i>
+                                    @else
+                                        <i class="fa fa-gear hover:-rotate-90 duration-1000 cursor-pointer text-gray-800"
+                                            x-on:click="$dispatch('open-modal', {data: null, name: 'modal-auction'})"></i>
+                                    @endif
+                                </td>
+                                @continue
+                            @endif
 
                             <td>
                                 @if (isset($specialCol) && $k === $specialCol['colName'] && $specialCol['type'] === 'list')
@@ -151,48 +163,50 @@
         </table>
         {!! $data->links() !!}
     </div>
+    @include('admin.product.auction-modal')
+</div>
 
-    @push('scripts')
-        <script>
-            (function() {
-                const deleteBtn = document.querySelectorAll('button.delete')
+@push('scripts')
+    <script>
+        (function() {
+            const deleteBtn = document.querySelectorAll('button.delete')
 
-                deleteBtn.forEach(function(btn) {
-                    btn.addEventListener('click', function(e) {
-                        const isDeleteConfirmed = confirm('Apakah Anda yakin ingin menghapus item ini ?')
-                        // jika konfirmasi ditolak maka batalkan submit
-                        if (!isDeleteConfirmed) {
-                            e.preventDefault()
-                        }
-                    })
+            deleteBtn.forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    const isDeleteConfirmed = confirm('Apakah Anda yakin ingin menghapus item ini ?')
+                    // jika konfirmasi ditolak maka batalkan submit
+                    if (!isDeleteConfirmed) {
+                        e.preventDefault()
+                    }
                 })
+            })
 
-                // UPDATE SEARCH INPUT PLACEHOLDER
-                const searchInput = document.getElementById('search')
-                const searchBy = document.getElementById('search-by')
+            // UPDATE SEARCH INPUT PLACEHOLDER
+            const searchInput = document.getElementById('search')
+            const searchBy = document.getElementById('search-by')
 
-                function updateSearchInpurAttr() {
-                    searchInput.setAttribute('placeholder',
-                        `Cari berdasarkan ${searchBy ? searchBy.options[searchBy.selectedIndex].text : "nama"}`)
-                    searchInput.setAttribute('name', searchBy && searchBy.value)
-                }
+            function updateSearchInpurAttr() {
+                searchInput.setAttribute('placeholder',
+                    `Cari berdasarkan ${searchBy ? searchBy.options[searchBy.selectedIndex].text : "nama"}`)
+                searchInput.setAttribute('name', searchBy && searchBy.value)
+            }
 
+            updateSearchInpurAttr()
+            searchBy && searchBy.addEventListener('change', function() {
                 updateSearchInpurAttr()
-                searchBy && searchBy.addEventListener('change', function() {
-                    updateSearchInpurAttr()
-                    searchInput.value = null
-                    searchInput.focus()
-                })
-                // END UPDATE SEARCH INPUT PLACEHOLDER
+                searchInput.value = null
+                searchInput.focus()
+            })
+            // END UPDATE SEARCH INPUT PLACEHOLDER
 
-                // SUBMIT SEARCH AFTER NUMBER OF ROWS FILTER CHANGED
-                const numbRows = document.getElementById('numbRows')
-                const submitForm = document.getElementById('form_search')
+            // SUBMIT SEARCH AFTER NUMBER OF ROWS FILTER CHANGED
+            const numbRows = document.getElementById('numbRows')
+            const submitForm = document.getElementById('form_search')
 
-                numbRows.addEventListener('change', function(e) {
-                    submitForm.submit()
-                })
+            numbRows.addEventListener('change', function(e) {
+                submitForm.submit()
+            })
 
-            })()
-        </script>
-    @endpush
+        })()
+    </script>
+@endpush

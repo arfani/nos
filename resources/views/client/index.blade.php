@@ -48,7 +48,7 @@
             'img' => Storage::url('mocks/c.jpg'),
             'price' => 10000,
             'promo' => [
-                'active' => false,
+                'active' => true,
                 'discount' => 20,
             ],
             'variants' => true,

@@ -40,6 +40,8 @@ class UpdateProductRequest extends FormRequest
             'length' => ['nullable'],
             'width' => ['nullable'],
             'height' => ['nullable'],
+            'detail' => ['nullable'],
+            'detail-value' => ['nullable'],
         ];
     }
 

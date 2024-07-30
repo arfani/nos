@@ -16,7 +16,7 @@ export default () => ({
                 tags: true,
                 placeholder: "Pilih kategori"
             })
-            
+
             $("#brand").select2({
                 theme: "classic",
                 placeholder: "Pilih brand"
@@ -36,8 +36,11 @@ export default () => ({
             })
         })
     },
-    submit(){
+    submit() {
         this.isSubmitting = true;
+        // set deskripsi editor ke hidden input agar ikut tersubmit form
+        const editorContent = document.querySelector('#description-editor .ql-editor').innerHTML;
+        document.getElementById('description').value = editorContent;
         this.$el.submit();
     },
 

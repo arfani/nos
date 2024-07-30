@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             ProductPictureSeeder::class,
             PromoSeeder::class,
             DimentionSeeder::class,
+            AuctionSeeder::class,
         ]);
     }
 }

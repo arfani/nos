@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CategoryProduct;
+use App\Models\Detail;
+use App\Models\DetailValue;
 use App\Models\Dimention;
 use App\Models\Product;
 use App\Models\ProductPicture;
@@ -50,6 +52,7 @@ class ProductController extends Controller
             'Stok',
             'Harga',
             'Promo',
+            'Lelang',
             'Aksi'
         ];
 
@@ -73,13 +76,12 @@ class ProductController extends Controller
                 $priceFormatted = 'Rp. ' . number_format($minPrice, 0, ',', '.') . ' - Rp. ' . number_format($maxPrice, 0, ',', '.');
             }
 
-            // dd($item->promo->active);
-
             return [
                 'name' => $item->name,
                 'stock' => $stock,
                 'price' => $priceFormatted,
                 'promo' => $item->promo->active ?? null,
+                'auction' => $item->auction ?? null,
                 'id' => $item->id,
             ];
         });
@@ -106,6 +108,7 @@ class ProductController extends Controller
         $new_product = new Product();
         $new_product->name = $validated["name"];
         $new_product->slug = Str::of($validated["name"])->slug('-')->value;
+        $new_product->description = $validated["desc"];
 
         DB::transaction(function () use ($new_product, $validated) {
             $new_product->save();
@@ -167,6 +170,23 @@ class ProductController extends Controller
             $dimention->width = $validated["width"];
             $dimention->height = $validated["height"];
             $dimention->save();
+
+            // DETAILS
+            if (isset($validated["detail"])) {
+                foreach ($validated["detail"] as $index => $detail_input) {
+
+                    if (isset($detail_input)) { //hanya simpan detail yang tidak null
+                        $detail = Detail::firstOrCreate(['detail' => $detail_input]);
+
+                        $detail_value = new DetailValue();
+                        $detail_value->detail_id = $detail->id;
+                        $detail_value->product_id = $new_product->id;
+                        $detail_value->value = $validated["detail-value"][$index];
+
+                        $detail_value->save();
+                    }
+                }
+            }
         });
 
         return redirect()->route('product.index')
@@ -182,7 +202,7 @@ class ProductController extends Controller
 
     function edit(Product $product)
     {
-        $data = $product;
+        $data = $product->load('detail_value.detail');
         $variants = Variant::limit(2)->get();
         $categories = Category::all();
         $brands = Brand::all();
@@ -275,6 +295,35 @@ class ProductController extends Controller
             $dimention->width = $validated["width"];
             $dimention->height = $validated["height"];
             $dimention->save();
+
+            // DETAILS
+            if (isset($validated["detail"])) {
+                //AMBIL DETAIL_VALUE SAAT INI UNTUK MENDAPATKAN DATA DETAIL DARI DETAIL_ID
+                $currentDetailValue = DetailValue::where('product_id', $product->id)->get();
+                $currentDetailIds = $currentDetailValue->pluck('detail_id')->toArray();
+
+                // HAPUS SEMUA DETAIL VALUE
+                DetailValue::destroy($currentDetailValue);
+                foreach ($validated["detail"] as $index => $detail_input) {
+                    if (isset($detail_input)) { //hanya simpan detail yang tidak null
+                        $detail = Detail::firstOrCreate(['detail' => $detail_input]);
+
+                        $detail_value = new DetailValue();
+                        $detail_value->detail_id = $detail->id;
+                        $detail_value->product_id = $product->id;
+                        $detail_value->value = $validated["detail-value"][$index];
+
+                        $detail_value->save();
+                    }
+                }
+
+                // HAPUS DETAIL SAAT INI YANG TIDAK DIGUNAKAN PADA DETAIL VALUE PRODUK YG LAIN
+                Detail::whereIn('id', $currentDetailIds)
+                    ->whereNotIn('id', function ($q) {
+                        $q->select('detail_id')
+                            ->from((new DetailValue())->getTable());
+                    })->delete();
+            }
         });
 
         return redirect()->route('product.index')
