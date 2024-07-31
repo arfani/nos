@@ -43,6 +43,10 @@
 
         {{ $attributes->has('focusable') ? 'setTimeout(() => firstFocusable().focus(), 100)' : '' }}
     } else {
+        const form = document.querySelector('#auction-form');
+        form.reset();
+        document.querySelectorAll('.error-message').forEach(error => error.innerHTML = '');
+        
         document.body.classList.remove('overflow-y-hidden');
     }
 })"

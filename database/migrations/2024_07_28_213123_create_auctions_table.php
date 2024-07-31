@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('endtime')->default(now()->addDays(1));
             $table->float('bid_start')->unsigned()->nullable()->default(0);
             $table->float('bid_increment')->unsigned()->nullable()->default(0);
-            $table->text('rules')->nullable();
+            $table->longText('rules')->nullable();
             $table->unsignedBigInteger('winner')->nullable()->default(null);
             $table->foreign('winner')->references('id')->on('users')->nullOnDelete();
             $table->float('bid_winner')->unsigned()->nullable()->default(null);

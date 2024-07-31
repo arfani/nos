@@ -15,8 +15,6 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SosmedController;
 use App\Http\Controllers\TestimonialController;
-use App\Models\Detail;
-use App\Models\DetailValue;
 use Illuminate\Support\Facades\Route;
 
 // MEMBER ROUTES
@@ -90,7 +88,7 @@ Route::prefix('admin')
 
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-        Route::patch('auction/{auction}', [AuctionController::class, 'update'])->name('auction.update');
+        Route::resource('auction', AuctionController::class)->only('store', 'update');
     });
 
 

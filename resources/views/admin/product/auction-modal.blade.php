@@ -1,11 +1,17 @@
 <x-ar.modal name="modal-auction" :show="$errors->auction_update->isNotEmpty()">
-    <form id="auction-form" method="post" class="p-6"
-        :action="'{{ route('auction.update', '') }}/' + data?.id || '{{ old('id') }}'">
+    <form id="auction-form" method="post" class="p-6" {{-- jika data.id ada berarti edit mode, jika tidak mode store --}}
+        :action="'{{ route('auction.store') }}'">
         @csrf
-        @method('PATCH')
 
+        <div x-init="console.log('{{ $errors->auction_update }}')"></div>
+        <div x-init="$watch('show', () => console.log('{{ $errors->auction_update }}', data?.active))"></div>
+        
         {{-- INPUT ID UNTUK MENDAPATKAN old('id') pada tag form --}}
         <input type="hidden" name="id" x-bind:value="data ? data.id : '{{ old('id') }}'">
+
+        {{-- INPUT PRODUCT ID UNTUK DISIMPAN DI AUCTION SAAT STORE MODE --}}
+        <input type="hidden" name="product_id"
+            x-bind:value="data?.product_id || '{{ old('product_id') }}'">
 
         <h2 class="text-lg md:text-2xl font-medium text-gray-900 dark:text-gray-100 text-center">
             {{ __('LELANG') }}
@@ -15,11 +21,16 @@
             {{ __('Lengkapi data lelang !') }}
         </p>
 
+        <div class="mt-6">
+            <h2 x-text="data?.product_name || '{{ old('product_name') }}'" class="text-xl"></h2>
+        <input type="hidden" name="product_name" x-bind:value="data ? data.product_name : '{{ old('product_name') }}'">
+    </div>
+
         <div class="flex flex-col gap-2 my-4">
-            <x-input-label for="active" value="{{ __('Aktif') }}" />
+            <x-input-label for="active" value="{{ __('Aktif') }}" class="w-fit" />
             <div class="checkbox-wrapper-51">
                 <input type="hidden" value="0" name="active">
-                <input id="active" type="checkbox" value="1" name="active" :checked="data?.active" />
+                <input id="active" type="checkbox" :value="data?.active || '{{ old('active') }}'" name="active" :checked="data?.active || '{{ old('active') }}'" />
                 <label class="toggle" for="active">
                     <span>
                         <svg viewBox="0 0 10 10" height="10px" width="10px">
@@ -73,8 +84,8 @@
             <button class="ql-underline"></button>
             <button class="ql-strike"></button>
             <button class="ql-link"></button>
-            <button class="ql-image"></button>
-            <button class="ql-video"></button>
+            {{-- <button class="ql-image"></button>
+            <button class="ql-video"></button> --}}
             <select class="ql-color"></select>
             <select class="ql-background"></select>
             <button class="ql-script" value="sub"></button>
@@ -89,7 +100,7 @@
             <select class="ql-align"></select>
             <button class="ql-clean"></button>
         </div>
-        <div id="rules-editor" class="bg-white text-black rounded-b [&>.ql-editor]:min-h-52"
+        <div id="rules-editor" class="my-input rounded-b [&>.ql-editor]:min-h-52"
             x-html="data?.rules ||'{{ old('rules') }}'">
         </div>
 

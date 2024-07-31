@@ -34,7 +34,7 @@ class ProductController extends Controller
 
         $validated = $request->validate($queryParams);
 
-        $data = Product::with("product_variant", "promo")->latest();
+        $data = Product::with("product_variant", "promo", "auction")->latest();
 
         if (isset($validated["name"])) {
             $data = $data->where('name', 'like', '%' . $validated["name"] . '%');
@@ -76,12 +76,15 @@ class ProductController extends Controller
                 $priceFormatted = 'Rp. ' . number_format($minPrice, 0, ',', '.') . ' - Rp. ' . number_format($maxPrice, 0, ',', '.');
             }
 
+            // ADD PRODUCT NAME TO DATA AUCTION UNTUK DITAMPILKAN DI FORM AUCTION
+            $auction = $item->auction ? array_merge($item->auction->toArray(), ['product_name' => $item->name]) : ['product_name' => $item->name, 'product_id' => $item->id];
+            
             return [
                 'name' => $item->name,
                 'stock' => $stock,
                 'price' => $priceFormatted,
                 'promo' => $item->promo->active ?? null,
-                'auction' => $item->auction ?? null,
+                'auction' => $auction,
                 'id' => $item->id,
             ];
         });

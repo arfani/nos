@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateAuctionRequest extends FormRequest
+class AuctionRequest extends FormRequest
 {
     protected $errorBag = 'auction_update';
 
@@ -17,11 +17,13 @@ class UpdateAuctionRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'product_id' => ['required'],
             'active' => ['required'],
             'endtime' => ['required'],
             'bid_start' => ['required'],
             'bid_increment' => ['required'],
-            'rules' => ['nullable', 'string'],
+            'rules' => ['nullable','string'],
+            'id' => ['nullable', 'numeric'],
         ];
     }
 
