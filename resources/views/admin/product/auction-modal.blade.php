@@ -1,19 +1,17 @@
 <x-ar.modal name="modal-auction" :show="$errors->auction_update->isNotEmpty()">
-    <form id="auction-form" method="post" class="p-6" {{-- jika data.id ada berarti edit mode, jika tidak mode store --}}
-        :action="'{{ route('auction.store') }}'">
+    <form id="auction-form" method="post" class="p-6" {{-- jika data.id ada berarti edit mode, jika tidak mode store --}} :action="'{{ route('auction.store') }}'">
         @csrf
 
         <div x-init="console.log('{{ $errors->auction_update }}')"></div>
         <div x-init="$watch('show', () => console.log('{{ $errors->auction_update }}', data?.active))"></div>
-        
+
         {{-- INPUT ID UNTUK MENDAPATKAN old('id') pada tag form --}}
         <input type="hidden" name="id" x-bind:value="data ? data.id : '{{ old('id') }}'">
 
         {{-- INPUT PRODUCT ID UNTUK DISIMPAN DI AUCTION SAAT STORE MODE --}}
-        <input type="hidden" name="product_id"
-            x-bind:value="data?.product_id || '{{ old('product_id') }}'">
+        <input type="hidden" name="product_id" x-bind:value="data?.product_id || '{{ old('product_id') }}'">
 
-        <h2 class="text-lg md:text-2xl font-medium text-gray-900 dark:text-gray-100 text-center">
+        <h2 class="text-lg md:text-2xl font-medium text-gray-900 dark:text-gray-100 text-center tracking-widest">
             {{ __('LELANG') }}
         </h2>
 
@@ -23,14 +21,16 @@
 
         <div class="mt-6">
             <h2 x-text="data?.product_name || '{{ old('product_name') }}'" class="text-xl"></h2>
-        <input type="hidden" name="product_name" x-bind:value="data ? data.product_name : '{{ old('product_name') }}'">
-    </div>
+            <input type="hidden" name="product_name"
+                x-bind:value="data ? data.product_name : '{{ old('product_name') }}'">
+        </div>
 
         <div class="flex flex-col gap-2 my-4">
             <x-input-label for="active" value="{{ __('Aktif') }}" class="w-fit" />
             <div class="checkbox-wrapper-51">
-                <input type="hidden" value="0" name="active">
-                <input id="active" type="checkbox" :value="data?.active || '{{ old('active') }}'" name="active" :checked="data?.active || '{{ old('active') }}'" />
+                {{-- <input type="hidden" value="0" name="active"> --}}
+                <input id="active" type="checkbox" value="1" name="active"
+                    :checked="data?.active || '{{ old('active') }}' ? true : false" />
                 <label class="toggle" for="active">
                     <span>
                         <svg viewBox="0 0 10 10" height="10px" width="10px">
@@ -59,7 +59,7 @@
                     class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">Rp</span>
                 <x-text-input type="number" id="bid_start" name="bid_start" min="0"
                     class="my-input bg-primary/5 rounded-r rounded-l-none" placeholder="200000"
-                    x-bind:value="data?.bid_start || `{{ old('bid_start') }}`" />
+                    x-bind:value="data?.bid_start || `{{ old('bid_start') }}`" required />
             </div>
             <x-input-error :messages="$errors->auction_update->get('bid_start')" class="mt-2" />
         </div>
@@ -71,7 +71,7 @@
                     class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">Rp</span>
                 <x-text-input type="number" id="bid_increment" name="bid_increment" min="0"
                     class="my-input bg-primary/5 rounded-r rounded-l-none" placeholder="10000"
-                    x-bind:value="data?.bid_increment || `{{ old('bid_increment') }}`" />
+                    x-bind:value="data?.bid_increment || `{{ old('bid_increment') }}`" required />
             </div>
             <x-input-error :messages="$errors->auction_update->get('bid_increment')" class="mt-2" />
         </div>

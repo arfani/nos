@@ -18,7 +18,7 @@ class AuctionRequest extends FormRequest
     {
         return [
             'product_id' => ['required'],
-            'active' => ['required'],
+            'active' => ['nullable', 'boolean'],
             'endtime' => ['required'],
             'bid_start' => ['required'],
             'bid_increment' => ['required'],
