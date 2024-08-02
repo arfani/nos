@@ -29,7 +29,7 @@
         <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                 <div class="w-10 rounded-full">
-                    <img alt="Tailwind CSS Navbar component"
+                    <img alt="{{ auth()->user()->name . "'s Foto" }}"
                         src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}"
                         />
                 </div>

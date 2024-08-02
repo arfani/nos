@@ -2,9 +2,6 @@
     <form id="auction-form" method="post" class="p-6" {{-- jika data.id ada berarti edit mode, jika tidak mode store --}} :action="'{{ route('auction.store') }}'">
         @csrf
 
-        <div x-init="console.log('{{ $errors->auction_update }}')"></div>
-        <div x-init="$watch('show', () => console.log('{{ $errors->auction_update }}', data?.active))"></div>
-
         {{-- INPUT ID UNTUK MENDAPATKAN old('id') pada tag form --}}
         <input type="hidden" name="id" x-bind:value="data ? data.id : '{{ old('id') }}'">
 
