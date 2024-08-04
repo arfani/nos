@@ -34,6 +34,44 @@
         // This will hide the loading screen once the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.loadingScreen').style.display = 'none';
+
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+
+            const redirectToSearch = () => {
+                const query = searchInput.value;
+
+                if (query == '') {
+                    alert('ketik yang ingin anda cari di kolom pencarian terlebih dahulu !');
+                    searchInput.focus();
+                    return
+                }
+
+                const url = `/products?q=${encodeURIComponent(query)}`;
+                window.location.href = url;
+            };
+
+            // Function to get the query parameter value
+            const getQueryParam = (param) => {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            };
+
+            // Set the input value from the query parameter on page load
+            const searchQuery = getQueryParam('q');
+            if (searchQuery) {
+                searchInput.value = decodeURIComponent(searchQuery);
+            }
+
+            // Event listener for the search button click
+            searchButton.addEventListener('click', redirectToSearch);
+
+            // Event listener for Enter key press in the input field
+            searchInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    redirectToSearch();
+                }
+            });
         });
 
         // Alternatively, use the window load event to ensure all resources are loaded

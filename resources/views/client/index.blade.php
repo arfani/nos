@@ -1,4 +1,4 @@
-@props([
+{{-- @props([
     'products' => [
         [
             'name' => 'Product test 1',
@@ -64,12 +64,13 @@
             ],
         ],
     ],
-])
+]) --}}
 
 <x-client-layout>
     @push('styles')
         @vite(['resources/css/client/home.css'])
     @endpush
+
     @if (session('status') == 'email-is-verified')
         <div x-data="{ show: false }" x-show="show" x-init="setTimeout(() => show = true, 100)
         setTimeout(() => show = false, 5000)" @click="show = false"
@@ -135,302 +136,209 @@
             <div class="flex gap-1">
                 <a href="{{ $notice->link }}" class="btn btn-sm btn-secondary"
                     x-show="'{{ $notice->link }}' !== ''">Lihat</a>
-                    <button class="btn btn-sm btn-circle bg-transparent outline-none border-0 hover:text-primary text-primary-content" @click="dismissNotice"><i class="fa fa-xmark"></i></button>
+                <button
+                    class="btn btn-sm btn-circle bg-transparent outline-none border-0 hover:text-primary text-primary-content"
+                    @click="dismissNotice"><i class="fa fa-xmark"></i></button>
             </div>
         </div>
     </div>
 
     {{-- HERO --}}
-    <div class="hero bg-base-200 mb-14">
-        <div class="hero-content flex-col sm:flex-row-reverse lg:mx-10">
-            <div class="!w-60 sm:!w-80 swiper heroSwiper">
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide rounded-box mask mask-squircle">
-                        <img src="{{ Storage::url('sliders/a.jpg') }}" class="w-full"
-                            alt="Tailwind CSS Carousel component" />
-                    </div>
-                    <div class="swiper-slide rounded-box mask mask-squircle">
-                        <img src="{{ Storage::url('sliders/b.jpg') }}" class="w-full"
-                            alt="Tailwind CSS Carousel component" />
-                    </div>
-                    <div class="swiper-slide rounded-box mask mask-squircle">
-                        <img src="{{ Storage::url('sliders/c.jpg') }}" class="w-full"
-                            alt="Tailwind CSS Carousel component" />
+    @if ($hero['data']->is_show)
+        <div class="hero bg-base-200 mb-14">
+            <div class="hero-content flex-col sm:flex-row-reverse lg:mx-10">
+                <div class="!w-60 sm:!w-80 swiper heroSwiper">
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        @foreach ($hero['product_pictures'] as $product)
+                            @if ($product->product_pictures->isNotEmpty())
+                                <div class="swiper-slide rounded-box mask mask-squircle">
+                                    <img src="{{ Storage::url($product->product_pictures->first()->path) }}"
+                                        class="w-full" alt="product images" />
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
-            </div>
-            <div class="text-center sm:text-left w-fit">
-                <h1 class="text-2xl sm:text-3xl font-bold">Barang Bergaransi !</h1>
-                <p class="py-6">Kualitas tinggi dengan garansi Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit. Repellendus alias est voluptate rerum dolorem ad culpa quos, voluptates itaque reiciendis
-                    maxime eum, odit deleniti in at ratione asperiores iste facere.</p>
-                <div class="relative">
-                    @include('components_custom.button-hero')
+                <div class="text-center sm:text-left w-fit">
+                    <h1 class="text-2xl sm:text-3xl font-bold">{{ $hero['data']->title }}</h1>
+                    <p class="py-6">
+                        {{ $hero['data']->description }}
+                    </p>
+                    <div class="relative">
+                        @include('components_custom.button-hero')
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     {{-- PROMO --}}
-    <div class="promo mb-14">
-        <h2 class="text-center text-3xl uppercase font-bold tracking-wider">Spesial Promo <i
-                class="fa fa-tags text-red-500 text-2xl pb-1"></i></h2>
-        <div class="swiper promoSwiper w-full pt-5">
-            <div class="w-full text-center mt-2 mb-6">
-                <a href="{{ route('client.promo') }}" class="btn btn-primary btn-sm btn-ghost tracking-wider">Lihat
-                    Semua</a>
+    @if ($promo['data']->is_show)
+        <div class="promo mb-14">
+            <h2 class="text-center text-3xl uppercase font-bold tracking-wider">
+                {{ $promo['data']->title }} <i class="fa fa-tags text-red-500 text-2xl pb-1"></i>
+            </h2>
+            <p class="text-center pt-2">{{ $promo['data']->description }}</p>
+            <div class="swiper promoSwiper w-full pt-5">
+                <div class="w-full text-center mt-2 mb-6">
+                    <a href="{{ route('client.promo') }}" class="btn btn-primary btn-sm btn-ghost tracking-wider">
+                        Lihat Semua
+                    </a>
+                </div>
+                <div class="swiper-wrapper">
+                    @foreach ($promo['items'] as $promo_item)
+                        <div class="swiper-slide">
+                            <x-client.logo-promo />
+                            <a href="{{ route('client.product', $promo_item->product->slug) }}">
+                                <div class="absolute inset-0 flex items-center justify-center text-3xl">
+                                    <div
+                                        class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                        <x-client.format-rp
+                                            value="{{ $promo_item->product->product_variant[0]->price }}" />
+                                    </div>
+                                </div>
+                                @if ($promo_item->product->product_pictures->isNotEmpty())
+                                    <img
+                                        src="{{ Storage::url($promo_item->product->product_pictures->first()->path) }}" />
+                                @endif
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-pagination"></div>
             </div>
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <x-client.logo-promo />
-                    <a href="{{ route('client.product', 'test') }}">
-                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                        <img src="{{ Storage::url('mocks/a.jpg') }}" />
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <x-client.logo-promo />
-                    <a href="{{ route('client.product', 'test') }}">
-                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                        <img src="{{ Storage::url('mocks/b.jpg') }}" />
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <x-client.logo-promo />
-                    <a href="{{ route('client.product', 'test') }}">
-                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                        <img src="{{ Storage::url('mocks/c.jpg') }}" />
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <x-client.logo-promo />
-                    <a href="{{ route('client.product', 'test') }}">
-                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                        <img src="{{ Storage::url('mocks/d.jpg') }}" />
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <x-client.logo-promo />
-                    <a href="{{ route('client.product', 'test') }}">
-                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                        <img src="{{ Storage::url('mocks/e.jpg') }}" />
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <x-client.logo-promo />
-                    <a href="{{ route('client.product', 'test') }}">
-                        <div class="absolute inset-0 flex items-center justify-center text-3xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                        <img src="{{ Storage::url('mocks/f.jpg') }}" />
-                    </a>
-                </div>
-            </div>
-            <div class="swiper-pagination"></div>
         </div>
-    </div>
-
+    @endif
 
     {{-- LELANG --}}
-    <div class="lelang mb-14 bg-base-300 pt-10 pb-12">
-        <h2 class="text-center mb-10 text-3xl uppercase font-bold tracking-wider">Barang Lelang <i
-                class="fa fa-hammer fa-flip-horizontal text-blue-500"></i></h2>
-
-        <div class="flex flex-col lg:flex-row items-center">
-            <div class="swiper lelangSwiper mb-10 lg:mb-0 !w-60 !h-60">
-                <div class="swiper-wrapper lg:mx-24">
-                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
-                        <x-client.countdown :endtime="now()->addDays(2)" />
-                        <a href="{{ route('client.product', 'test') }}">
-                            <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
+    @if ($auction['data']->is_show)
+        <div class="lelang mb-14 bg-base-300 pt-10 pb-12">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="swiper lelangSwiper mb-10 lg:mb-0 !w-60 !h-60">
+                    <div class="swiper-wrapper lg:mx-24">
+                        @foreach ($auction['items'] as $auction_item)
+                            <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
+                                <x-client.countdown :endtime="$auction_item->endtime" />
+                                <a href="{{ route('client.product', $auction_item->product->slug) }}">
+                                    <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
+                                        <div
+                                            class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                            <x-client.format-rp
+                                                value="{{ $auction_item->product->product_variant[0]->price }}" />
+                                        </div>
+                                    </div>
+                                    @if ($auction_item->product->product_pictures->isNotEmpty())
+                                        <img
+                                            src="{{ Storage::url($auction_item->product->product_pictures->first()->path) }}" />
+                                    @endif
+                                </a>
                             </div>
-                        </div>
-                            <img src="{{ Storage::url('mocks/a.jpg') }}" alt="" srcset="">
-                        </a>
-                    </div>
-                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
-                        <x-client.countdown :endtime="now()->addDays(2)" />
-                        <a href="{{ route('client.product', 'test') }}">
-                            <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                            <img src="{{ Storage::url('mocks/b.jpg') }}" alt="" srcset="">
-                        </a>
-                    </div>
-                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
-                        <x-client.countdown :endtime="now()->addDays(2)" />
-                        <a href="{{ route('client.product', 'test') }}">
-                            <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                            <img src="{{ Storage::url('mocks/c.jpg') }}" alt="" srcset="">
-                        </a>
-                    </div>
-                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
-                        <x-client.countdown :endtime="now()->addDays(7)" />
-                        <a href="{{ route('client.product', 'test') }}">
-                            <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                            <img src="{{ Storage::url('mocks/d.jpg') }}" alt="" srcset="">
-                        </a>
-                    </div>
-                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
-                        <x-client.countdown :endtime="now()->addDays(4)" />
-                        <a href="{{ route('client.product', 'test') }}">
-                            <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                            <img src="{{ Storage::url('mocks/e.jpg') }}" alt="" srcset="">
-                        </a>
-                    </div>
-                    <div class="swiper-slide [&>img]:h-full [&>img]:w-full">
-                        <x-client.countdown :endtime="now()->addDays(5)" />
-                            <a href="{{ route('client.product', 'test') }}">
-                                <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
-                            <div class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                Rp. 200.000
-                            </div>
-                        </div>
-                                <img src="{{ Storage::url('mocks/f.jpg') }}" alt="" srcset="" class="block">
-                            </a>
+                        @endforeach
                     </div>
                 </div>
-            </div>
 
-            <div class="text-center flex-1 lg:ml-32 lg:mr-8">
-                <h1 class="text-xl sm:text-2xl font-bold">Jangan Lewatkan !</h1>
-                <p class="py-4">Segera checkout barang-barang yang kami lelang sebelum terlambat !! Lorem ipsum
-                    dolor,
-                    sit
-                    amet consectetur adipisicing elit. Debitis rerum, cumque quidem nam mollitia aperiam suscipit
-                    voluptatem fugit earum ipsa ducimus provident excepturi ullam ipsum unde ratione, dolore voluptates
-                    non?</p>
-                <a href="{{ route('client.lelang') }}" class="btn btn-primary tracking-wider">Lihat Semua</a>
+                <div class="text-center flex-1 lg:ml-32 lg:mr-8">
+                    <h2 class="text-center mb-2 text-3xl uppercase font-bold tracking-wider">
+                        {{ $auction['data']->title }} <i class="fa fa-hammer fa-flip-horizontal text-blue-500"></i>
+                    </h2>
+                    <p class="py-4">
+                        {{ $auction['data']->description }}
+                    </p>
+                    <a href="{{ route('client.lelang') }}" class="btn btn-primary tracking-wider">Lihat Semua</a>
+                </div>
             </div>
         </div>
-    </div>
-
+    @endif
 
     {{-- PRODUCTS --}}
-    <div class="products">
-        <h2 class="text-center mb-10 text-3xl uppercase font-bold tracking-wider">PRODUK KAMI</h2>
+    @if ($products['data']->is_show)
+        <div class="products">
+            <h2 class="text-center text-3xl uppercase font-bold tracking-wider">{{ $products['data']->title }}</h2>
+            <p class="text-center mb-8 mt-2">{{ $products['data']->description }}</p>
+            <div class="flex flex-wrap justify-around">
+                @foreach ($products['items'] as $product)
+                    <x-client.product-item :product="$product" />
+                @endforeach
+            </div>
 
-        <div class="flex flex-wrap justify-around">
-            @foreach ($products as $item)
-                <x-client.product-item :product="$item" />
-            @endforeach
+            <div class="w-full text-center my-2">
+                <a href="{{ route('client.products') }}" class="btn btn-primary btn-ghost tracking-wider">Lihat Semua
+                    Produk</a>
+            </div>
         </div>
-
-        <div class="w-full text-center my-2">
-            <a href="{{ route('client.products') }}" class="btn btn-primary btn-ghost tracking-wider">Lihat Semua
-                Produk</a>
-        </div>
-    </div>
+    @endif
 
     <x-client.features />
 
     {{-- TESTIMONIAL --}}
-    <div class="testimonial mb-14 pt-10">
-        <h2 class="text-center text-3xl uppercase font-bold tracking-wider">Kata Pelanggan Kami</h2>
-
-        <div class="flex flex-col lg:flex-row items-center">
-
-            <div class="swiper testimonialSwiper mb-10 lg:mb-0 !w-3/4 !my-6">
-                <div class="swiper-wrapper !my-10">
-                    @foreach ($testimonials as $item)
-                    <div class="swiper-slide !bg-transparent">
-                        <div class="chat chat-start">
-                            <div class="chat-image avatar">
-                                <div class="w-10 rounded-full">
-                                    <img alt="profile photo"
-                                        src="{{ isset($item->img) ? Storage::url($item->img) : asset('assets/images/image-not-found.webp') }}"
-                                        />
+    @if ($testimonial['data']->is_show)
+        <div class="testimonial mb-14 pt-10">
+            <h2 class="text-center text-3xl uppercase font-bold tracking-wider">{{ $testimonial['data']->title }}</h2>
+            <p class="text-center mt-2">{{ $testimonial['data']->description }}</p>
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="swiper testimonialSwiper mb-10 lg:mb-0 !w-3/4 !my-2">
+                    <div class="swiper-wrapper !my-10">
+                        @foreach ($testimonial['items'] as $testi)
+                            <div class="swiper-slide !bg-transparent">
+                                <div class="chat chat-start">
+                                    <div class="chat-image avatar">
+                                        <div class="w-10 rounded-full">
+                                            <img alt="profile photo"
+                                                src="{{ isset($testi->img) ? Storage::url($testi->img) : asset('assets/images/image-not-found.webp') }}" />
+                                        </div>
+                                    </div>
+                                    <div class="chat-header text-primary ml-2">
+                                        {{ $testi->name }}
+                                    </div>
+                                    <div class="chat-bubble bg-secondary text-secondary-content">
+                                        {{ $testi->message }}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="chat-header text-primary ml-2">
-                                {{ $item->name }}
-                            </div>
-                            <div class="chat-bubble bg-secondary text-secondary-content">
-                                {{ $item->message }}
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
             </div>
-
         </div>
-    </div>
+    @endif
 
     {{-- FAQ --}}
-    <div class="faq mb-10">
-        <h2 class="text-center text-3xl uppercase font-bold tracking-wider mb-10">Yang Sering ditanyakan</h2>
-
-        @foreach ($faqs as $item)
-            <div class="collapse collapse-arrow bg-base-200 w-fit mx-9 mb-1">
-                <input type="radio" name="faq" />
-                <div class="collapse-title text-xl font-medium bg-base-300">
-                    {{ $item->question }}
+    @if ($faq['data']->is_show)
+        <div class="faq mb-10">
+            <h2 class="text-center text-3xl uppercase font-bold tracking-wider">{{ $faq['data']->title }}</h2>
+            <p class="text-center mt-2 mb-8">{{ $faq['data']->description }}</p>
+            @foreach ($faq['items'] as $faq_item)
+                <div class="collapse collapse-arrow bg-base-200 w-fit mx-9 mb-1">
+                    <input type="radio" name="faq" />
+                    <div class="collapse-title text-xl font-medium bg-base-300">
+                        {{ $faq_item->question }}
+                    </div>
+                    <div class="collapse-content pt-2">
+                        <p>{{ $faq_item->answer }}</p>
+                    </div>
                 </div>
-                <div class="collapse-content pt-2">
-                    <p>{{ $item->answer }}</p>
-                </div>
-            </div>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
+    @endif
 
     {{-- BRANDS --}}
-    <div class="brands my-20">
-        <h2 class="text-center text-3xl uppercase font-bold tracking-wider mb-10">Brand Kami</h2>
-
-        <div class="swiper brandsSwiper">
-            <div class="swiper-wrapper">
-                @foreach ($brands as $item)
-                    <div class="swiper-slide">
-                        <a
-                            @isset($item->link)
-                        href="{{ $item->link }}"
-                    @endisset>
-                            <img src="{{ Storage::url($item->logo) }}" alt="logo {{ $item->name }}">
-                        </a>
-                    </div>
-                @endforeach
+    @if ($brand['data']->is_show)
+        <div class="brands my-20">
+            <h2 class="text-center text-3xl uppercase font-bold tracking-wider">{{ $brand['data']->title }}</h2>
+            <p class="text-center mt-2 mb-8">{{ $brand['data']->description }}</p>
+            <div class="swiper brandsSwiper">
+                <div class="swiper-wrapper">
+                    @foreach ($brand['items'] as $brand_item)
+                        <div class="swiper-slide">
+                            <a href="{{ $brand_item->link }}">
+                                <img src="{{ Storage::url($brand_item->logo) }}" alt="logo {{ $brand_item->name }}">
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-pagination"></div>
             </div>
-            <div class="swiper-pagination"></div>
         </div>
-    </div>
+    @endif
 </x-client-layout>

@@ -32,7 +32,7 @@ class StoreProductRequest extends FormRequest
             'weight' => ['nullable', 'numeric'],
             'sku' => ['nullable', 'string', Rule::unique(ProductVariant::class)],
             'active' => ['required', 'boolean'],
-            'desc' => ['nullable', 'string'],
+            'description' => ['nullable', 'string'],
             'categories' => ['nullable'],
             'product_pictures' => ['nullable'],
             'discount' => ['nullable'],

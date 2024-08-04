@@ -1,4 +1,4 @@
-@props([
+{{-- @props([
     'products' => [
         [
             'name' => 'Product test 2',
@@ -127,14 +127,17 @@
             ],
         ],
     ],
-])
+]) --}}
+
 <x-client-layout>
-    <h2 class="text-center mb-10 text-3xl uppercase font-bold tracking-wider">SPESIAL PROMO <i
-            class="fa fa-tags text-red-500 text-2xl pb-1"></i></h2>
+    <h2 class="text-center text-3xl uppercase font-bold tracking-wider">
+        {{ $promo['data']->title }} <i class="fa fa-tags text-red-500 text-2xl pb-1"></i>
+    </h2>
+    <p class="text-center pt-2 mb-8">{{ $promo['data']->description }}</p>
 
     <div class="flex flex-wrap justify-around">
-        @foreach ($products as $item)
-            <x-client.product-item :product="$item" />
+        @foreach ($promo['items'] as $product)
+            <x-client.product-item :product="$product" />
         @endforeach
     </div>
 

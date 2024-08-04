@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('product_variant_name', 100)->nullable();
             $table->integer('stock')->unsigned()->nullable()->default(0);
             $table->float('price')->unsigned()->nullable()->default(0);
-            $table->integer('weight')->unsigned()->nullable()->default(0);
+            $table->decimal('weight')->unsigned()->nullable()->default(0);
             $table->string('sku', 100)->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();

@@ -57,7 +57,7 @@
                                                 class="tooltip ml-1" data-tip="Promo akan aktif jika ada diskon"><i
                                                     class="fa fa-circle-exclamation animate-pulse"></i></div></label>
                                         <div class="flex">
-                                            <input type="number" id="discount" name="discount" min="0"
+                                            <input type="number" id="discount" name="discount" min="0" step=".01"
                                                 class="my-input bg-primary/5 rounded-l"
                                                 value="{{ old('discount', isset($data->promo->discount) ? $data->promo->discount : 0) }}">
                                             <span
@@ -92,7 +92,7 @@
                                     <div class="flex flex-col mb-4">
                                         <label for="weight" class="font-semibold mb-2">Berat</label>
                                         <div class="flex">
-                                            <input type="number" id="weight" name="weight" min="0"
+                                            <input type="number" id="weight" name="weight" min="0" step=".01"
                                                 class="my-input bg-primary/5 rounded"
                                                 value="{{ old('weight', isset($data) ? $data->product_variant[0]->weight : 0) }}">
                                             <span
@@ -123,7 +123,7 @@
                                     <div class="flex flex-col mb-4 flex-1">
                                         <label for="length" class="font-semibold mb-2">Panjang</label>
                                         <div class="flex">
-                                            <input type="number" id="length" name="length" min="0"
+                                            <input type="number" id="length" name="length" min="0" step=".01"
                                                 class="my-input bg-primary/5 rounded-l flex-1" placeholder="Panjang"
                                                 max="1000"
                                                 value="{{ old('stock', isset($data->dimention->length) ? $data->dimention->length : 0) }}">
@@ -135,7 +135,7 @@
                                     <div class="flex flex-col mb-4 flex-1">
                                         <label for="width" class="font-semibold mb-2">Lebar</label>
                                         <div class="flex">
-                                            <input type="number" id="width" name="width" min="0"
+                                            <input type="number" id="width" name="width" min="0" step=".01"
                                                 class="my-input bg-primary/5 rounded-l flex-1" placeholder="Lebar"
                                                 max="1000"
                                                 value="{{ old('stock', isset($data->dimention->width) ? $data->dimention->width : 0) }}">
@@ -147,7 +147,7 @@
                                     <div class="flex flex-col mb-4 flex-1">
                                         <label for="height" class="font-semibold mb-2">Tinggi</label>
                                         <div class="flex">
-                                            <input type="number" id="height" name="height" min="0"
+                                            <input type="number" id="height" name="height" min="0" step=".01"
                                                 class="my-input bg-primary/5 rounded-l flex-1" placeholder="Tinggi"
                                                 max="1000"
                                                 value="{{ old('stock', isset($data->dimention->height) ? $data->dimention->height : 0) }}">

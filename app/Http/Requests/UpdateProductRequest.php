@@ -32,7 +32,7 @@ class UpdateProductRequest extends FormRequest
             'weight' => ['nullable', 'numeric'],
             'sku' => ['nullable', 'string', Rule::unique(ProductVariant::class)->ignore($this->product->product_variant[0])],
             'active' => ['required', 'boolean'],
-            'desc' => ['nullable', 'string'],
+            'description' => ['nullable', 'string'],
             'categories' => ['nullable'],
             'product_pictures' => ['nullable'],
             'deleted_pictures' => ['nullable'],

@@ -1,8 +1,9 @@
 <x-client-layout>
-    <h2 class="text-center text-3xl uppercase font-bold tracking-wider">{{ $products['data']->title }}</h2>
-    <p class="text-center mb-8 mt-2">{{ $products['data']->description }}</p>
+    <h2 class="text-center text-3xl uppercase font-bold tracking-wider">{{ __('Produk ') . '"' . $category . '"' }}</h2>
+    <p class="text-center mb-8 mt-2">
+        {{ __('Halaman ini hanya menampilkan produk dengan kategori ')}} <strong>"{{ $category }}"</strong></p>
     <div class="flex flex-wrap justify-around">
-        @foreach ($products['items'] as $product)
+        @foreach ($products as $product)
             <x-client.product-item :product="$product" />
         @endforeach
     </div>

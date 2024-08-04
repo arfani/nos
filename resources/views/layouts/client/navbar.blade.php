@@ -1,7 +1,7 @@
 {{-- bottom navigation --}}
 <div class="btm-nav md:hidden bg-base-300 text-primary z-20">
     <a href="{{ route('client.home') }}" @class(['active' => Request::routeIs('client.home')])>
-        <div class="tooltip tooltip-primary" data-tip="Home">
+        <div class="tooltip tooltip-primary" data-tip="Halaman Utama">
             <span class="fa fa-home"></span>
         </div>
     </a>
@@ -30,8 +30,12 @@
 {{-- top navigation --}}
 <div class="navbar bg-base-300 fixed z-20 py-3 md:px-7">
     <div class="flex-1">
-        <a href="{{ route('client.home') }}" class="ml-2 sm:mr-2">
-            <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="60px" class="">
+        <a href="{{ route('client.home') }}" @class([
+            'ml-2 sm:mr-2',
+            'tooltip tooltip-primary tooltip-bottom' => !Request::routeIs(
+                'client.home'),
+        ]) data-tip="Halaman Utama">
+            <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="60px" />
         </a>
         <div class="tooltip tooltip-primary tooltip-right" data-tip="Daftar Kategori">
             <div tabindex="0" role="button" class="btn btn-ghost outline-none text-lg"
@@ -44,7 +48,12 @@
     <div class="flex-none">
         {{-- searching --}}
         <div class="form-control hidden md:block mr-2">
-            <input type="text" placeholder="Apa yang Anda cari ?" class="input input-bordered lg:w-96 w-auto" />
+            <div class="relative">
+                <input id="search-input" type="text" placeholder="Apa yang Anda cari ?" class="input input-bordered lg:w-96 w-auto" />
+                <button id="search-button" class="!absolute right-2 top-1/2 transform -translate-y-1/2 hover:bg-primary/20 rounded-full btn-sm">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
         </div>
         <button class="btn btn-ghost btn-circle md:hidden">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -82,7 +91,7 @@
         </div> -->
 
         {{-- cart --}}
-        <div class="dropdown dropdown-end dropdown-open" x-data>
+        <div class="dropdown dropdown-end" x-data>
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
                 <div class="indicator">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -101,14 +110,15 @@
                         <template x-for="item in $store.cart.items">
                             <div class="cart-item" :key="item.product.id">
                                 <div class="flex gap-2">
-                                    <img src="{{ Storage::url('mocks/a.jpg') }}" alt="" width="60px" class="rounded">
+                                    <img src="{{ Storage::url('mocks/a.jpg') }}" alt="" width="60px"
+                                        class="rounded">
                                     <div class="name flex-1">
                                         <div x-text="item.product.name"></div>
                                         <div x-text="'variant'"></div>
                                     </div>
                                     <div class="price mr-2">
                                         <div>
-                                            <span x-text="item.qty"></span> 
+                                            <span x-text="item.qty"></span>
                                             <span x-text="'x ' + item.product.price"></span>
                                         </div>
                                         <div x-text="'Harga sebelum diskon'"></div>

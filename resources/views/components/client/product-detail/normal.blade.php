@@ -1,86 +1,16 @@
-<div
-    class="img-slide-container rounded bg-base-200 shadow-xl text-base-content p-4 w-full h-fit sm:w-3/4 md:w-1/2 mx-auto lg:w-1/4 mb-6">
-    <div class="swiper mySwiper2">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/a.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/b.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/c.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/d.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/e.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/f.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/c.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/d.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/e.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/a.jpg') }}" />
-            </div>
-        </div>
-    </div>
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/a.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/b.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/c.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/d.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/e.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/f.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/c.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/d.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/e.jpg') }}" />
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ Storage::url('mocks/a.jpg') }}" />
-            </div>
-        </div>
-    </div>
-</div>
+<x-client.product-detail.thumbnail-picture :product="$product" />
 
 <div
     class="detail-product-container rounded bg-base-200 shadow-xl text-base-content p-4 w-full h-fit sm:w-3/4 md:w-1/2 mx-auto md:flex-1 mb-6">
     <h1 class="text-center text-xl sm:text-2xl font-bold">
-        {{ $product['name'] }}
+        {{ $product->name }}
     </h1>
 
     <div class="divider">
         Harga
     </div>
 
-    <x-client.format-rp :value="$product['price']" />
+    <x-client.format-rp :value="$product->product_variant->first()->price" />
 
     @if ($product['variants'])
         <div class="divider">Varian</div>
@@ -102,17 +32,17 @@
         </div>
     @endif
 
-    @if ($product['detail'])
+    @if ($product->detail_value->isNotEmpty())
         <div class="divider">Spesifikasi</div>
-        @foreach ($product['detail'] as $detail)
+        @foreach ($product->detail_value as $detail)
             <div class="specification">
-                <span>{{ $detail['name'] }}</span> : <span>{{ $detail['value'] }}</span>
+                <span>{{ $detail->detail->detail }}</span> : <span>{{ $detail->value }}</span>
             </div>
         @endforeach
     @endif
 
     <div class="divider">Deskripsi</div>
-    <p>{{ $product['description'] ?? 'No description found' }}</p>
+    <p>{{ $product->description ?? '-' }}</p>
 </div>
 
 <div
@@ -120,9 +50,9 @@
     <h1>Atur jumlah dan catatan</h1>
     <div class="divider"></div>
     <input type="number" min="1" value="1" class="input w-20 mb-2">
-    <div>Sisa stok : {{ $product['stock'] }}</div>
+    <div>Sisa stok : {{ $product->product_variant->first()->stock }}</div>
     <input type="text" class="input w-11/12 my-2" placeholder="Catatan">
-    <div class="mb-2">Subtotal : 100.000</div>
+    <div class="mb-2">Subtotal : <span>-</span></div>
     <div class="flex justify-center gap-3 mt-4">
         <button class="btn btn-ghost btn-sm text-lg "><i class="fa fa-share-nodes"></i></button>
         <button class="btn btn-ghost btn-sm text-lg text-secondary"><i class="fa fa-heart-circle-plus"></i></button>

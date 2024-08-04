@@ -19,4 +19,14 @@ class Auction extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    /**
+     * Get the user that owns the Auction
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function the_winner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'winner');
+    }
 }

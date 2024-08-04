@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\ProductPicture;
 use App\Models\ProductVariant;
 use App\Models\Promo;
+use App\Models\Setting;
 use App\Models\Variant;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -78,7 +79,7 @@ class ProductController extends Controller
 
             // ADD PRODUCT NAME TO DATA AUCTION UNTUK DITAMPILKAN DI FORM AUCTION
             $auction = $item->auction ? array_merge($item->auction->toArray(), ['product_name' => $item->name]) : ['product_name' => $item->name, 'product_id' => $item->id];
-            
+
             return [
                 'name' => $item->name,
                 'stock' => $stock,
@@ -111,7 +112,7 @@ class ProductController extends Controller
         $new_product = new Product();
         $new_product->name = $validated["name"];
         $new_product->slug = Str::of($validated["name"])->slug('-')->value;
-        $new_product->description = $validated["desc"];
+        $new_product->description = $validated["description"];
 
         DB::transaction(function () use ($new_product, $validated) {
             $new_product->save();
@@ -159,7 +160,7 @@ class ProductController extends Controller
 
             // DISCOUNT (PROMO)
             $discount = $validated["discount"];
-            if ($discount > 0) {
+            if ($discount && $discount > 0) {
                 $promo = new Promo();
                 $promo->product_id = $new_product->id;
                 $promo->discount = $discount;
@@ -220,6 +221,7 @@ class ProductController extends Controller
 
         $product->name = $validated["name"];
         $product->slug = Str::of($validated["name"])->slug('-')->value;
+        $product->description = $validated["description"];
 
         DB::transaction(function () use ($product, $validated) {
             $product->save();
@@ -280,20 +282,30 @@ class ProductController extends Controller
 
             // UPDATE DISCOUNT
             $discount = $validated["discount"];
-            $promo = Promo::firstOrNew(['product_id' => $product->id]);
-            $promo->discount = $discount;
+            if ($discount) {
+                $promo = Promo::firstOrNew(['product_id' => $product->id]);
+                $promo->discount = $discount;
 
-            // toggle promo based discount
-            if ($discount > 0) {
-                $promo->active = true;
+                // toggle promo based discount
+                if ($discount > 0) {
+                    $promo->active = true;
+                } else {
+                    $promo->active = false;
+                }
+
+                $promo->save();
             } else {
-                $promo->active = false;
+                // kosongkan diskon jika inputan kosong
+                $promo = Promo::firstWhere(['product_id' => $product->id]);
+                if ($promo) {
+                    $promo->discount = 0;
+                    $promo->active = false;
+                    $promo->save();
+                }
             }
 
-            $promo->save();
-
             // DIMENTION
-            $dimention = Dimention::where('product_id', $product->id)->first();
+            $dimention = Dimention::firstWhere('product_id', $product->id);
             $dimention->length = $validated["length"];
             $dimention->width = $validated["width"];
             $dimention->height = $validated["height"];
@@ -349,21 +361,61 @@ class ProductController extends Controller
             ->with('success', 'Berhasil dihapus !!');
     }
 
-    function allProducts(): View
+    function allProducts(Request $request): View
     {
-        return view('client.product.index');
+        $keyword = $request->query('q');
+
+        // jika ada query string untuk search
+        if ($keyword) {
+            $products = Product::with(['product_pictures', 'promo', 'auction'])
+                ->where('name', 'like', '%' . $keyword . '%')
+                ->where('active', 1)
+                // ->limit() // nanti dilimit setelah sudah bisa load more
+                ->latest()->get();
+
+            return view('client.product.product-by-keyword', compact('products', 'keyword'));
+        }
+
+        $product_data = Setting::where('section_name', 'product')->first();
+        $products = [
+            'data' => $product_data,
+            'items' => Product::with(['product_pictures', 'promo', 'auction'])
+                ->where('active', 1)
+                ->limit($product_data->show_items)->latest()->get()
+        ];
+
+        return view('client.product.index', compact('products'));
     }
 
-    function productById(): View
+    function product($slug): View
     {
-        return view('client.product.detail');
+        $product = Product::firstWhere('slug', $slug);
+
+        return view('client.product.detail', compact('product'));
     }
 
     function productsByCategory($category): View
     {
-        // get prduct where category is $category and then pass to view
-        //
+        $products = Product::with(['product_pictures', 'promo', 'auction'])
+            ->whereHas('category', function ($query) use ($category) {
+                $query->where('name', $category);
+            })
+            ->where('active', 1)
+            // ->limit() // nanti dilimit setelah sudah bisa load more
+            ->latest()->get();
 
-        return view('client.product.index');
+        return view('client.product.product-by-category', compact('products', 'category'));
+    }
+
+    function productsBySearch(Request $request): View
+    {
+        $keyword = $request->query('n');
+        $products = Product::with(['product_pictures', 'promo', 'auction'])
+            ->where('name', 'like', '%' . $keyword . '%')
+            ->where('active', 1)
+            // ->limit() // nanti dilimit setelah sudah bisa load more
+            ->latest()->get();
+
+        return view('client.product.product-by-keyword', compact('products'));
     }
 }

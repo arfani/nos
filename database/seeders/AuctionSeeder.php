@@ -21,7 +21,7 @@ class AuctionSeeder extends Seeder
         Auction::create([
             'product_id' => $product1->id,
             'active' => true,
-            'endtime' => now()->addDays(2),
+            'endtime' => now()->addDays(1),
             'bid_start' => 20000,
             'bid_increment' => 5000,
             'rules' => 'syarat dan ketentuan berlaku',
@@ -41,7 +41,7 @@ class AuctionSeeder extends Seeder
         Auction::create([
             'product_id' => $product3->id,
             'active' => true,
-            'endtime' => now()->addDays(2),
+            'endtime' => now()->addDays(3),
             'bid_start' => 200000,
             'bid_increment' => 50000,
             'rules' => 'pemenang silahkan menghubungi admin untuk konfirmasi ongkir dan alamat',
