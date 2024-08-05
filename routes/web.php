@@ -15,12 +15,16 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SosmedController;
 use App\Http\Controllers\TestimonialController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // MEMBER ROUTES
 Route::get('/', [ClientController::class, 'home'])->name('client.home');
 Route::get('/promo', [ClientController::class, 'promo'])->name('client.promo');
 Route::get('/lelang', [ClientController::class, 'lelang'])->name('client.lelang');
+
+Route::post('/bid', [AuctionController::class, 'bid'])->name('bid.store');
+Route::post('/comment', [AuctionController::class, 'comment'])->name('comment.store');
 
 // PRODUCTS
 Route::get('/products', [ProductController::class, 'allProducts'])->name('client.products');
@@ -106,5 +110,6 @@ require __DIR__ . '/auth.php';
 
 Route::get('testing', function () {
     
+    return User::firstWhere('username', 'member1')->id;
     return view('testing');
 });

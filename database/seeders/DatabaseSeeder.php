@@ -36,6 +36,8 @@ class DatabaseSeeder extends Seeder
             DimentionSeeder::class,
             AuctionSeeder::class,
             SettingSeeder::class,
+            BidSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }

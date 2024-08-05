@@ -193,7 +193,7 @@
                             <a href="{{ route('client.product', $promo_item->product->slug) }}">
                                 <div class="absolute inset-0 flex items-center justify-center text-3xl">
                                     <div
-                                        class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
+                                        class="top-4 left-2 bg-gradient-to-tr from-red-500 to-yellow-200 text-black px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
                                         <x-client.format-rp
                                             value="{{ $promo_item->product->product_variant[0]->price }}" />
                                     </div>
@@ -223,9 +223,9 @@
                                 <a href="{{ route('client.product', $auction_item->product->slug) }}">
                                     <div class="absolute inset-x-0 top-1/3 flex items-center justify-center text-xl">
                                         <div
-                                            class="top-4 left-2 bg-error text-error-content px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12">
-                                            <x-client.format-rp
-                                                value="{{ $auction_item->product->product_variant[0]->price }}" />
+                                            class="top-4 left-2 bg-gradient-to-tr from-red-500 to-yellow-200 text-black px-3 py-1 rounded font-bold shadow-md transform -rotate-12">
+                                            <div>Mulai dari</div>
+                                            <x-client.format-rp value="{{ $auction_item->bid_start }}" />
                                         </div>
                                     </div>
                                     @if ($auction_item->product->product_pictures->isNotEmpty())

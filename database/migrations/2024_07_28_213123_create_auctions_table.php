@@ -19,8 +19,8 @@ return new class extends Migration
             $table->float('bid_start')->unsigned()->nullable()->default(0);
             $table->float('bid_increment')->unsigned()->nullable()->default(0);
             $table->longText('rules')->nullable();
-            $table->unsignedBigInteger('winner')->nullable()->default(null);
-            $table->foreign('winner')->references('id')->on('users')->nullOnDelete();
+            // $table->unsignedBigInteger('winner')->nullable()->default(null);
+            $table->foreignUuid('winner')->nullable()->default(null)->references('id')->on('users')->noActionOnDelete();
             $table->float('bid_winner')->unsigned()->nullable()->default(null);
             $table->timestamps();
         });

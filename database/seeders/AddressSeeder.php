@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Address;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,8 @@ class AddressSeeder extends Seeder
      */
     public function run(): void
     {
+        $userMember = User::firstWhere('username', 'member1');
+
         Address::create([
             'name' => 'Rumah',
             'address' => 'Jalan Beo No. 22 Karang Kemong, Cakranegara Barat, Mataram, Lombok, NTB.',
@@ -20,7 +23,7 @@ class AddressSeeder extends Seeder
             'recipient' => 'Abdullah',
             'hp' => '081907456710',
             'isMain' => true,
-            'user_id' => 2,
+            'user_id' => $userMember->id,
         ]);
         
         Address::create([
@@ -30,7 +33,7 @@ class AddressSeeder extends Seeder
             'recipient' => 'Arfan',
             'hp' => '081907456710',
             'isMain' => false,
-            'user_id' => 2,
+            'user_id' => $userMember->id,
         ]);
     }
 }

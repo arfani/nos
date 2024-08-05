@@ -66,11 +66,11 @@
 
     <div class="flex flex-col items-start gap-2 mb-2">
         <span class="">Bid Tertinggi</span>
-        <span class="bg-secondary text-secondary-content py-2 px-4 rounded"><x-client.format-rp :value="$product->auction->bid_winner" /></span>
+        <span class="bg-secondary text-secondary-content py-2 px-4 rounded"><x-client.format-rp :value="$product->auction->bids->first()->value" /></span>
     </div>
     <div class="flex items-center gap-2">
         <span class="">Oleh</span>
-        <span class="bg-secondary text-secondary-content py-2 px-4 rounded">{{ $product->auction->the_winner->name ?? '-' }}</span>
+        <span class="bg-secondary text-secondary-content py-2 px-4 rounded">{{ auth()->user() && $product->auction->bids->first()->id === auth()->user()->id ? 'Anda' : $product->auction->bids->first()->user->name }}</span>
     </div>
 
     <div class="flex justify-center gap-3 mt-4">

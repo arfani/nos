@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Auction;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +19,8 @@ class AuctionSeeder extends Seeder
         $product2 = Product::where('name', 'Product dua')->first();
         $product3 = Product::where('name', 'Product tiga')->first();
 
+        $member2 = User::firstWhere('username', 'member2');
+        
         Auction::create([
             'product_id' => $product1->id,
             'active' => true,
@@ -34,8 +37,8 @@ class AuctionSeeder extends Seeder
             'bid_start' => 10000,
             'bid_increment' => 10000,
             'rules' => 'syarat dan ketentuan berlaku',
-            'winner' => 2,
-            'bid_winner' => 710000,
+            'winner' => $member2->id,
+            'bid_winner' => 500000,
         ]);
         
         Auction::create([

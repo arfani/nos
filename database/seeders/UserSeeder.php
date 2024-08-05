@@ -45,6 +45,38 @@ class UserSeeder extends Seeder
             'level_id' => 2
         ]);
 
+        User::factory()->create([
+            'name' => 'Member 2',
+            'username' => 'member2',
+            'email' => 'member2@example.com',
+            'hp' => '081907123123',
+            'img' => 'mocks/me.jpg',
+            'fullname' => 'Member 2 bin Fulan',
+            'birthday' => now(),
+            'gender' => 'm',
+            'status-pernikahan' => 'menikah',  
+            'status' => 'living life',
+            'occupation' => 'Pengusaha',
+            'education' => 'S1',
+            'level_id' => 2
+        ]);
+
+        User::factory()->create([
+            'name' => 'Member 3',
+            'username' => 'member3',
+            'email' => 'member3@example.com',
+            'hp' => '081907123123',
+            'img' => 'mocks/me.jpg',
+            'fullname' => 'Member 3 bin Fulan',
+            'birthday' => now(),
+            'gender' => 'm',
+            'status-pernikahan' => 'menikah',  
+            'status' => 'living life',
+            'occupation' => 'Pengusaha',
+            'education' => 'S1',
+            'level_id' => 2
+        ]);
+
       
     }
 }
