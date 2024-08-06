@@ -54,8 +54,12 @@
     <input type="text" class="input w-11/12 my-2" placeholder="Catatan">
     <div class="mb-2">Subtotal : <span>-</span></div>
     <div class="flex justify-center gap-3 mt-4">
-        <button class="btn btn-ghost btn-sm text-lg "><i class="fa fa-share-nodes"></i></button>
-        <button class="btn btn-ghost btn-sm text-lg text-secondary"><i class="fa fa-heart-circle-plus"></i></button>
+        <div class="tooltip" data-tip="Bagikan">
+            <button class="btn btn-ghost btn-sm text-lg" x-data
+                @click.prevent="$dispatch('open-modal', 'share-product')"><i class="fa fa-share-nodes"></i>
+            </button>
+        </div>
+        {{-- <button class="btn btn-ghost btn-sm text-lg text-secondary"><i class="fa fa-heart-circle-plus"></i></button> --}}
         <button class="btn btn-ghost btn-sm text-lg "><i class="fa fa-opencart"></i></button>
     </div>
 </div>

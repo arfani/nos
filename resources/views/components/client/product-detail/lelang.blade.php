@@ -66,22 +66,38 @@
 
     <div class="flex flex-col items-start gap-2 mb-2">
         <span class="">Bid Tertinggi</span>
-        <span class="bg-secondary text-secondary-content py-2 px-4 rounded"><x-client.format-rp :value="$product->auction->bids->first()->value" /></span>
+        <span class="bg-secondary text-secondary-content py-2 px-4 rounded">
+            @if ($product->auction->bids->isNotEmpty())
+                <x-client.format-rp :value="$product->auction->bids->first()->value" />
+            @else
+                -
+            @endif
+        </span>
     </div>
     <div class="flex items-center gap-2">
         <span class="">Oleh</span>
-        <span class="bg-secondary text-secondary-content py-2 px-4 rounded">{{ auth()->user() && $product->auction->bids->first()->id === auth()->user()->id ? 'Anda' : $product->auction->bids->first()->user->name }}</span>
+        <span class="bg-secondary text-secondary-content py-2 px-4 rounded">
+            @if (auth() && $product->auction->bids->isNotEmpty())
+                {{ $product->auction->bids->first()->id === auth()->user()->id ? 'Anda' : $product->auction->bids->first()->user->name }}
+            @else
+                -
+            @endif
+        </span>
     </div>
 
     <div class="flex justify-center gap-3 mt-4">
         <div class="tooltip" data-tip="Bagikan">
-            <button class="btn btn-ghost btn-sm text-lg "><i class="fa fa-share-nodes"></i></button>
+            <button class="btn btn-ghost btn-sm text-lg" x-data
+                @click.prevent="$dispatch('open-modal', 'share-product')"><i class="fa fa-share-nodes"></i>
+            </button>
         </div>
-        <div class="tooltip" data-tip="Favorit">
+        {{-- NANTI DITAMBAH FITUR WISHLIST ATAU FAVORITE --}}
+        {{-- <div class="tooltip" data-tip="Favorit">
             <button class="btn btn-ghost btn-sm text-lg text-secondary"><i class="fa fa-heart-circle-plus"></i></button>
-        </div>
+        </div> --}}
         <div class="tooltip" data-tip="Ikuti Lelang">
-            <a href="#bidding" class="btn btn-ghost btn-sm text-lg "><i class="fa fa-bullseye"></i></a>
+            <a href="#bidding" class="btn btn-ghost btn-sm text-lg" x-data
+                @click="$store.auction.isCommentTab = false"><i class="fa fa-bullseye"></i></a>
         </div>
     </div>
 </div>

@@ -27,38 +27,46 @@
     @endif
 
     <div id="bidding" class="mb-14 mt-0"></div>
-    <div class="w-full sm:w-11/12 mb-6 mx-auto" x-data="{ activeTab: 1 }">
+    <div class="w-full sm:w-11/12 mb-6 mx-auto" x-data>
         <div class="flex justify-center">
             <button class="px-4 py-2 -mb-px text-sm font-medium border-b-2"
-                :class="activeTab === 1 ? 'border-primary' : 'border-gray-800 text-gray-600'" @click="activeTab = 1">
+                :class="!$store.auction.isCommentTab ? 'border-primary' : 'border-gray-800 text-gray-600'"
+                @click="$store.auction.isCommentTab = false">
                 Bidding
             </button>
             <button class="px-4 py-2 -mb-px text-sm font-medium border-b-2"
-                :class="activeTab === 2 ? 'border-primary' : 'border-gray-800 text-gray-600'" @click="activeTab = 2">
+                :class="$store.auction.isCommentTab ? 'border-primary' : 'border-gray-800 text-gray-600'"
+                @click="$store.auction.isCommentTab = true">
                 Komentar
             </button>
         </div>
 
         <!-- Tab Contents -->
         <div class="p-6 bg-base-200 rounded">
-            <div x-show="activeTab === 1">
-                <h2 class="text-lg font-semibold pb-1 px-3 rounded border-b-2 border-b-primary w-fit mx-auto">Bidding
+            <div x-show="!$store.auction.isCommentTab">
+                @guest
+                    <div class="text-center text-error animate-pulse">Silahkan login untuk melakukan bidding</div>
+                @endguest
+                <h2 class="text-lg font-semibold pb-1 px-3 rounded border-b-2 border-b-primary w-fit mx-auto">
+                    Bidding
                 </h2>
-                <div class="flex gap-1 justify-center my-4">
-                    <form action="{{ route('bid.store') }}" method="POST">
-                        @csrf
-                        <input type="number" name="value"
-                            value="{{ $product->auction->bids->first()->value + $product->auction->bid_increment }}"
-                            step="{{ $product->auction->bid_increment }}" min="{{ $product->auction->bid_start }}"
-                            class="input">
-                        <input type="hidden" name="auction_id" value="{{ $product->auction->id }}">
-                        <div class="tooltip" data-tip="Bid">
-                            <button class="btn btn-primary" type="submit">
-                                <fa class="fa fa-bullseye"></fa>
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                @auth
+                    <div class="flex gap-1 justify-center my-4">
+                        <form action="{{ route('bid.store') }}" method="POST">
+                            @csrf
+                            <input type="number" name="value"
+                                value="{{ $product->auction->bids->isNotEmpty() ? $product->auction->bids->first()->value + $product->auction->bid_increment : $product->auction->bid_start }}"
+                                step="{{ $product->auction->bid_increment }}" min="{{ $product->auction->bid_start }}"
+                                class="input">
+                            <input type="hidden" name="auction_id" value="{{ $product->auction->id }}">
+                            <div class="tooltip" data-tip="Bid">
+                                <button class="btn btn-primary" type="submit">
+                                    <fa class="fa fa-bullseye"></fa>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                @endauth
 
                 @foreach ($product->auction->bids as $bid)
                     <div
@@ -79,19 +87,25 @@
                 @endforeach
 
             </div>
-            <div x-show="activeTab === 2">
-                <h2 class="text-lg font-semibold pb-1 px-3 rounded border-b-2 border-b-primary w-fit mx-auto">Komentar
+            <div x-show="$store.auction.isCommentTab">
+                @guest
+                    <div class="text-center text-error animate-pulse">Silahkan login untuk berkomentar</div>
+                @endguest
+                <h2 class="text-lg font-semibold pb-1 px-3 rounded border-b-2 border-b-primary w-fit mx-auto">
+                    Komentar
                 </h2>
-                <div class="flex gap-1 justify-center my-4">
-                    <form action="{{ route('comment.store') }}" method="POST">
-                        @csrf
-                        <input type="text" name="comment" class="input" placeholder="komentar yang sopan">
-                        <input type="hidden" name="auction_id" value="{{ $product->auction->id }}">
-                        <div class="tooltip" data-tip="Komentar">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
-                        </div>
-                    </form>
-                </div>
+                @auth
+                    <div class="flex gap-1 justify-center my-4">
+                        <form action="{{ route('comment.store') }}" method="POST">
+                            @csrf
+                            <input type="text" name="comment" class="input" placeholder="komentar yang sopan">
+                            <input type="hidden" name="auction_id" value="{{ $product->auction->id }}">
+                            <div class="tooltip" data-tip="Komentar">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                @endauth
 
                 @foreach ($product->auction->comments as $comment)
                     <div
@@ -115,3 +129,50 @@
         </div>
     </div>
 @endif
+
+
+<x-modal name="share-product" focusable>
+
+    <div class="p-6 pb-12">
+        <div class="text-center mb-4">
+            <h1 class="font-bold text-xl">Bagikan</h1>
+        </div>
+        <div class="flex justify-center gap-4">
+            <div class="tooltip tooltip-bottom" data-tip="Facebook">
+                <a href="https://www.facebook.com/sharer.php?u={{ url()->current() }}" target="_blank">
+                    <i class="fa fa-facebook text-3xl"></i>
+                </a>
+            </div>
+            <div x-data="deviceDetection()" class="tooltip tooltip-bottom" data-tip="Whatsapp">
+                <a :href="whatsappUrl" target="_blank">
+                    <i class="fa fa-whatsapp text-3xl"></i>
+                </a>
+            </div>
+            <div class="tooltip tooltip-bottom" data-tip="Twitter">
+                <a href="https://twitter.com/share?url={{ url()->current() }}&text={{ $product->name }}"
+                    target="_blank">
+                    <i class="fa fa-twitter text-3xl"></i>
+                </a>
+            </div>
+            <div class="tooltip tooltip-bottom" data-tip="Copy to clipboard">
+                <a href="#" x-data @click.prevent="navigator.clipboard.writeText('{{ url()->current() }}')">
+                    <i class="fa fa-copy text-3xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function deviceDetection() {
+            return {
+                isMobile: window.matchMedia("(max-width: 767px)").matches,
+                get whatsappUrl() {
+                    const currentUrl = '{{ url()->current() }}';
+                    return this.isMobile ?
+                        `https://api.whatsapp.com/send?text=${currentUrl}` :
+                        `https://web.whatsapp.com/send?text=${currentUrl}`;
+                }
+            }
+        }
+    </script>
+</x-modal>
