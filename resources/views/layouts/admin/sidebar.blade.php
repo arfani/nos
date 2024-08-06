@@ -19,14 +19,14 @@
          <a href="{{ route('product.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm', // 'bg-primary text-primary-content'=> Request::RouteIs('admin.dashboard') || Request::is('products/*'),
          ])>
-             Produk
+             Products
          </a>
          <a href="{{ route('category.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
              'bg-primary text-primary-content' =>
                  Request::RouteIs('category.index') || Request::is('admin/category/*'),
          ])>
-             Kategori
+             Categories
          </a>
          <a href="{{ route('notice.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
@@ -34,40 +34,40 @@
          ])>
              Notice
          </a>
-         <a href="{{ route('faq.index') }}" @class([
+         <a href="{{ route('admin-member.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
              'bg-primary text-primary-content' =>
-                 Request::RouteIs('faq.index') || Request::is('admin/faq/*'),
+                 Request::RouteIs('admin-member.index') || Request::is('admin/member/*'),
          ])>
-             FAQ
+             Members
          </a>
          <a href="{{ route('brand.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
              'bg-primary text-primary-content' =>
                  Request::RouteIs('brand.index') || Request::is('admin/brand/*'),
          ])>
-             Brand
+             Brands
          </a>
-         <a href="{{ route('admin-member.index') }}" @class([
+         <a href="{{ route('faq.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
              'bg-primary text-primary-content' =>
-                 Request::RouteIs('admin-member.index') || Request::is('admin/member/*'),
+                 Request::RouteIs('faq.index') || Request::is('admin/faq/*'),
          ])>
-             Member
+             FAQ's
          </a>
          <a href="{{ route('feature.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
              'bg-primary text-primary-content' =>
                  Request::RouteIs('feature.index') || Request::is('admin/feature/*'),
          ])>
-             Feature
+             Features
          </a>
          <a href="{{ route('sosmed.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
              'bg-primary text-primary-content' =>
                  Request::RouteIs('sosmed.index') || Request::is('admin/sosmed/*'),
          ])>
-             Sosmed
+             Social Media
          </a>
          <a href="{{ route('testimonial.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
@@ -136,6 +136,14 @@
                  Request::is('admin/profile/*'),
          ])>
              Profile
+         </a>
+         <a href="{{ route('admin-profile.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('admin-profile.index') ||
+                 Request::is('admin/profile/*'),
+         ])>
+             Homepage Client
          </a>
 
          {{-- <a href="#" class="block px-4 py-3 mt-0 text-sm hover:bg-primary-content/20">Profil</a> --}}
