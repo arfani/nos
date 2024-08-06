@@ -137,11 +137,11 @@
          ])>
              Profile
          </a>
-         <a href="{{ route('admin-profile.index') }}" @class([
+         <a href="{{ route('homepage-client.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
              'bg-primary text-primary-content' =>
-                 Request::RouteIs('admin-profile.index') ||
-                 Request::is('admin/profile/*'),
+                 Request::RouteIs('homepage-client.index') ||
+                 Request::is('admin/homepage-client/*'),
          ])>
              Homepage Client
          </a>

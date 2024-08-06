@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FeatureController;
+use App\Http\Controllers\HomepageClientController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SosmedController;
@@ -93,6 +94,8 @@ Route::prefix('admin')
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
         Route::resource('auction', AuctionController::class)->only('store', 'update');
+        Route::resource('homepage-client', HomepageClientController::class)->only('index', 'update');
+
     });
 
 
