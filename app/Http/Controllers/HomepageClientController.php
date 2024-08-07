@@ -17,28 +17,44 @@ class HomepageClientController extends Controller
     function index(): View
     {
         // SETTINGS
-        $hero = Setting::where('section_name', 'hero')->first();
+        $hero = Setting::firstWhere('section_name', 'hero');
 
-        $promo = Setting::where('section_name', 'promo')->first();
+        $promo = Setting::firstWhere('section_name', 'promo');
 
-        $auction = Setting::where('section_name', 'auction')->first();
+        $auction = Setting::firstWhere('section_name', 'auction');
 
-        $products = Setting::where('section_name', 'product')->first();
+        $product = Setting::firstWhere('section_name', 'product');
 
-        $testimonial = Setting::where('section_name', 'testimonial')->first();
+        $testimonial = Setting::firstWhere('section_name', 'testimonial');
 
-        $faq = Setting::where('section_name', 'faq')->first();
+        $faq = Setting::firstWhere('section_name', 'faq');
 
-        $brand = Setting::where('section_name', 'brand')->first();
+        $brand = Setting::firstWhere('section_name', 'brand');
 
-        return view('admin.homepage-client.index', compact('hero'));
+        return view('admin.homepage-client.index', compact(
+            'hero',
+            'promo',
+            'auction',
+            'product',
+            'testimonial',
+            'faq',
+            'brand',
+        ));
     }
 
     function update(Request $request, $section_name)
     {
-        $hero = Setting::where('section_name', $section_name)->first();
-        $hero->update($request->all());
+        $request->validate([
+            'title' => ['required'],
+            'show_items' => ['numeric', 'min:1', 'max:100']
+        ], [
+            'title.required' => 'Judul tidak boleh kosong!'
+        ], []);
 
-        return redirect()->back()->with('success', 'Data Hero berhasil diupdate!');
+        $data = Setting::firstWhere('section_name', $section_name);
+        $data->update($request->all());
+
+        $section_name = $section_name === 'auction' ? 'lelang' : $section_name;
+        return redirect()->back()->with('success', 'Data ' . $section_name . ' berhasil diupdate!');
     }
 }

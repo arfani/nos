@@ -49,7 +49,7 @@ class SettingSeeder extends Seeder
             'section_name' => 'testimonial',
             'is_show' => true,
             'title' => 'KATA PELANGGAN',
-            'description' => '',
+            'description' => 'Testimoni dari pelanggan setia kami',
             'show_items' => 10
         ]);
         
