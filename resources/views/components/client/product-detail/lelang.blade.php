@@ -77,8 +77,8 @@
     <div class="flex items-center gap-2">
         <span class="">Oleh</span>
         <span class="bg-secondary text-secondary-content py-2 px-4 rounded">
-            @if (auth() && $product->auction->bids->isNotEmpty())
-                {{ $product->auction->bids->first()->id === auth()->user()->id ? 'Anda' : $product->auction->bids->first()->user->name }}
+            @if (auth()->user() && $product->auction->bids->isNotEmpty())
+                {{ $product->auction->bids->first()->user_id === auth()->user()->id ? 'Anda' : $product->auction->bids->first()->user->name }}
             @else
                 -
             @endif
