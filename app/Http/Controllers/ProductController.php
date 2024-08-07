@@ -361,30 +361,40 @@ class ProductController extends Controller
             ->with('success', 'Berhasil dihapus !!');
     }
 
-    function allProducts(Request $request): View
+    function allProducts(Request $request)
     {
         $keyword = $request->query('q');
-
-        // jika ada query string untuk search
+        $perPage = 10;
+    
         if ($keyword) {
             $products = Product::with(['product_pictures', 'promo', 'auction'])
                 ->where('name', 'like', '%' . $keyword . '%')
                 ->where('active', 1)
-                // ->limit() // nanti dilimit setelah sudah bisa load more
-                ->latest()->get();
-
+                ->latest()
+                ->paginate($perPage);
+    
+            if ($request->ajax()) {
+                return response()->json([
+                    'html' => view('components.client.product-items', compact('products'))->render()
+                ]);
+            }
+    
             return view('client.product.product-by-keyword', compact('products', 'keyword'));
         }
-
+    
         $product_data = Setting::where('section_name', 'product')->first();
-        $products = [
-            'data' => $product_data,
-            'items' => Product::with(['product_pictures', 'promo', 'auction'])
-                ->where('active', 1)
-                ->limit($product_data->show_items)->latest()->get()
-        ];
-
-        return view('client.product.index', compact('products'));
+        $products = Product::with(['product_pictures', 'promo', 'auction'])
+            ->where('active', 1)
+            ->latest()
+            ->paginate($perPage);
+    
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('components.client.product-items', compact('products'))->render()
+            ]);
+        }
+    
+        return view('client.product.index', compact('products', 'product_data'));
     }
 
     function product($slug): View

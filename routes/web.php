@@ -113,6 +113,7 @@ require __DIR__ . '/auth.php';
 
 Route::get('testing', function () {
     
+    dd(User::paginate(1));
     return User::firstWhere('username', 'member1')->id;
     return view('testing');
 });

@@ -5,8 +5,6 @@
                 class="rounded-xl" />
         </a>
 
-        {{-- {{ dd($product->auction) }} --}}
-
         @if (isset($product->auction) && $product->auction->active)
             <x-client.logo-lelang :endtime="$product->auction->endtime" />
         @elseif (isset($product->promo) && $product->promo->active)
