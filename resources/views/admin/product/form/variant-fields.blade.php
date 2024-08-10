@@ -46,7 +46,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Varian</th>
+                        <!-- Membuat header tabel dinamis berdasarkan keys dari variants -->
+                        <template x-for="key in Object.keys(variants)" :key="key">
+                            <th x-text="key" class="text-left"></th>
+                        </template>
                         <th>Stok</th>
                         <th>Harga</th>
                         <th>Berat</th>
@@ -58,7 +61,11 @@
                     <template x-for="combination in variantCombinations"
                         :key="combination.join('-')">
                         <tr class="text-center">
-                            <td x-text="combination.join(' - ')"></td>
+                            <!-- Iterasi melalui setiap nilai dalam kombinasi untuk menampilkan kolom yang sesuai -->
+                            <template x-for="value in combination" :key="value">
+                                <td x-text="value"></td>
+                            </template>
+
                             <td>
                                 <input type="number" name="stock_variant[]" min="0"
                                     class="my-input bg-primary/5 rounded w-24">
