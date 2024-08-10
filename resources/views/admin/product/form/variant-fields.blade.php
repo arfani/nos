@@ -1,7 +1,7 @@
 <template x-if="variantMode">
     <div class="form-content-with-variant mt-4" id="variant-container">
         <div class="divider tracking-widest font-bold text-xl">VARIAN PRODUK</div>
-        
+
         <div class="flex items-end mb-4 mt-8">
             <div class="flex flex-col flex-1">
                 <label for="variant" class="font-semibold mb-2">Tipe Varian</label>
@@ -28,21 +28,16 @@
                     <div class="mr-2 p-1" x-text="key"></div>
                     <select x-model="variants[key]" multiple="multiple"
                         class="tipe-variant-edit mr-2 bg-gray-200 p-1 rounded"
-                        @click="editVariantValues(key, $event.target.selectedOptions)"
-                        x-init="initSelect2($el)" 
-                        x-effect="updateSelect2($el, variants[key])"
-                        :data-key="key"
-                        >
+                        @click="editVariantValues(key, $event.target.selectedOptions)" x-init="initSelect2($el)"
+                        x-effect="updateSelect2($el, variants[key])" :data-key="key">
                     </select>
-                    <button @click="removeVariant(key)"
-                        class="bg-red-500 text-white px-2 py-1 rounded ml-2"><i
+                    <button @click="removeVariant(key)" class="bg-red-500 text-white px-2 py-1 rounded ml-2"><i
                             class="fa fa-trash"></i></button>
                 </div>
             </template>
         </div>
 
-        <div
-            class="variant-fields-container flex flex-col border border-primary px-4 py-6 overflow-auto rounded">
+        <div class="variant-fields-container flex flex-col border border-primary px-4 py-6 overflow-auto rounded">
             <table>
                 <thead>
                     <tr>
@@ -58,13 +53,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <template x-for="combination in variantCombinations"
-                        :key="combination.join('-')">
+                    <template x-for="combination in variantCombinations" :key="combination.join('-')">
                         <tr class="text-center">
-                            <!-- Iterasi melalui setiap nilai dalam kombinasi untuk menampilkan kolom yang sesuai -->
+                            <!-- Tampilkan nilai kombinasi dengan key -->
                             <template x-for="value in combination" :key="value">
                                 <td x-text="value"></td>
                             </template>
+                            <!-- Kolom tambahan untuk stok, harga, berat, SKU, dan status -->
+
 
                             <td>
                                 <input type="number" name="stock_variant[]" min="0"
@@ -79,8 +75,7 @@
                                     class="my-input bg-primary/5 rounded">
                             </td>
                             <td>
-                                <input type="text" name="sku_variant[]"
-                                    class="my-input bg-primary/5 rounded">
+                                <input type="text" name="sku_variant[]" class="my-input bg-primary/5 rounded">
                             </td>
                             <td>
                                 {{-- @include(

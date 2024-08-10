@@ -8,8 +8,8 @@ export default () => ({
     sizeOptions: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
     init() {
         this.$watch('variantCombinations', (val) => {
-            console.log('VARIANT COMBINATION:',val);
-            console.log('VARIANTs:',this.variants);
+            console.log('VARIANT COMBINATION:', val);
+            console.log('VARIANTs:', this.variants);
         })
 
         $("#categories").select2({
@@ -143,7 +143,8 @@ export default () => ({
             return;
         }
 
-        let combinations = this.variants[keys[0]].map(value => [value]);
+        // Gabungkan key varian dengan nilai untuk membuat kombinasi yang unik
+        let combinations = this.variants[keys[0]].map(value => [`${keys[0]}: ${value}`]);
 
         for (let i = 1; i < keys.length; i++) {
             let currentKey = keys[i];
@@ -152,7 +153,7 @@ export default () => ({
 
             for (let combination of combinations) {
                 for (let value of currentValues) {
-                    newCombinations.push([...combination, value]);
+                    newCombinations.push([...combination, `${currentKey}: ${value}`]);
                 }
             }
 
