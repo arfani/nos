@@ -107,6 +107,7 @@ class ProductController extends Controller
 
     function store(StoreProductRequest $request)
     {
+        dd($request->all());
         $validated = $request->validated();
 
         $new_product = new Product();

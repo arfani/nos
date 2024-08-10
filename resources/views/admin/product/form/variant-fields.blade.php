@@ -1,23 +1,8 @@
 <template x-if="variantMode">
-    <div class="form-content-with-variant">
-        <div class="flex gap-2 flex-col sm:flex-row sm:items-end mb-4">
-            <div class="flex flex-col flex-1">
-                <label for="name" class="font-semibold mb-2">Nama Produk
-                    <x-ar.required-label />
-                </label>
-                <input type="text" id="name" name="name"
-                    class="my-input bg-primary/5 rounded"
-                    value="{{ old('name', isset($data) ? $data->name : '') }}" required
-                    autofocus>
-            </div>
-        </div>
-
-        <div class="flex flex-col mb-4">
-            <label for="desc" class="font-semibold mb-2">Deskripsi</label>
-            <textarea name="desc" id="desc" rows="3" class="my-input bg-primary/5 rounded">{{ old('desc', isset($data) ? $data->desc : '') }}</textarea>
-        </div>
-
-        <div class="flex flex-col sm:flex-row sm:items-end mb-4 mt-8">
+    <div class="form-content-with-variant mt-4" id="variant-container">
+        <div class="divider tracking-widest font-bold text-xl">VARIAN PRODUK</div>
+        
+        <div class="flex items-end mb-4 mt-8">
             <div class="flex flex-col flex-1">
                 <label for="variant" class="font-semibold mb-2">Tipe Varian</label>
                 <select name="variant" id="variant" x-ref="variant">
@@ -43,11 +28,11 @@
                     <div class="mr-2 p-1" x-text="key"></div>
                     <select x-model="variants[key]" multiple="multiple"
                         class="tipe-variant-edit mr-2 bg-gray-200 p-1 rounded"
-                        @change="editVariantValues(key, $event.target.selectedOptions)"
-                        x-init="initSelect2($el)" x-effect="updateSelect2($el, variants[key])">
-                        {{-- <template x-for="option in values" :key="option">
-                            <option :value="option" x-text="option"></option>
-                        </template> --}}
+                        @click="editVariantValues(key, $event.target.selectedOptions)"
+                        x-init="initSelect2($el)" 
+                        x-effect="updateSelect2($el, variants[key])"
+                        :data-key="key"
+                        >
                     </select>
                     <button @click="removeVariant(key)"
                         class="bg-red-500 text-white px-2 py-1 rounded ml-2"><i

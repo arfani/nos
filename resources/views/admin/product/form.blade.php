@@ -31,53 +31,62 @@
                     <div class="form-container flex flex-col gap-4">
                         <x-ar.note-required-fields />
 
-                        <template x-if="!variantMode">
-                            <div class="form-content-without-variant">
-                                <div class="flex flex-wrap gap-2">
-                                    <div class="flex flex-col mb-4 flex-1">
-                                        <label for="name" class="font-semibold mb-2">Nama Produk
-                                            <x-ar.required-label />
-                                        </label>
-                                        <input type="text" id="name" name="name"
-                                            class="my-input bg-primary/5 rounded"
-                                            value="{{ old('name', isset($data) ? $data->name : '') }}" required
-                                            autofocus>
-                                    </div>
-                                    <div class="flex flex-col mb-4">
-                                        <label for="youtube" class="font-semibold mb-2">Youtube ID</label>
-                                        <input type="text" id="youtube" name="youtube"
-                                            class="my-input bg-primary/5 rounded"
-                                            value="{{ old('youtube', isset($data) ? $data->youtube : '') }}">
+                        <div class="form-content-without-variant">
+                            <div class="flex flex-wrap gap-2">
+                                <div class="flex flex-col mb-4 flex-1">
+                                    <label for="name" class="font-semibold mb-2">Nama Produk
+                                        <x-ar.required-label />
+                                    </label>
+                                    <input type="text" id="name" name="name"
+                                        class="my-input bg-primary/5 rounded"
+                                        value="{{ old('name', isset($data) ? $data->name : '') }}" required autofocus>
+                                </div>
+                                <div class="flex flex-col mb-4">
+                                    <label for="youtube" class="font-semibold mb-2">Youtube ID</label>
+                                    <input type="text" id="youtube" name="youtube"
+                                        class="my-input bg-primary/5 rounded"
+                                        value="{{ old('youtube', isset($data) ? $data->youtube : '') }}">
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row gap-2 my-2">
+                                <div class="flex flex-col mb-4">
+                                    <label for="discount" class="font-semibold mb-2">Discount <div class="tooltip ml-1"
+                                            data-tip="Promo akan aktif jika ada diskon"><i
+                                                class="fa fa-circle-exclamation animate-pulse"></i></div></label>
+                                    <div class="flex">
+                                        <input type="number" id="discount" name="discount" min="0"
+                                            step=".01" class="my-input bg-primary/5 rounded-l"
+                                            value="{{ old('discount', isset($data->promo->discount) ? $data->promo->discount : 0) }}">
+                                        <span
+                                            class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">%</span>
                                     </div>
                                 </div>
-
-                                <div class="flex flex-wrap gap-2 my-2">
-                                    <div class="flex flex-col mb-4">
-                                        <label for="discount" class="font-semibold mb-2">Discount <div
-                                                class="tooltip ml-1" data-tip="Promo akan aktif jika ada diskon"><i
-                                                    class="fa fa-circle-exclamation animate-pulse"></i></div></label>
-                                        <div class="flex">
-                                            <input type="number" id="discount" name="discount" min="0" step=".01"
-                                                class="my-input bg-primary/5 rounded-l"
-                                                value="{{ old('discount', isset($data->promo->discount) ? $data->promo->discount : 0) }}">
-                                            <span
-                                                class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">%</span>
-                                        </div>
+                                <template x-if="variantMode">
+                                    <div class="bg-primary/5 p-2 self-center mx-auto animate-pulse text-center rounded">
+                                        <i class="fa fa-circle-exclamation mr-1"></i>
+                                        jika produk memiliki varian beberapa input dipindah ke masing-masing varian
                                     </div>
+                                </template>
+                                <template x-if="!variantMode">
                                     <div class="flex flex-col mb-4 flex-1">
                                         <label for="sku" class="font-semibold mb-2">SKU</label>
                                         <input type="text" id="sku" name="sku"
                                             class="my-input bg-primary/5 rounded"
-                                            value="{{ old('sku', isset($data) ? $data->product_variant[0]->sku : '') }}">
+                                            value="{{ old('sku', isset($data) ? $data->product_variant[0]->sku : '') }}"
+                                            :disabled="variantMode">
                                     </div>
-                                </div>
+                                </template>
+                            </div>
 
+                            <template x-if="!variantMode">
                                 <div class="flex gap-2 [&>div]:flex-1 flex-wrap">
                                     <div class="flex flex-col mb-4">
                                         <label for="stock" class="font-semibold mb-2">Stok</label>
                                         <input type="number" id="stock" name="stock" min="0"
                                             class="my-input bg-primary/5 rounded"
-                                            value="{{ old('stock', isset($data) ? $data->product_variant[0]->stock : 0) }}">
+                                            value="{{ old('stock', isset($data) ? $data->product_variant[0]->stock : 0) }}"
+                                            :disabled="variantMode">
                                     </div>
                                     <div class="flex flex-col mb-4">
                                         <label for="price" class="font-semibold mb-2">Harga</label>
@@ -85,16 +94,18 @@
                                             <span
                                                 class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">Rp</span>
                                             <input type="number" id="price" name="price" min="0"
-                                                class="my-input bg-primary/5 rounded-r"
-                                                value="{{ old('price', isset($data) ? $data->product_variant[0]->price : 0) }}">
+                                                class="my-input bg-primary/5 rounded-r flex-1"
+                                                value="{{ old('price', isset($data) ? $data->product_variant[0]->price : 0) }}"
+                                                :disabled="variantMode">
                                         </div>
                                     </div>
                                     <div class="flex flex-col mb-4">
                                         <label for="weight" class="font-semibold mb-2">Berat</label>
                                         <div class="flex">
-                                            <input type="number" id="weight" name="weight" min="0" step=".01"
-                                                class="my-input bg-primary/5 rounded"
-                                                value="{{ old('weight', isset($data) ? $data->product_variant[0]->weight : 0) }}">
+                                            <input type="number" id="weight" name="weight" min="0"
+                                                step=".01" class="my-input bg-primary/5 rounded flex-1"
+                                                value="{{ old('weight', isset($data) ? $data->product_variant[0]->weight : 0) }}"
+                                                :disabled="variantMode">
                                             <span
                                                 class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">g</span>
                                         </div>
@@ -113,90 +124,86 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div
-                                    class="flex gap-2 flex-wrap border border-primary p-2 my-4 rounded flex-col sm:flex-row">
-                                    <div class="flex flex-col items-center justify-center sm:mx-6">
-                                        <label for="price" class="font-semibold">DIMENSI</label>
-                                    </div>
-
-                                    <div class="flex flex-col mb-4 flex-1">
-                                        <label for="length" class="font-semibold mb-2">Panjang</label>
-                                        <div class="flex">
-                                            <input type="number" id="length" name="length" min="0" step=".01"
-                                                class="my-input bg-primary/5 rounded-l flex-1" placeholder="Panjang"
-                                                max="1000"
-                                                value="{{ old('stock', isset($data->dimention->length) ? $data->dimention->length : 0) }}">
-                                            <span
-                                                class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex flex-col mb-4 flex-1">
-                                        <label for="width" class="font-semibold mb-2">Lebar</label>
-                                        <div class="flex">
-                                            <input type="number" id="width" name="width" min="0" step=".01"
-                                                class="my-input bg-primary/5 rounded-l flex-1" placeholder="Lebar"
-                                                max="1000"
-                                                value="{{ old('stock', isset($data->dimention->width) ? $data->dimention->width : 0) }}">
-                                            <span
-                                                class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex flex-col mb-4 flex-1">
-                                        <label for="height" class="font-semibold mb-2">Tinggi</label>
-                                        <div class="flex">
-                                            <input type="number" id="height" name="height" min="0" step=".01"
-                                                class="my-input bg-primary/5 rounded-l flex-1" placeholder="Tinggi"
-                                                max="1000"
-                                                value="{{ old('stock', isset($data->dimention->height) ? $data->dimention->height : 0) }}">
-                                            <span
-                                                class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
-                                        </div>
-                                    </div>
-
+                            </template>
+                            <div
+                                class="flex gap-2 flex-wrap border border-primary p-2 my-4 rounded flex-col sm:flex-row">
+                                <div class="flex flex-col items-center justify-center sm:mx-6">
+                                    <label for="price" class="font-semibold">DIMENSI</label>
                                 </div>
 
-                                {{-- <div class="flex flex-col">
+                                <div class="flex flex-col mb-4 flex-1">
+                                    <label for="length" class="font-semibold mb-2">Panjang</label>
+                                    <div class="flex">
+                                        <input type="number" id="length" name="length" min="0"
+                                            step=".01" class="my-input bg-primary/5 rounded-l flex-1"
+                                            placeholder="Panjang" max="1000"
+                                            value="{{ old('stock', isset($data->dimention->length) ? $data->dimention->length : 0) }}">
+                                        <span
+                                            class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col mb-4 flex-1">
+                                    <label for="width" class="font-semibold mb-2">Lebar</label>
+                                    <div class="flex">
+                                        <input type="number" id="width" name="width" min="0"
+                                            step=".01" class="my-input bg-primary/5 rounded-l flex-1"
+                                            placeholder="Lebar" max="1000"
+                                            value="{{ old('stock', isset($data->dimention->width) ? $data->dimention->width : 0) }}">
+                                        <span
+                                            class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col mb-4 flex-1">
+                                    <label for="height" class="font-semibold mb-2">Tinggi</label>
+                                    <div class="flex">
+                                        <input type="number" id="height" name="height" min="0"
+                                            step=".01" class="my-input bg-primary/5 rounded-l flex-1"
+                                            placeholder="Tinggi" max="1000"
+                                            value="{{ old('stock', isset($data->dimention->height) ? $data->dimention->height : 0) }}">
+                                        <span
+                                            class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {{-- <div class="flex flex-col">
                                     <textarea name="description" id="description" rows="3" class="my-input bg-primary/5 rounded">{{ old('description', isset($data) ? $data->description : '') }}</textarea>
                                 </div> --}}
 
-                                <label for="description" class="font-semibold">Deskripsi</label>
-                                <div id="toolbar" class="mt-2 rounded-t">
-                                    <button class="ql-bold"></button>
-                                    <button class="ql-italic"></button>
-                                    <button class="ql-underline"></button>
-                                    <button class="ql-strike"></button>
-                                    <button class="ql-link"></button>
-                                    <button class="ql-image"></button>
-                                    <button class="ql-video"></button>
-                                    <select class="ql-color"></select>
-                                    <select class="ql-background"></select>
-                                    <button class="ql-script" value="sub"></button>
-                                    <button class="ql-script" value="super"></button>
-                                    <button class="ql-blockquote"></button>
-                                    <button class="ql-code-block"></button>
-                                    <button class="ql-list" value="ordered"></button>
-                                    <button class="ql-list" value="bullet"></button>
-                                    <button class="ql-indent" value="-1"></button>
-                                    <button class="ql-indent" value="+1"></button>
-                                    <button class="ql-direction" value="rtl"></button>
-                                    <select class="ql-align"></select>
-                                    <button class="ql-clean"></button>
-                                </div>
-                                {{-- tinggi menggunakan [&>.ql-editor]:min-h-52 agar bisa fokus saat klik diarea editor bagian bawah --}}
-                                <div id="description-editor" class="bg-white text-black rounded-b [&>.ql-editor]:min-h-52">
-                                    {!! old('description', isset($data) ? $data->description : '') !!}
-                                </div>
-
-                                <input type="hidden" id="description" name="description">
+                            <label for="description" class="font-semibold">Deskripsi</label>
+                            <div id="toolbar" class="mt-2 rounded-t">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                                <button class="ql-underline"></button>
+                                <button class="ql-strike"></button>
+                                <button class="ql-link"></button>
+                                <button class="ql-image"></button>
+                                <button class="ql-video"></button>
+                                <select class="ql-color"></select>
+                                <select class="ql-background"></select>
+                                <button class="ql-script" value="sub"></button>
+                                <button class="ql-script" value="super"></button>
+                                <button class="ql-blockquote"></button>
+                                <button class="ql-code-block"></button>
+                                <button class="ql-list" value="ordered"></button>
+                                <button class="ql-list" value="bullet"></button>
+                                <button class="ql-indent" value="-1"></button>
+                                <button class="ql-indent" value="+1"></button>
+                                <button class="ql-direction" value="rtl"></button>
+                                <select class="ql-align"></select>
+                                <button class="ql-clean"></button>
                             </div>
-                        </template>
+                            {{-- tinggi menggunakan [&>.ql-editor]:min-h-52 agar bisa fokus saat klik diarea editor bagian bawah --}}
+                            <div id="description-editor"
+                                class="bg-white text-black rounded-b [&>.ql-editor]:min-h-52">
+                                {!! old('description', isset($data) ? $data->description : '') !!}
+                            </div>
 
-                        {{-- MODE VARIANT --}}
-                        @include('admin.product.form.variant-fields')
-                        {{-- MODE VARIANT END --}}
+                            <input type="hidden" id="description" name="description">
+                        </div>
 
                         {{-- CATEGORIES --}}
                         <div class="flex flex-col flex-1 text-black">
@@ -275,13 +282,19 @@
                         </div>
                         <button type="button" class="btn add-item-detail"><i class="fa fa-plus"></i> Detail</button>
 
-                        <div class="grid grid-cols-2 gap-2">
+                        {{-- MODE VARIANT --}}
+                        @include('admin.product.form.variant-fields')
+                        {{-- MODE VARIANT END --}}
+
+                        {{-- BUTTON SUBMIT AND BACK CONTAINER --}}
+                        <div class="grid grid-cols-2 gap-2 mt-6">
                             <a href="{{ route('product.index') }}"
-                                class="py-2 px-4 bg-gray-500 text-gray-50 text-center rounded">{{ __('Kembali') }}</a>
+                                class="mx-10 py-2 px-4 bg-base-200 text-base-content text-center rounded">{{ __('Kembali') }}</a>
                             <button type="submit"
-                                :class="{ 'py-2 px-4 bg-primary text-primary-content rounded': true, 'bg-primary/25 cursor-not-allowed': isSubmitting }"
+                                :class="{ 'mx-10 py-2 px-4 bg-primary text-primary-content rounded': true, 'bg-primary/25 cursor-not-allowed': isSubmitting }"
                                 :disabled="isSubmitting">Simpan</button>
                         </div>
+                        {{-- BUTTON SUBMIT AND BACK CONTAINER END --}}
                     </div>
                 </form>
             </div>
