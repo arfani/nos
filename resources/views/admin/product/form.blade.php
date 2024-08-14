@@ -304,6 +304,7 @@
 
                 <div x-init="setVariantCombinations('{{ json_encode($existingVariantCombinations) }}')"></div>
                 <div x-init="setVariants('{{ json_encode($existingVariants) }}')"></div>
+                <div x-init="initializeProductVariants('{{ json_encode($productVariants) }}')"></div>
             @endisset
             </div>
         </div>

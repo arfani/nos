@@ -303,7 +303,26 @@ class ProductController extends Controller
             return $variant->product_detail->pluck('variant_value.value')->toArray();
         })->toArray();  // Convert to array for JSON encoding
 
-        return view('admin.product.form', compact('data', 'variants', 'categories', 'brands', 'existingVariants', 'existingVariantCombinations'));
+        $productVariants = $product->product_variant->map(function ($variant) {
+            return [
+                'id' => $variant->id,
+                'stock' => $variant->stock,
+                'price' => $variant->price,
+                'weight' => $variant->weight,
+                'SKU' => $variant->SKU,
+                'active' => $variant->active,
+                'details' => $variant->product_detail->map(function ($detail) {
+                    return [
+                        'variant' => $detail->variant_value->variant->variant,
+                        'value' => $detail->variant_value->value,
+                    ];
+                })->toArray()
+            ];
+        })->toArray();
+        
+        $productVariantsJson = json_encode($productVariants);
+
+        return view('admin.product.form', compact('data', 'variants', 'categories', 'brands', 'existingVariants', 'existingVariantCombinations', 'productVariants'));
     }
 
     function update(UpdateProductRequest $request, Product $product)

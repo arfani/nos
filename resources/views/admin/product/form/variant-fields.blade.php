@@ -37,14 +37,20 @@
             </template>
         </div>
 
+        @isset($data)
+            <div class="animate-pulse my-2"><i class="fa fa-circle-exclamation mr-1"></i> Data varian akan direset jika Anda
+                menambahkan varian baru</div>
+        @endisset
+
         <div class="variant-fields-container flex flex-col border border-primary px-4 py-6 overflow-auto rounded">
             <table>
                 <thead>
                     <tr>
                         <!-- Membuat header tabel dinamis berdasarkan keys dari variants -->
-                        <template x-for="key in Object.keys(variants)" :key="key">
+                        {{-- <template x-for="key in Object.keys(variants)" :key="key">
                             <th x-text="key" class="text-left"></th>
-                        </template>
+                        </template> --}}
+                        <th class="text-center">Varian</th>
                         <th>Stok</th>
                         <th>Harga</th>
                         <th>Berat</th>
@@ -53,7 +59,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <template x-for="combination in variantCombinations" :key="combination.join('-')">
+                    <template x-for="(combination, index) in variantCombinations" :key="combination.join('-')">
                         <tr class="text-center">
                             <!-- Tampilkan nilai kombinasi dengan key -->
                             <template x-for="value in combination" :key="value">
@@ -61,22 +67,28 @@
                             </template>
                             <!-- Kolom tambahan untuk stok, harga, berat, SKU, dan status -->
                             <td>
-                                <input type="number" name="stock_variant[]" min="0"
-                                    class="my-input bg-primary/5 rounded w-24">
+                                <input type="number"
+                                    @isset($data) :value="productVariants[index].stock" @endisset
+                                    name="stock_variant[]" min="0" class="my-input bg-primary/5 rounded w-24">
                             </td>
                             <td>
-                                <input type="number" name="price_variant[]" min="0"
-                                    class="my-input bg-primary/5 rounded w-40">
+                                <input type="number"
+                                    @isset($data) :value="productVariants[index].price" @endisset
+                                    name="price_variant[]" min="0" class="my-input bg-primary/5 rounded w-40">
                             </td>
                             <td>
-                                <input type="number" name="weight_variant[]" min="0"
-                                    class="my-input bg-primary/5 rounded">
+                                <input type="number"
+                                    @isset($data) :value="productVariants[index].weight" @endisset
+                                    name="weight_variant[]" min="0" class="my-input bg-primary/5 rounded">
                             </td>
                             <td>
-                                <input type="text" name="sku_variant[]" class="my-input bg-primary/5 rounded">
+                                <input type="text"
+                                    @isset($data) :value="productVariants[index].sku" @endisset
+                                    name="sku_variant[]" class="my-input bg-primary/5 rounded">
                             </td>
                             <td>
-                                <input id="active" type="checkbox" value="1" name="active_variant[]" />
+                                <input id="active" type="checkbox" value="1" name="active_variant[]"
+                                    :checked="productVariants[index].active ? true : false" />
 
                                 {{-- @include(
                                     'components_custom.toggle-active-product',

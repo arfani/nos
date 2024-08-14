@@ -3,7 +3,7 @@ export default () => ({
     variantMode: false,
     variants: {}, // Mulai dengan objek kosong untuk varian dinamis
     variantCombinations: [], // Array untuk menyimpan kombinasi varian
-    productVariants: [], // Data untuk menyimpan varian produk lengkap dengan stok, harga, berat, SKU, dll.
+    productVariants: [], // Data untuk menyimpan varian produk lengkap dengan stok, harga, berat, SKU, dll. (edit mode)
     isSubmitting: false,
     colorOptions: ['Merah', 'Biru', 'Hijau', 'Kuning', 'Putih', 'Hitam', 'Jingga', 'Ungu', 'Cokelat', 'Abuabu', 'Pink', 'Toska', 'Biru langit', 'Biru laut', 'Biru muda', 'Biru tua', 'Hijau muda', 'Hijau tua', 'Merah muda', 'Merah tua', 'Emas', 'Perak', 'Marun', 'Lavender', 'Cyan', 'Indigo', 'Lemon', 'Mocca', 'Peach', 'Olive', 'Nila', 'Amber', 'Coral'],
     sizeOptions: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
@@ -14,13 +14,14 @@ export default () => ({
         // this.variants = JSON.parse(variants); // Parsing JSON to object
     },
     setVariantCombinations(variantCombinations) {
-        console.log(variantCombinations);
-        
         this.variantCombinations = JSON.parse(variantCombinations); // Parsing JSON to array
-
     },
     initializeProductVariants(productVariants) {
-        this.productVariants = productVariants;
+        this.productVariants = JSON.parse(productVariants);
+    },
+    // Tambahkan metode untuk mengubah stok, harga, berat, SKU, dll.
+    updateProductVariant(index, field, value) {
+        this.productVariants[index][field] = value;
     },
     init() {
         this.$watch('variantCombinations', (val) => {
@@ -107,6 +108,7 @@ export default () => ({
     },
 
     addVariant() {
+        this.productVariants = [];
         let variantKey = this.$refs.variant.value;
 
         let variantValues = Array.from(this.$refs.variant_values.selectedOptions).map(
