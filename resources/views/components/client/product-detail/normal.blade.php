@@ -42,7 +42,7 @@
     @endif
 
     <div class="divider">Deskripsi</div>
-    <p>{{ $product->description ?? '-' }}</p>
+    <p>{!! $product->description ?? '-' !!}</p>
 </div>
 
 <div

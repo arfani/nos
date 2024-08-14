@@ -8,7 +8,7 @@
     </h1>
 
     <div class="divider">Deskripsi</div>
-    <p>{{ $product->description ?? '-' }}</p>
+    <p>{!! $product->description !!}</p>
 
     <div class="divider">
         Harga <i class="fa fa-tags text-red-500 text-2xl"></i>

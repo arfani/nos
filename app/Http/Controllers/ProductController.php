@@ -12,11 +12,13 @@ use App\Models\Detail;
 use App\Models\DetailValue;
 use App\Models\Dimention;
 use App\Models\Product;
+use App\Models\ProductDetail;
 use App\Models\ProductPicture;
 use App\Models\ProductVariant;
 use App\Models\Promo;
 use App\Models\Setting;
 use App\Models\Variant;
+use App\Models\VariantValue;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -107,7 +109,6 @@ class ProductController extends Controller
 
     function store(StoreProductRequest $request)
     {
-        dd($request->all());
         $validated = $request->validated();
 
         $new_product = new Product();
@@ -118,14 +119,17 @@ class ProductController extends Controller
         DB::transaction(function () use ($new_product, $validated) {
             $new_product->save();
 
-            $newProductVariant = new ProductVariant();
-            $newProductVariant->product_id = $new_product->id;
-            $newProductVariant->stock = $validated["stock"];
-            $newProductVariant->price = $validated["price"];
-            $newProductVariant->weight = $validated["weight"];
-            $newProductVariant->sku = $validated["sku"];
-            $newProductVariant->active = $validated["active"];
-            $newProductVariant->save();
+            // JIKA TIDAK ADA VARIANT MAKA SIMPAN SATU SAJA PADA PRODUCT VARIANT JIKA ADA VARIANT MAKA DI HANDLE DIBAWAH DIBAGIAN VARIANTS
+            if (!isset($validated["variantData"])) {
+                $newProductVariant = new ProductVariant();
+                $newProductVariant->product_id = $new_product->id;
+                $newProductVariant->stock = $validated["stock"];
+                $newProductVariant->price = $validated["price"];
+                $newProductVariant->weight = $validated["weight"];
+                $newProductVariant->sku = $validated["sku"];
+                $newProductVariant->active = $validated["active"] ?? false;
+                $newProductVariant->save();
+            }
 
             // CATEGORIES (many to many)
             if (isset($validated["categories"])) {
@@ -192,7 +196,85 @@ class ProductController extends Controller
                     }
                 }
             }
+
+            // VARIANTS
+            if (isset($validated["variantData"])) {
+                $variants = json_decode($validated['variantData'], true);
+                $variantCombinations = json_decode($validated['variantCombinationsData'], true);
+                foreach ($variants as $variantName => $values) {
+                    $variant = Variant::firstOrCreate(['variant' => $variantName]);
+
+                    foreach ($values as $value) {
+                        VariantValue::firstOrCreate([
+                            'variant_id' => $variant->id,
+                            'value' => $value,
+                        ]);
+                    }
+                }
+
+                // Simpan kombinasi varian ke tabel product_variants dan product_details
+                foreach ($variantCombinations as $i => $combination) {
+                    $productVariant = new ProductVariant([
+                        'product_id' => $new_product->id,
+                        'stock' => $validated['stock_variant'][$i],
+                        'price' => $validated['price_variant'][$i],
+                        'weight' => $validated['weight_variant'][$i],
+                        'sku' => $validated['sku_variant'][$i],
+                        'active' => $validated['active_variant'][$i] ?? false,
+                    ]);
+                    $productVariant->save();
+
+                    foreach ($combination as $value) {
+                        // Misal $value adalah 'Warna: Merah'
+                        [$variantName, $variantValue] = explode(': ', $value);
+                
+                        // Cari variant_id berdasarkan nama varian
+                        $variant = Variant::where('variant', $variantName)->first();
+                
+                        // Cari atau buat VariantValue berdasarkan variant_id dan nilai
+                        $variantValueObj = VariantValue::firstOrCreate([
+                            'variant_id' => $variant->id,
+                            'value' => $variantValue,
+                        ]);
+                
+                        // Simpan ke tabel product_details
+                        ProductDetail::create([
+                            'product_variant_id' => $productVariant->id,
+                            'variant_value_id' => $variantValueObj->id, // Gunakan ID di sini
+                            'isMain' => false, // Atur logika isMain sesuai kebutuhan
+                        ]);
+                    }
+
+                }
+            }
         });
+        // $variants = json_decode($request->input('variantData'), true);
+        // $variantCombinations = json_decode($request->input('variantCombinationsData'), true);
+
+        // // Simpan varian dan nilai varian
+        // foreach ($variants as $variantName => $values) {
+        //     $variant = Variant::firstOrCreate(['variant' => $variantName]);
+
+        //     foreach ($values as $value) {
+        //         $variantValue = VariantValue::firstOrCreate([
+        //             'variant_id' => $variant->id,
+        //             'value' => $value,
+        //         ]);
+        //     }
+        // }
+
+        // // Simpan kombinasi varian ke tabel product_variants
+        // foreach ($variantCombinations as $variantData) {
+        //     $productVariant = new ProductVariant([
+        //         'stock' => $variantData['stock'],
+        //         'price' => $variantData['price'],
+        //         'weight' => $variantData['weight'],
+        //         'sku' => $variantData['sku'],
+        //         'active' => $variantData['active'],
+        //     ]);
+
+        //     // $product->productVariants()->save($productVariant);
+        // }
 
         return redirect()->route('product.index')
             ->with('success', 'Berhasil ditambahkan!');
@@ -212,7 +294,16 @@ class ProductController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
 
-        return view('admin.product.form', compact('data', 'variants', 'categories', 'brands'));
+        $existingVariants = $product->product_variant->mapWithKeys(function($variant) {
+            return [$variant->product_detail->first()->variant_value->variant->variant => 
+                    $variant->product_detail->pluck('variant_value.value')->toArray()];
+        })->toArray();  // Convert to array for JSON encoding
+        
+        $existingVariantCombinations = $product->product_variant->map(function($variant) {
+            return $variant->product_detail->pluck('variant_value.value')->toArray();
+        })->toArray();  // Convert to array for JSON encoding
+
+        return view('admin.product.form', compact('data', 'variants', 'categories', 'brands', 'existingVariants', 'existingVariantCombinations'));
     }
 
     function update(UpdateProductRequest $request, Product $product)
@@ -236,7 +327,7 @@ class ProductController extends Controller
             $newProductVariant->price = $validated["price"];
             $newProductVariant->weight = $validated["weight"];
             $newProductVariant->sku = $validated["sku"];
-            $newProductVariant->active = $validated["active"];
+            $newProductVariant->active = $validated["active"] ?? false;
             $newProductVariant->save();
 
             // CATEGORIES (many to many)
@@ -366,35 +457,35 @@ class ProductController extends Controller
     {
         $keyword = $request->query('q');
         $perPage = 10;
-    
+
         if ($keyword) {
             $products = Product::with(['product_pictures', 'promo', 'auction'])
                 ->where('name', 'like', '%' . $keyword . '%')
                 ->where('active', 1)
                 ->latest()
                 ->paginate($perPage);
-    
+
             if ($request->ajax()) {
                 return response()->json([
                     'html' => view('components.client.product-items', compact('products'))->render()
                 ]);
             }
-    
+
             return view('client.product.product-by-keyword', compact('products', 'keyword'));
         }
-    
+
         $product_data = Setting::where('section_name', 'product')->first();
         $products = Product::with(['product_pictures', 'promo', 'auction'])
             ->where('active', 1)
             ->latest()
             ->paginate($perPage);
-    
+
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('components.client.product-items', compact('products'))->render()
             ]);
         }
-    
+
         return view('client.product.index', compact('products', 'product_data'));
     }
 

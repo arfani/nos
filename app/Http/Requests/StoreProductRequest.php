@@ -31,7 +31,7 @@ class StoreProductRequest extends FormRequest
             'price' => ['nullable', 'numeric'],
             'weight' => ['nullable', 'numeric'],
             'sku' => ['nullable', 'string', Rule::unique(ProductVariant::class)],
-            'active' => ['required', 'boolean'],
+            'active' => ['nullable', 'boolean'],
             'description' => ['nullable', 'string'],
             'categories' => ['nullable'],
             'product_pictures' => ['nullable'],
@@ -41,10 +41,19 @@ class StoreProductRequest extends FormRequest
             'height' => ['nullable'],
             'detail' => ['nullable'],
             'detail-value' => ['nullable'],
+            'variantData' => ['nullable'],
+            'variantCombinationsData' => ['nullable'],
+
+            'stock_variant' => 'nullable',
+            'price_variant' => 'nullable',
+            'weight_variant' => 'nullable',
+            'sku_variant' => 'nullable',
+            'active_variant' => 'nullable',
         ];
     }
 
-    function messages() {
+    function messages()
+    {
         return [
             'name.unique' => 'Nama produk ini sudah ada.'
         ];

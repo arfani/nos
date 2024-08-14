@@ -60,8 +60,6 @@
                                 <td x-text="value"></td>
                             </template>
                             <!-- Kolom tambahan untuk stok, harga, berat, SKU, dan status -->
-
-
                             <td>
                                 <input type="number" name="stock_variant[]" min="0"
                                     class="my-input bg-primary/5 rounded w-24">
@@ -78,6 +76,8 @@
                                 <input type="text" name="sku_variant[]" class="my-input bg-primary/5 rounded">
                             </td>
                             <td>
+                                <input id="active" type="checkbox" value="1" name="active_variant[]" />
+
                                 {{-- @include(
                                     'components_custom.toggle-active-product',
                                     ['name' => 'active_variant[]']
@@ -87,6 +87,10 @@
                     </template>
                 </tbody>
             </table>
+            <!-- Hidden inputs for variants and variantCombinations -->
+            <input type="hidden" name="variantData" :value="JSON.stringify(variants)">
+            <input type="hidden" name="variantCombinationsData" :value="JSON.stringify(variantCombinations)">
+
         </div>
     </div>
 </template>

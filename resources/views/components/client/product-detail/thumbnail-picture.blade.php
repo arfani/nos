@@ -2,18 +2,22 @@
     class="img-slide-container rounded bg-base-200 shadow-xl text-base-content p-4 w-full h-fit sm:w-3/4 md:w-1/2 mx-auto lg:w-1/4">
     <div class="swiper mySwiper2">
         <div class="swiper-wrapper">
-            @foreach ($product->product_pictures as $picture)
-                <div class="swiper-slide">
-                    <img src="{{ Storage::url($picture->path) }}" />
-                    @isset($product->auction)
-                        <x-client.logo-lelang :endtime="$product->auction->endtime" />
-                    @else
-                        @isset($product->promo)
-                            <x-client.logo-promo />
+            @if ($product->product_pictures->isNotEmpty())
+                @foreach ($product->product_pictures as $picture)
+                    <div class="swiper-slide">
+                        <img src="{{ Storage::url($picture->path) }}" />
+                        @isset($product->auction)
+                            <x-client.logo-lelang :endtime="$product->auction->endtime" />
+                        @else
+                            @isset($product->promo)
+                                <x-client.logo-promo />
+                            @endisset
                         @endisset
-                    @endisset
-                </div>
-            @endforeach
+                    </div>
+                @endforeach
+            @else
+                <img src="{{ '/assets/images/image-not-found.webp' }}" alt="{{ $product->name }}" class="rounded-xl" />
+            @endif
         </div>
     </div>
     <div class="swiper mySwiper">

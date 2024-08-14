@@ -4,7 +4,7 @@
             <div class="p-6 [&>div]:mb-2">
                 <h2 class="text-2xl uppercase mb-4">Data <b>{{ $data->name }}</b></h2>
 
-                <div class="flex">
+                <div class="flex md:flex-row flex-col gap-4">
                     <div class="flex-1">
                         <div>Nama : <strong>{{ $data->name }}</strong></div>
                         <div>Stok : <strong>{{ $data->product_variant->first()->stock }}</strong></div>
@@ -17,7 +17,42 @@
                         <div>Lebar : <strong>{{ $data->dimention->width }} cm</strong></div>
                         <div>Tinggi : <strong>{{ $data->dimention->height }} cm</strong></div>
                         <div>Status : <strong>{{ $data->active ? 'Aktif' : 'Tidak Aktif' }}</strong></div>
-                        <div>Deskripsi : <strong>{{ $data->description }}</strong></div>
+                        <div>Deskripsi : <strong>{!! $data->description !!}</strong></div>
+                        <div class="overflow-auto"> Varian :
+                            <table class="w-full table-auto bg-base-300 text-base-content shadow-md rounded-lg mt-2">
+                                <thead>
+                                    <tr class="bg-secondary text-secondary-content uppercase text-sm leading-normal">
+                                        @foreach ($data->product_variant->first()->product_detail as $detail)
+                                            <th class="py-3 px-4 text-left">{{ $detail->variant_value->variant->variant }}</th>
+                                        @endforeach
+                                        <th class="py-3 px-4 text-left">Stok</th>
+                                        <th class="py-3 px-4 text-left">Harga</th>
+                                        <th class="py-3 px-4 text-left">Berat</th>
+                                        <th class="py-3 px-4 text-left">SKU</th>
+                                        <th class="py-3 px-4 text-left">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm font-light">
+                                    @foreach ($data->product_variant as $variant)
+                                        <tr class="border-b">
+                                            @foreach ($variant->product_detail as $detail)
+                                                <td class="py-3 px-4 text-left whitespace-nowrap">{{ $detail->variant_value->value }}</td>
+                                            @endforeach
+                                            <td class="py-3 px-4 text-left">{{ $variant->stock }}</td>
+                                            <td class="py-3 px-4 text-left">{{ number_format($variant->price, 0, ',', '.') }} IDR</td>
+                                            <td class="py-3 px-4 text-left">{{ $variant->weight }} g</td>
+                                            <td class="py-3 px-4 text-left">{{ $variant->SKU }}</td>
+                                            <td class="py-3 px-4 text-left">
+                                                <span class="px-2 py-1 whitespace-nowrap font-semibold leading-tight {{ $variant->active ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100' }} rounded-full">
+                                                    {{ $variant->active ? 'Aktif' : 'Tidak Aktif' }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            
+                        </div>
                     </div>
                     <div class="flex-1 flex flex-col gap-2">
                         <div>Gambar :

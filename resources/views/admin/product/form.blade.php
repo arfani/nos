@@ -297,6 +297,14 @@
                         {{-- BUTTON SUBMIT AND BACK CONTAINER END --}}
                     </div>
                 </form>
+                @isset($data)
+
+                <div x-init="setVariantMode(true)"></div>
+                {{-- <div x-init="console.log('{{ json_encode($existingVariants) }}')"></div> --}}
+
+                <div x-init="setVariantCombinations('{{ json_encode($existingVariantCombinations) }}')"></div>
+                <div x-init="setVariants('{{ json_encode($existingVariants) }}')"></div>
+            @endisset
             </div>
         </div>
     </div>
@@ -419,6 +427,9 @@
                     detailProducts.forEach(productDetail => {
                         detailCont.append(itemDetail(productDetail.detail.detail, productDetail.value));
                     });
+
+                    // VARIANTS
+
                 @endisset
             })
         </script>
