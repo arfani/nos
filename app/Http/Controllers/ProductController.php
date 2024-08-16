@@ -119,8 +119,56 @@ class ProductController extends Controller
         DB::transaction(function () use ($new_product, $validated) {
             $new_product->save();
 
-            // JIKA TIDAK ADA VARIANT MAKA SIMPAN SATU SAJA PADA PRODUCT VARIANT JIKA ADA VARIANT MAKA DI HANDLE DIBAWAH DIBAGIAN VARIANTS
-            if (!isset($validated["variantData"])) {
+            if (isset($validated["variantData"])) {
+                // JIKA ADA VARIANT
+                $variants = json_decode($validated['variantData'], true);
+                $variantCombinations = json_decode($validated['variantCombinationsData'], true);
+                foreach ($variants as $variantName => $values) {
+                    $variant = Variant::firstOrCreate(['variant' => $variantName]);
+
+                    foreach ($values as $value) {
+                        VariantValue::firstOrCreate([
+                            'variant_id' => $variant->id,
+                            'value' => $value,
+                        ]);
+                    }
+                }
+
+                // Simpan kombinasi varian ke tabel product_variants dan product_details
+                foreach ($variantCombinations as $i => $combination) {
+                    $productVariant = new ProductVariant([
+                        'product_id' => $new_product->id,
+                        'stock' => $validated['stock_variant'][$i],
+                        'price' => $validated['price_variant'][$i],
+                        'weight' => $validated['weight_variant'][$i],
+                        'sku' => $validated['sku_variant'][$i],
+                        'active' => $validated['active_variant'][$i] ?? false,
+                    ]);
+                    $productVariant->save();
+
+                    foreach ($combination as $value) {
+                        // Misal $value adalah 'Warna: Merah'
+                        [$variantName, $variantValue] = explode(': ', $value);
+
+                        // Cari variant_id berdasarkan nama varian
+                        $variant = Variant::where('variant', $variantName)->first();
+
+                        // Cari atau buat VariantValue berdasarkan variant_id dan nilai
+                        $variantValueObj = VariantValue::firstOrCreate([
+                            'variant_id' => $variant->id,
+                            'value' => $variantValue,
+                        ]);
+
+                        // Simpan ke tabel product_details
+                        ProductDetail::create([
+                            'product_variant_id' => $productVariant->id,
+                            'variant_value_id' => $variantValueObj->id, // Gunakan ID di sini
+                            'isMain' => false, // Atur logika isMain sesuai kebutuhan
+                        ]);
+                    }
+                }
+            } else {
+                // JIKA TIDAK ADA VARIANT MAKA SIMPAN SATU SAJA PADA PRODUCT VARIANT JIKA ADA VARIANT MAKA DI HANDLE DIBAWAH DIBAGIAN VARIANTS
                 $newProductVariant = new ProductVariant();
                 $newProductVariant->product_id = $new_product->id;
                 $newProductVariant->stock = $validated["stock"];
@@ -196,57 +244,6 @@ class ProductController extends Controller
                     }
                 }
             }
-
-            // VARIANTS
-            if (isset($validated["variantData"])) {
-                $variants = json_decode($validated['variantData'], true);
-                $variantCombinations = json_decode($validated['variantCombinationsData'], true);
-                foreach ($variants as $variantName => $values) {
-                    $variant = Variant::firstOrCreate(['variant' => $variantName]);
-
-                    foreach ($values as $value) {
-                        VariantValue::firstOrCreate([
-                            'variant_id' => $variant->id,
-                            'value' => $value,
-                        ]);
-                    }
-                }
-
-                // Simpan kombinasi varian ke tabel product_variants dan product_details
-                foreach ($variantCombinations as $i => $combination) {
-                    $productVariant = new ProductVariant([
-                        'product_id' => $new_product->id,
-                        'stock' => $validated['stock_variant'][$i],
-                        'price' => $validated['price_variant'][$i],
-                        'weight' => $validated['weight_variant'][$i],
-                        'sku' => $validated['sku_variant'][$i],
-                        'active' => $validated['active_variant'][$i] ?? false,
-                    ]);
-                    $productVariant->save();
-
-                    foreach ($combination as $value) {
-                        // Misal $value adalah 'Warna: Merah'
-                        [$variantName, $variantValue] = explode(': ', $value);
-                
-                        // Cari variant_id berdasarkan nama varian
-                        $variant = Variant::where('variant', $variantName)->first();
-                
-                        // Cari atau buat VariantValue berdasarkan variant_id dan nilai
-                        $variantValueObj = VariantValue::firstOrCreate([
-                            'variant_id' => $variant->id,
-                            'value' => $variantValue,
-                        ]);
-                
-                        // Simpan ke tabel product_details
-                        ProductDetail::create([
-                            'product_variant_id' => $productVariant->id,
-                            'variant_value_id' => $variantValueObj->id, // Gunakan ID di sini
-                            'isMain' => false, // Atur logika isMain sesuai kebutuhan
-                        ]);
-                    }
-
-                }
-            }
         });
         // $variants = json_decode($request->input('variantData'), true);
         // $variantCombinations = json_decode($request->input('variantCombinationsData'), true);
@@ -294,14 +291,38 @@ class ProductController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
 
-        $existingVariants = $product->product_variant->mapWithKeys(function($variant) {
-            return [$variant->product_detail->first()->variant_value->variant->variant => 
-                    $variant->product_detail->pluck('variant_value.value')->toArray()];
-        })->toArray();  // Convert to array for JSON encoding
-        
-        $existingVariantCombinations = $product->product_variant->map(function($variant) {
-            return $variant->product_detail->pluck('variant_value.value')->toArray();
-        })->toArray();  // Convert to array for JSON encoding
+        // $existingVariants = $product->product_variant;
+        // dd($existingVariants);
+        $existingVariants = [];
+
+        foreach ($product->product_variant as $variant) {
+            foreach ($variant->product_detail as $detail) {
+                $variantName = $detail->variant_value->variant->variant;
+                $variantValue = $detail->variant_value->value;
+
+                // Tambahkan nilai ke dalam array varian yang sesuai
+                if (!isset($existingVariants[$variantName])) {
+                    $existingVariants[$variantName] = [];
+                }
+
+                // Pastikan nilai tidak duplikat
+                if (!in_array($variantValue, $existingVariants[$variantName])) {
+                    $existingVariants[$variantName][] = $variantValue;
+                }
+            }
+        }
+
+        // dd(response()->json($existingVariants));
+
+
+        //     $existingVariants = $product->product_variant->mapWithKeys(function($variant) {
+        //     return [$variant->product_detail->first()->variant_value->variant->variant => 
+        //             $variant->product_detail->pluck('variant_value.value')->toArray()];
+        // })->toArray();  // Convert to array for JSON encoding
+
+        // $existingVariantCombinations = $product->product_variant->map(function($variant) {
+        //     return $variant->product_detail->pluck('variant_value.value')->toArray();
+        // })->toArray();  // Convert to array for JSON encoding
 
         $productVariants = $product->product_variant->map(function ($variant) {
             return [
@@ -309,7 +330,7 @@ class ProductController extends Controller
                 'stock' => $variant->stock,
                 'price' => $variant->price,
                 'weight' => $variant->weight,
-                'SKU' => $variant->SKU,
+                'sku' => $variant->sku,
                 'active' => $variant->active,
                 'details' => $variant->product_detail->map(function ($detail) {
                     return [
@@ -319,15 +340,14 @@ class ProductController extends Controller
                 })->toArray()
             ];
         })->toArray();
-        
-        $productVariantsJson = json_encode($productVariants);
 
-        return view('admin.product.form', compact('data', 'variants', 'categories', 'brands', 'existingVariants', 'existingVariantCombinations', 'productVariants'));
+        // $productVariantsJson = json_encode($productVariants);
+
+        return view('admin.product.form', compact('data', 'variants', 'categories', 'brands', 'existingVariants', 'productVariants'));
     }
 
     function update(UpdateProductRequest $request, Product $product)
     {
-        // dd($request->all());
         $validated = $request->validated();
 
         $product->name = $validated["name"];
@@ -337,17 +357,144 @@ class ProductController extends Controller
         DB::transaction(function () use ($product, $validated) {
             $product->save();
 
-            // HAPUS DULU PRODUCT VARIAN KEMUDIAN SIMPAN DENGAN YANG BARU (INI JIKA TANPA VARIANT)
-            ProductVariant::where('product_id', $product->id)->delete();
+            if (isset($validated["variantData"])) {
+                // JIKA ADA VARIANT 
 
-            $newProductVariant = new ProductVariant();
-            $newProductVariant->product_id = $product->id;
-            $newProductVariant->stock = $validated["stock"];
-            $newProductVariant->price = $validated["price"];
-            $newProductVariant->weight = $validated["weight"];
-            $newProductVariant->sku = $validated["sku"];
-            $newProductVariant->active = $validated["active"] ?? false;
-            $newProductVariant->save();
+                //  HAPUS DULU DATA VARIANT LAMA
+                $variants_id = [];
+                $variant_values_id = [];
+                foreach ($product->product_variant as $variant) {
+                    foreach ($variant->product_detail as $detail) {
+                        // Simpan detail ke dalam array
+                        $variant_values_id[] = $detail->variant_value->id;
+                        $variants_id[] = $detail->variant_value->variant_id;
+                    }
+                }
+                // Hapus semua product_variants, ini akan menghapus product_details juga
+                foreach ($product->product_variant as $variant) {
+                    $variant->delete();
+                }
+                
+                // singkirkan id variant value yang duplikat
+                $variant_values = array_unique($variant_values_id);
+                // hapus variant value yang tidak digunakan / tidak ada pada product detail
+                foreach ($variant_values as $value_id) {
+                    $is_exists_in_product_detail = ProductDetail::where('variant_value_id', $value_id)->exists();
+                    if(!$is_exists_in_product_detail){
+                        VariantValue::destroy($value_id);
+                    }
+                }
+
+                // variant sama seperti variant_value diatas
+                foreach ($variants_id as $variant_id) {
+                    $is_exists_in_variant_value = VariantValue::where('variant_id', $variant_id)->exists();
+                    if(!$is_exists_in_variant_value){
+                        Variant::destroy($variant_id);
+                    }
+                }
+                // HAPUS DATA VARIANT LAMA END
+
+                //  KEMUADIAN SIMPAN DATA VARIANT BARU
+                $variants = json_decode($validated['variantData'], true);
+                $variantCombinations = json_decode($validated['variantCombinationsData'], true);
+                foreach ($variants as $variantName => $values) {
+                    $variant = Variant::firstOrCreate(['variant' => $variantName]);
+
+                    foreach ($values as $value) {
+                        VariantValue::firstOrCreate([
+                            'variant_id' => $variant->id,
+                            'value' => $value,
+                        ]);
+                    }
+                }
+
+                // Simpan kombinasi varian ke tabel product_variants dan product_details
+                foreach ($variantCombinations as $i => $combination) {
+                    $productVariant = new ProductVariant([
+                        'product_id' => $product->id,
+                        'stock' => $validated['stock_variant'][$i],
+                        'price' => $validated['price_variant'][$i],
+                        'weight' => $validated['weight_variant'][$i],
+                        'sku' => $validated['sku_variant'][$i],
+                        'active' => $validated['active_variant'][$i] ?? false,
+                    ]);
+                    $productVariant->save();
+
+                    foreach ($combination as $value) {
+                        // Misal $value adalah 'Warna: Merah'
+                        [$variantName, $variantValue] = explode(': ', $value);
+
+                        // Cari variant_id berdasarkan nama varian
+                        $variant = Variant::where('variant', $variantName)->first();
+
+                        // Cari atau buat VariantValue berdasarkan variant_id dan nilai
+                        $variantValueObj = VariantValue::firstOrCreate([
+                            'variant_id' => $variant->id,
+                            'value' => $variantValue,
+                        ]);
+
+                        // Simpan ke tabel product_details
+                        ProductDetail::create([
+                            'product_variant_id' => $productVariant->id,
+                            'variant_value_id' => $variantValueObj->id, // Gunakan ID di sini
+                            'isMain' => false, // Atur logika isMain sesuai kebutuhan
+                        ]);
+                    }
+                }
+            } else {
+                // JIKA TIDAK ADA VARIANT
+
+                //  HAPUS DULU DATA VARIANT LAMA
+                $variants_id = [];
+                $variant_values_id = [];
+                foreach ($product->product_variant as $variant) {
+                    foreach ($variant->product_detail as $detail) {
+                        // Simpan detail ke dalam array
+                        $variant_values_id[] = $detail->variant_value->id;
+                        $variants_id[] = $detail->variant_value->variant_id;
+                    }
+                }
+                // Hapus semua product_variants KECUALI INDEX YANG PERTAMA
+                //  AGAR ID NYA TIDAK DIPERBAHARUI ATAU DIUBAH 
+                // UNTUK ANTISIPASI JIKA SUDAH ADA DI KERANJANG ATAU SUDAH DIORDER,
+                //  ini akan menghapus product_details juga
+                foreach ($product->product_variant as $key => $variant) {
+                    // dd($key);
+                    if($key === 0){
+                        continue;
+                    }
+                    $variant->delete();
+                }
+                
+                // singkirkan id variant value yang duplikat
+                $variant_values = array_unique($variant_values_id);
+                // hapus variant value yang tidak digunakan / tidak ada pada product detail
+                foreach ($variant_values as $value_id) {
+                    $is_exists_in_product_detail = ProductDetail::where('variant_value_id', $value_id)->exists();
+                    if(!$is_exists_in_product_detail){
+                        VariantValue::destroy($value_id);
+                    }
+                }
+
+                // variant sama seperti variant_value diatas
+                foreach ($variants_id as $variant_id) {
+                    $is_exists_in_variant_value = VariantValue::where('variant_id', $variant_id)->exists();
+                    if(!$is_exists_in_variant_value){
+                        Variant::destroy($variant_id);
+                    }
+                }
+                // HAPUS DATA VARIANT LAMA END
+
+                $newProductVariant = ProductVariant::firstWhere('product_id', $product->id);
+                // dd($newProductVariant);
+                $newProductVariant->product_id = $product->id;
+                $newProductVariant->stock = $validated["stock"];
+                $newProductVariant->price = $validated["price"];
+                $newProductVariant->weight = $validated["weight"];
+                $newProductVariant->sku = $validated["sku"];
+                $newProductVariant->active = $validated["active"] ?? false;
+                $newProductVariant->save();
+            }
 
             // CATEGORIES (many to many)
             if (isset($validated["categories"])) {

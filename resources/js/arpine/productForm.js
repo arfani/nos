@@ -8,25 +8,27 @@ export default () => ({
     colorOptions: ['Merah', 'Biru', 'Hijau', 'Kuning', 'Putih', 'Hitam', 'Jingga', 'Ungu', 'Cokelat', 'Abuabu', 'Pink', 'Toska', 'Biru langit', 'Biru laut', 'Biru muda', 'Biru tua', 'Hijau muda', 'Hijau tua', 'Merah muda', 'Merah tua', 'Emas', 'Perak', 'Marun', 'Lavender', 'Cyan', 'Indigo', 'Lemon', 'Mocca', 'Peach', 'Olive', 'Nila', 'Amber', 'Coral'],
     sizeOptions: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
     setVariantMode(mode){
+        //PERBAIKI SET MODE VARIANT 
         this.variantMode=mode
+        
     },
     setVariants(variants) {
-        // this.variants = JSON.parse(variants); // Parsing JSON to object
+        this.variants = JSON.parse(variants); // Parsing JSON to object
     },
-    setVariantCombinations(variantCombinations) {
-        this.variantCombinations = JSON.parse(variantCombinations); // Parsing JSON to array
-    },
+    // setVariantCombinations(variantCombinations) {
+    //     this.variantCombinations = JSON.parse(variantCombinations); // Parsing JSON to array
+    // },
     initializeProductVariants(productVariants) {
         this.productVariants = JSON.parse(productVariants);
     },
-    // Tambahkan metode untuk mengubah stok, harga, berat, SKU, dll.
-    updateProductVariant(index, field, value) {
-        this.productVariants[index][field] = value;
-    },
+    // // Tambahkan metode untuk mengubah stok, harga, berat, SKU, dll.
+    // updateProductVariant(index, field, value) {
+    //     this.productVariants[index][field] = value;
+    // },
     init() {
         this.$watch('variantCombinations', (val) => {
+            console.log('VARIANTS:', this.variants);
             console.log('VARIANT COMBINATION:', val);
-            console.log('VARIANTs:', this.variants);
         })
 
         $("#categories").select2({

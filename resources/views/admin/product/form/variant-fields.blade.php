@@ -47,13 +47,13 @@
                 <thead>
                     <tr>
                         <!-- Membuat header tabel dinamis berdasarkan keys dari variants -->
-                        {{-- <template x-for="key in Object.keys(variants)" :key="key">
-                            <th x-text="key" class="text-left"></th>
-                        </template> --}}
-                        <th class="text-center">Varian</th>
+                        <template x-for="key in Object.keys(variants)" :key="key">
+                            <th x-text="key" class="text-center"></th>
+                        </template>
+                        {{-- <th class="text-center">Varian</th> --}}
                         <th>Stok</th>
                         <th>Harga</th>
-                        <th>Berat</th>
+                        <th>Berat <span class="text-sm">(g)</span></th>
                         <th>SKU</th>
                         <th>Status</th>
                     </tr>
@@ -63,7 +63,7 @@
                         <tr class="text-center">
                             <!-- Tampilkan nilai kombinasi dengan key -->
                             <template x-for="value in combination" :key="value">
-                                <td x-text="value"></td>
+                                <td x-text="value" class="whitespace-nowrap px-2"></td>
                             </template>
                             <!-- Kolom tambahan untuk stok, harga, berat, SKU, dan status -->
                             <td>
@@ -87,8 +87,14 @@
                                     name="sku_variant[]" class="my-input bg-primary/5 rounded">
                             </td>
                             <td>
+                                <select name="active_variant[]" class="my-input">
+                                    <option value="1"  @isset($data) :selected="productVariants[index].active === 1" @else selected @endisset >Aktif</option>
+                                    <option value="0"  @isset($data) :selected="productVariants[index].active === 0" @endisset >Tidak Aktif</option>
+                                </select>
+                                {{-- <input id="active" type="hidden" value="0" name="active_variant[]" />
                                 <input id="active" type="checkbox" value="1" name="active_variant[]"
-                                    :checked="productVariants[index].active ? true : false" />
+                                @isset($data) :checked="productVariants[index].active ? true : false" @endisset
+                                     /> --}}
 
                                 {{-- @include(
                                     'components_custom.toggle-active-product',

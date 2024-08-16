@@ -297,15 +297,15 @@
                         {{-- BUTTON SUBMIT AND BACK CONTAINER END --}}
                     </div>
                 </form>
+
                 @isset($data)
-
-                <div x-init="setVariantMode(true)"></div>
-                {{-- <div x-init="console.log('{{ json_encode($existingVariants) }}')"></div> --}}
-
-                <div x-init="setVariantCombinations('{{ json_encode($existingVariantCombinations) }}')"></div>
-                <div x-init="setVariants('{{ json_encode($existingVariants) }}')"></div>
-                <div x-init="initializeProductVariants('{{ json_encode($productVariants) }}')"></div>
-            @endisset
+                    @if (count($data->product_variant) > 1)
+                        {{-- set variantmode true jika variant ada lebih dari 1 --}}
+                        <div x-init="setVariantMode(true)"></div>
+                    @endif
+                    <div x-init="setVariants('{{ json_encode($existingVariants) }}')"></div>
+                    <div x-init="initializeProductVariants('{{ json_encode($productVariants) }}')"></div>
+                @endisset
             </div>
         </div>
     </div>
@@ -430,7 +430,6 @@
                     });
 
                     // VARIANTS
-
                 @endisset
             })
         </script>
