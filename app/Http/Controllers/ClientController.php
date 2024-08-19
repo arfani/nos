@@ -48,7 +48,7 @@ class ClientController extends Controller
         $product_data = Setting::where('section_name', 'product')->first();
         $products = [
             'data' => $product_data,
-            'items' => Product::with(['product_pictures', 'promo', 'auction'])
+            'items' => Product::with(['product_pictures', 'promo', 'auction', 'product_variant.product_detail.variant_value.variant'])
                 ->where('active', 1)
                 ->limit($product_data->show_items)->latest()->get()
         ];

@@ -49,8 +49,10 @@
         {{-- searching --}}
         <div class="form-control hidden md:block mr-2">
             <div class="relative">
-                <input id="search-input" type="text" placeholder="Apa yang Anda cari ?" class="input input-bordered lg:w-96 w-auto" />
-                <button id="search-button" class="!absolute right-2 top-1/2 transform -translate-y-1/2 hover:bg-primary/20 rounded-full btn-sm">
+                <input id="search-input" type="text" placeholder="Apa yang Anda cari ?"
+                    class="input input-bordered lg:w-96 w-auto" />
+                <button id="search-button"
+                    class="!absolute right-2 top-1/2 transform -translate-y-1/2 hover:bg-primary/20 rounded-full btn-sm">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
@@ -91,49 +93,9 @@
         </div> -->
 
         {{-- cart --}}
-        <div class="dropdown dropdown-end" x-data>
-            <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-                <div class="indicator">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                    <span class="text-[10px] indicator-item badge-error p-1 rounded-full" x-show="$store.cart.totalItem"
-                        x-text="$store.cart.totalItem"></span>
-                </div>
-            </div>
-            <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content min-w-96 bg-base-100 shadow">
-                <div class="card-body">
-                    <span class="font-bold text-lg" x-text="$store.cart.totalItem + ' total produk'"></span>
-                    <div class="list-product max-h-80 overflow-auto flex flex-col gap-2">
-                        <template x-for="item in $store.cart.items">
-                            <div class="cart-item" :key="item.product.id">
-                                <div class="flex gap-2">
-                                    <img src="{{ Storage::url('mocks/a.jpg') }}" alt="" width="60px"
-                                        class="rounded">
-                                    <div class="name flex-1">
-                                        <div x-text="item.product.name"></div>
-                                        <div x-text="'variant'"></div>
-                                    </div>
-                                    <div class="price mr-2">
-                                        <div>
-                                            <span x-text="item.qty"></span>
-                                            <span x-text="'x ' + item.product.price"></span>
-                                        </div>
-                                        <div x-text="'Harga sebelum diskon'"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                    <span class="font-bold text-lg text-right" x-text="'Subtotal: ' + $store.cart.subtotal"></span>
-                    <div class="card-actions">
-                        <a href="{{ route('client.cart') }}" class="btn btn-primary btn-block">Lihat Keranjang</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @can('is-member')
+           @include('layouts.client.cart')
+        @endcan
 
         {{-- user icon --}}
         <div class="dropdown dropdown-end">
@@ -149,7 +111,8 @@
                         <label class="swap swap-rotate">
 
                             <!-- this hidden checkbox controls the state -->
-                            <input type="checkbox" class="themeSetter hidden" value="synthwave" />
+                            {{-- id disini saya buat untuk menghilangkan warning pada console --}}
+                            <input type="checkbox" class="themeSetter hidden" value="synthwave" id="themeSetter" />
 
                             <!-- sun icon -->
                             <svg class="swap-off fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg"
@@ -168,8 +131,18 @@
                         </label>
                     </button>
                 </div>
-                <li><a href="{{ route('client.profile') }}" class="py-2"><span
-                            class="fa fa-user"></span><span>Profil</span></a></li>
+                <li>
+                    @can('is-member')
+                    <a href="{{ route('client.profile') }}" class="py-2">
+                        <span class="fa fa-user"></span><span>Profil</span>
+                    </a>
+                    @endcan
+                    @can('is-admin')
+                    <a href="{{ route('admin-profile.index') }}" class="py-2">
+                        <span class="fa fa-user"></span><span>Profil</span>
+                    </a>
+                    @endcan
+                </li>
                 <div class="divider my-0"></div>
                 <li>
                     @if (auth()->check())

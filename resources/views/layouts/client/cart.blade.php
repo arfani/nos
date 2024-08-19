@@ -1,17 +1,25 @@
-<x-client-layout>
-    <div class="cart-body p-2" x-data>
-        <h1 class="text-3xl lg:text-4xl mb-6 font-bold">Keranjang</h1>
-        <div class="flex gap-4">
-            <div class="flex flex-col gap-2 flex-1">
+<div class="dropdown dropdown-end" x-data>
+    <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+        <div class="indicator">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span class="text-[10px] indicator-item badge-error p-1 rounded-full" x-show="$store.cart.totalItem"
+                x-text="$store.cart.totalItem"></span>
+        </div>
+    </div>
+    <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content min-w-96 bg-base-100 shadow">
+        <div class="card-body">
+            <span class="font-bold text-lg" x-text="$store.cart.totalItem + ' total produk'"></span>
+            <div class="list-product max-h-80 overflow-auto flex flex-col gap-2">
                 <template x-for="item in $store.cart.items">
-                    <div class="cart-item bg-base-200 p-2 rounded" :key="item.product.id">
+                    <div class="cart-item" :key="item.product.id">
                         <div class="flex gap-2">
-                            <img :src="item.product.product_pictures.length ? `/storage/${item.product.product_pictures[0].path}` :
-                                ''"
-                                alt="product-image" width="160px" class="rounded mx-2">
-
+                            <img :src="item.product.product_pictures.length ? `/storage/${item.product.product_pictures[0].path}` : ''" alt="product-image" width="60px" class="rounded">
+                            
                             <div class="name flex-1">
-                                <div class="text-xl font-bold" x-text="item.product.name"></div>
+                                <div x-text="item.product.name"></div>
                                 <template x-if="item.product_variant">
                                     <template x-for="detail in item.product_variant.product_detail">
                                         <div class="text-xs"
@@ -23,7 +31,7 @@
                                     <div>-</div>
                                 </template>
                             </div>
-                            <div class="price mr-2 self-center">
+                            <div class="price mr-2">
                                 <div>
                                     <span x-text="item.quantity"></span>
                                     {{-- JIKA PRODUCT VARIANT ID TIDAK ADA BERARTI TIDAK ADA VARIAN MAKA AMBIL DARI RELASI PRODUCT->PRODUCT_VARAINT, JIKA ADA YA AMBIL DARI PRODUCT_VARIANT GA USAH DARI PRODUCT KARENA BERARTI PRODUCT NYA ADA VARIANT --}}
@@ -47,22 +55,12 @@
                         </div>
                     </div>
                 </template>
-                <div x-show="!$store.cart.items.length">Keranjang belanjamu masih kosong !!!</div>
             </div>
-            <div class="rounded bg-base-200 py-2 px-4 h-fit sticky top-24">
-                <h2 class="text-xl font-bold mb-2">Ringkasan Belanja</h2>
-                <div class="flex justify-between">
-                    <div class="w-32">Total Items</div>
-                    <div x-text="$store.cart.totalItem"></div>
-                </div>
-                <div class="flex justify-between">
-                    <div class="w-32" class="">Subtotal</div>
-                    <div x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.subtotal)"></div>
-                </div>
-                <div class="card-actions my-2">
-                    <a href="{{ route('client.cart') }}" class="btn btn-primary btn-block">Beli</a>
-                </div>
+            <span class="font-bold text-lg text-right"
+                x-text="'Subtotal: ' + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.subtotal)"></span>
+            <div class="card-actions">
+                <a href="{{ route('client.cart') }}" class="btn btn-primary btn-block">Lihat Keranjang</a>
             </div>
         </div>
     </div>
-</x-client-layout>
+</div>

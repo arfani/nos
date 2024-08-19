@@ -30,17 +30,27 @@ class ProductDetailSeeder extends Seeder
 
         ProductDetail::create([
             'product_variant_id' => 3,
-            'variant_value_id' => 5
+            'variant_value_id' => 4
+        ]);
+        
+        ProductDetail::create([
+            'product_variant_id' => 4,
+            'variant_value_id' => 2
         ]);
         
         ProductDetail::create([
             'product_variant_id' => 4,
             'variant_value_id' => 3
         ]);
+
+        ProductDetail::create([
+            'product_variant_id' => 5,
+            'variant_value_id' => 1
+        ]);
         
         ProductDetail::create([
-            'product_variant_id' => 4,
-            'variant_value_id' => 4
+            'product_variant_id' => 5,
+            'variant_value_id' => 3
         ]);
     }
 }

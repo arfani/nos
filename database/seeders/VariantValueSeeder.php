@@ -21,10 +21,10 @@ class VariantValueSeeder extends Seeder
             'variant_id' => 1,
             'value' => 'Putih'
         ]);
-        VariantValue::create([
-            'variant_id' => 1,
-            'value' => 'Biru'
-        ]);
+        // VariantValue::create([
+        //     'variant_id' => 1,
+        //     'value' => 'Biru'
+        // ]);
         VariantValue::create([
             'variant_id' => 2,
             'value' => 'M'

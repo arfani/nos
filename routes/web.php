@@ -33,8 +33,13 @@ Route::get('/product/{slug}', [ProductController::class, 'product'])->name('clie
 Route::get('/products/category/{category}', [ProductController::class, 'productsByCategory'])->name('client.productsByCategory');
 
 // CART
-Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
 
+Route::middleware(['auth', 'verified', 'can:is-member'])
+    ->group(function () {
+        Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
+        Route::get('/data-cart', [CartController::class, 'get_data']); // untuk diambil dari alpine
+        Route::post('/add-to-cart', [CartController::class, 'add_to_cart']); // untuk diambil dari alpine
+    });
 // PROFILE
 Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile')->middleware('auth', 'can:is-member');
 Route::post('/profile/address', [ProfileController::class, 'store_address'])->name('profile.store_address');
@@ -95,7 +100,6 @@ Route::prefix('admin')
 
         Route::resource('auction', AuctionController::class)->only('store', 'update');
         Route::resource('homepage-client', HomepageClientController::class)->only('index', 'update');
-
     });
 
 
@@ -112,7 +116,7 @@ Route::get('/notification', [NotificationController::class, 'index'])->name('cli
 require __DIR__ . '/auth.php';
 
 Route::get('testing', function () {
-    
+
     dd(User::paginate(1));
     return User::firstWhere('username', 'member1')->id;
     return view('testing');

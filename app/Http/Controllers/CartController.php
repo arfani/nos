@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -11,5 +12,43 @@ class CartController extends Controller
     function index(): View
     {
         return view('client.cart.index');
+    }
+
+    function get_data()
+    {
+        if (!auth()->check()) {
+            return response()->json([]);
+        }
+
+        $data = Cart::with('user', 'product.product_variant.product_detail.variant_value.variant', 'product_variant.product_detail.variant_value.variant', 'product.promo', 'product_variant', 'product.product_pictures')
+        ->where('user_id', auth()->user()->id)
+        ->latest()
+        ->get();
+
+        return response()->json($data);
+    }
+
+    function add_to_cart(Request $request)
+    {
+        $cart = Cart::firstWhere([
+            'user_id' => auth()->user()->id,
+            'product_id' => $request->product_id,
+            'product_variant_id' => $request->product_variant_id
+        ]);
+
+        // JIKA BARANG SUDAH ADA DI DALAM CART MAKA HANYA AKUMULASI QTY SAJA
+        if ($cart) {
+            $cart->quantity += $request->quantity;
+        } else {
+            // JIKA TIDAK ADA BARANG MAKA TAMBAH BARU
+            $cart = new Cart();
+            $cart->user_id = auth()->user()->id;
+            $cart->product_id = $request->product_id;
+            $cart->product_variant_id = $request->product_variant_id;
+            $cart->quantity = $request->quantity;
+        }
+        $cart->save();
+
+        return response()->json(['status' => 1]);
     }
 }

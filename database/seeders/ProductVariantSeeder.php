@@ -59,6 +59,16 @@ class ProductVariantSeeder extends Seeder
             'weight' => 500, //gram
             'active' => true
         ]);
+
+        ProductVariant::create([
+            'product_id' => $product2->id,
+            'product_variant_name' => 'variant 4',
+            'sku' => 'produav4',
+            'price' => 250000,
+            'stock' => 200,
+            'weight' => 500, //gram
+            'active' => true
+        ]);
         
         ProductVariant::create([
             'product_id' => $product3->id,

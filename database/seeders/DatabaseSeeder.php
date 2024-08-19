@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             BidSeeder::class,
             CommentSeeder::class,
+            CartSeeder::class,
         ]);
     }
 }

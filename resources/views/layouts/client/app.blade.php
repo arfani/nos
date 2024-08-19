@@ -23,6 +23,8 @@
         @include('components_custom.loader')
     </div>
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     @include('layouts.client.navbar')
     <!-- Page Content -->
     <main class="pt-28 pb-4 px-4 transition-all">

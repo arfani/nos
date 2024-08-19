@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="sm:mx-6 lg:mx-8 p-6 py-10 bg-secondary text-secondary-content rounded overflow-x-auto"
+    <div class="sm:mx-6 lg:mx-8 bg-secondary text-secondary-content rounded overflow-x-auto"
         x-data="data()">
         <div class="flex flex-col sm:flex-row items-center sm:items-start p-4 gap-8 sm:gap-2">
             {{-- alert --}}
