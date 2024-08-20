@@ -34,7 +34,7 @@
         </div>
 
         <div class="mt-6">
-            <x-input-label for="noteForCurrier" value="{{ __('Catatan unuk kurir') }}" />
+            <x-input-label for="noteForCurrier" value="{{ __('Catatan untuk kurir') }}" />
             <x-text-input name="noteForCurrier" type="text" class="mt-1 block w-full"
                 placeholder="{{ __('Depan Masjid') }}"
                 x-bind:value="`{{ old('noteForCurrier') }}`

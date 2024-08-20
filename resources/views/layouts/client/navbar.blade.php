@@ -93,7 +93,7 @@
         </div> -->
 
         {{-- cart --}}
-        @can('is-member')
+        @cannot('is-admin')
            @include('layouts.client.cart')
         @endcan
 

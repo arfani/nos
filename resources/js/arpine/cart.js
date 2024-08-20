@@ -1,5 +1,7 @@
 export default {
     items: [],
+    showNotifAddSuccess: false,
+    showNotifAddFailed: false,
     get totalItem() {
         return this.items.reduce((sum, item) => sum + item.quantity, 0)
     },
@@ -39,9 +41,11 @@ export default {
         if (result.status === 1) {
             // Successfully added to cart, now refresh the cart data
             await this.getDataCart();
+            this.showNotifAddSuccess = true;
         } else {
             // Handle the error case
             console.error('Failed to add to cart');
+            this.showNotifAddFailed = true;
         }
     }
 }

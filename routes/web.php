@@ -34,12 +34,18 @@ Route::get('/products/category/{category}', [ProductController::class, 'products
 
 // CART
 
+Route::get('/data-cart', [CartController::class, 'get_data']); // untuk diambil dari alpine
+Route::post('/add-to-cart', [CartController::class, 'add_to_cart']); // untuk diambil dari alpine
+
 Route::middleware(['auth', 'verified', 'can:is-member'])
-    ->group(function () {
+->group(function () {
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
-        Route::get('/data-cart', [CartController::class, 'get_data']); // untuk diambil dari alpine
-        Route::post('/add-to-cart', [CartController::class, 'add_to_cart']); // untuk diambil dari alpine
+        Route::get('/checkout', [CartController::class, 'checkout'])->name('client.checkout');
     });
+
+// BUAT AUTH DI VIEW AJAAAA
+
+
 // PROFILE
 Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile')->middleware('auth', 'can:is-member');
 Route::post('/profile/address', [ProfileController::class, 'store_address'])->name('profile.store_address');

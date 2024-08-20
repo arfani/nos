@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Cart;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -14,6 +15,19 @@ class CartController extends Controller
         return view('client.cart.index');
     }
 
+    function checkout(): View
+    {
+        $address = Address::where('user_id', auth()->user()->id)
+            ->where('isMain', 1)
+            ->first();
+
+            if(!$address){
+                $address = Address::where('user_id', auth()->user()->id)->first();
+            }
+
+        return view('client.cart.checkout', compact('address'));
+    }
+
     function get_data()
     {
         if (!auth()->check()) {
@@ -21,9 +35,9 @@ class CartController extends Controller
         }
 
         $data = Cart::with('user', 'product.product_variant.product_detail.variant_value.variant', 'product_variant.product_detail.variant_value.variant', 'product.promo', 'product_variant', 'product.product_pictures')
-        ->where('user_id', auth()->user()->id)
-        ->latest()
-        ->get();
+            ->where('user_id', auth()->user()->id)
+            ->latest()
+            ->get();
 
         return response()->json($data);
     }
