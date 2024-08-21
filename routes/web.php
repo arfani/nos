@@ -38,9 +38,11 @@ Route::get('/data-cart', [CartController::class, 'get_data']); // untuk diambil 
 Route::post('/add-to-cart', [CartController::class, 'add_to_cart']); // untuk diambil dari alpine
 
 Route::middleware(['auth', 'verified', 'can:is-member'])
-->group(function () {
+    ->group(function () {
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
         Route::get('/checkout', [CartController::class, 'checkout'])->name('client.checkout');
+        Route::patch('/update-qty/{cart}', [CartController::class, 'update_qty'])->name('client.update_qty');
+        Route::delete('/remove-item/{cart}', [CartController::class, 'remove_item'])->name('client.remove_item');
     });
 
 // BUAT AUTH DI VIEW AJAAAA

@@ -21,9 +21,9 @@ class CartController extends Controller
             ->where('isMain', 1)
             ->first();
 
-            if(!$address){
-                $address = Address::where('user_id', auth()->user()->id)->first();
-            }
+        if (!$address) {
+            $address = Address::where('user_id', auth()->user()->id)->first();
+        }
 
         return view('client.cart.checkout', compact('address'));
     }
@@ -62,6 +62,22 @@ class CartController extends Controller
             $cart->quantity = $request->quantity;
         }
         $cart->save();
+
+        return response()->json(['status' => 1]);
+    }
+
+    function update_qty(Request $request, Cart $cart)
+    {
+        $cart->quantity = $request->qty;
+        $cart->save();
+
+        return response()->json(['status' => 1]);
+    }
+
+    function remove_item(Cart $cart)
+    {
+        // return $cart;
+        $cart->delete();
 
         return response()->json(['status' => 1]);
     }
