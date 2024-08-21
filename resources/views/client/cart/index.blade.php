@@ -1,6 +1,7 @@
 <x-client-layout>
     <div class="cart-body p-2" x-data>
-        <h1 class="text-3xl lg:text-4xl mb-6 font-bold pl-6"><i class="fa fa-cart-shopping"></i> Keranjang Belanjaanmu</h1>
+        <h1 class="text-3xl lg:text-4xl mb-6 font-bold pl-6"><i class="fa fa-cart-shopping"></i> Keranjang Belanjaanmu
+        </h1>
         <div class="flex gap-4">
             <div class="flex flex-col gap-2 flex-1">
                 <template x-for="item in $store.cart.items">
@@ -43,6 +44,14 @@
                                         </div>
                                     </template>
                                 </template>
+                                <div class="mt-3">
+                                    <button class="btn btn-sm btn-ghost"
+                                        @click="$store.cart.updateQty($refs['qty-' + item.product.id].value)">-</button>
+                                    <input type="number" name="qty" :value="item.quantity"
+                                        class="my-input w-16 mx-2" :x-ref="'qty-' + item.product.id">
+                                    <button class="btn btn-sm btn-ghost"
+                                        @click="$store.cart.updateQty($refs['qty-' + item.product.id].value)">+</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -57,7 +66,9 @@
                 </div>
                 <div class="flex justify-between">
                     <div class="w-32" class="">Subtotal</div>
-                    <div x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.subtotal)"></div>
+                    <div
+                        x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.subtotal)">
+                    </div>
                 </div>
                 <div class="card-actions my-2">
                     <a href="{{ route('client.checkout') }}" class="btn btn-primary btn-block">Beli</a>

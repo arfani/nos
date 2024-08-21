@@ -47,5 +47,8 @@ export default {
             console.error('Failed to add to cart');
             this.showNotifAddFailed = true;
         }
+    },
+    async updateQty(qty){
+        alert(qty)
     }
 }
