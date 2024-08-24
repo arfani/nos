@@ -129,3 +129,7 @@ Route::get('testing', function () {
     return User::firstWhere('username', 'member1')->id;
     return view('testing');
 });
+
+Route::get('/dsc-webhook', function(){
+    return response()->json(['status' => 'success'], 200);
+});
