@@ -130,7 +130,7 @@ Route::get('testing', function () {
     return view('testing');
 });
 
-Route::get('/dsc-webhook', function(){
+Route::post('/dsc-webhook', function(){
     return response()->json(['status' => 'success'], 200, ['Content-Type' => 'application/x-www-urlencoded']);
 });
 
