@@ -131,5 +131,7 @@ Route::get('testing', function () {
 });
 
 Route::get('/dsc-webhook', function(){
-    return response()->json(['status' => 'success'], 200);
+    return response()->json(['status' => 'success'], 200, ['Content-Type' => 'application/x-www-urlencoded']);
 });
+
+Route::get('/get-areas-single', [CartController::class, 'get_areas_single'])->name('get-areas-single');
