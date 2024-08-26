@@ -20,6 +20,12 @@ return new class extends Migration
             $table->string('hp', 100);
             $table->boolean('isMain')->default(false);
             $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
+            $table->string('area_id');
+            $table->string('area_name');
+            $table->string('postal_code');
+            $table->string('province');
+            $table->string('city');
+            $table->string('district');
             $table->timestamps();
         });
     }

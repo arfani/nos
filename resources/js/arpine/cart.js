@@ -134,5 +134,41 @@ export default {
             this.showNotifFailed = false;
             this.notifTimeout = null; // Clear the timeout ID
         }, 5000);
-    }
+    },
+    // UNTUK CHECKOUT PAGE
+    addressSelected: { name: 'testid' },
+    setAddress(id, name, recipient, hp, address) {
+        this.addressSelected.id = id;
+        this.addressSelected.name = name;
+        this.addressSelected.recipient = recipient;
+        this.addressSelected.hp = hp;
+        this.addressSelected.address = address;
+
+        // this.setDeliveryMethods()
+    },
+    deliveryMethods: [],
+    // async setDeliveryMethods() {
+
+    //     try {
+    //         const response = await fetch('https://api.rajaongkir.com/starter/province', {
+
+    //         // method: 'GET',
+    //             // mode: 'no-cors',
+    //             headers: {
+    //                 'Content-Type': 'application/x-www-form-urlencoded',
+    //                 'key': '1d8af72b3116392197885902b6bbee85' // Tambahkan header key di sini
+    //             }
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+
+    //         const data = await response.json();
+    //         // this.items = data;
+    //         console.log(data, '--data')
+    //     } catch (error) {
+    //         console.error('Fetch error:', error);
+    //     }
+    // }
 }

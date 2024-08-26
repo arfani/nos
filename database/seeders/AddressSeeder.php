@@ -24,8 +24,14 @@ class AddressSeeder extends Seeder
             'hp' => '081907456710',
             'isMain' => true,
             'user_id' => $userMember->id,
+            'area_id' => 'IDNP22IDNC271IDND2891IDZ83239',
+            'area_name' => 'Cakranegara, Mataram, Nusa Tenggara Barat (NTB). 83239',
+            'province' => 'Nusa Tenggara Barat (NTB)',
+            'city' => 'Mataram',
+            'district' => 'Cakranegara',
+            'postal_code' => 83239
         ]);
-        
+
         Address::create([
             'name' => 'Kantor',
             'address' => 'Jalan Caturwarga, Pajang Timur, Mataram, Lombok, NTB.',
@@ -34,6 +40,12 @@ class AddressSeeder extends Seeder
             'hp' => '081907456710',
             'isMain' => false,
             'user_id' => $userMember->id,
+            'area_id' => 'IDNP22IDNC271IDND2892IDZ83117',
+            'area_name' => 'Mataram, Mataram, Nusa Tenggara Barat (NTB). 83117',
+            'province' => 'Nusa Tenggara Barat (NTB)',
+            'city' => 'Mataram',
+            'district' => 'Mataram',
+            'postal_code' => 83117
         ]);
     }
 }

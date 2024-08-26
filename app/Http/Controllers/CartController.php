@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Cart;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class CartController extends Controller
 {
@@ -15,17 +16,45 @@ class CartController extends Controller
         return view('client.cart.index');
     }
 
-    function checkout(): View
+    function checkout()
     {
-        $address = Address::where('user_id', auth()->user()->id)
-            ->where('isMain', 1)
-            ->first();
+        // $response = Http::withHeaders([
+        //     // 'authorization' => 'biteship_live.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZHNjIiwidXNlcklkIjoiNjZjN2VlYTc5ZWE1NWYwMDEyZDcyYzIzIiwiaWF0IjoxNzI0NDcxMTYxfQ.J892b7nG4MRPAsHVv7Hz2AqGg-Nsaw1Eof2wAZX9w4w',
+        //     'authorization' => 'biteship_test.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzIiwidXNlcklkIjoiNjZjN2VlYTc5ZWE1NWYwMDEyZDcyYzIzIiwiaWF0IjoxNzI0NDY4OTY4fQ.tvttczzzVKaAvNUKFxkH2tBG68FdSLhiw7_7IoBikZE',
+        //     'content-type' => 'application/json',
 
-        if (!$address) {
+        //     ])->get('https://api.biteship.com/v1/maps/areas?countries=ID&input=ja');
+        //     // DIBAWAH CONTOH CEK ONGKIR
+        // // ])->post(
+        // //     'https://api.biteship.com/v1/rates/couriers',
+        // //     [
+        // //         'origin_postal_code' => 10730,
+        // //         'destination_postal_code' => 83239,
+        // //         'couriers' => 'gojek,grab,tiki,anteraja,pos,sicepat,jne',
+        // //         'items' => [
+        // //             [
+        // //                 'name' => 'test name barang',
+        // //                 'value' => 120000,
+        // //                 'quantity' => 3,
+        // //                 'weight' => 1000,
+        // //             ]
+        // //         ],
+        // //     ]
+        // // );
+
+
+        // dd($response->json());
+
+        $address = Address::where('user_id', auth()->user()->id)
+            ->where('isMain', 1)->first();
+
+        if (!$address) {  //jika tidak ada alamat utama maka ambil alamat yg pertama dibuat
             $address = Address::where('user_id', auth()->user()->id)->first();
         }
 
-        return view('client.cart.checkout', compact('address'));
+        $addresses = Address::where('user_id', auth()->user()->id)->get();
+
+        return view('client.cart.checkout', compact('address', 'addresses'));
     }
 
     function get_data()
@@ -80,5 +109,22 @@ class CartController extends Controller
         $cart->delete();
 
         return response()->json(['status' => 1]);
+    }
+
+    function get_areas_single(Request $request)
+    {
+        $queryParams = $request->query();
+
+        // Build the query string from the parameters
+        $queryString = http_build_query($queryParams);
+
+        $response = Http::withHeaders([
+            // 'authorization' => 'biteship_live.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZHNjIiwidXNlcklkIjoiNjZjN2VlYTc5ZWE1NWYwMDEyZDcyYzIzIiwiaWF0IjoxNzI0NDcxMTYxfQ.J892b7nG4MRPAsHVv7Hz2AqGg-Nsaw1Eof2wAZX9w4w',
+            'authorization' => 'biteship_test.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzIiwidXNlcklkIjoiNjZjN2VlYTc5ZWE1NWYwMDEyZDcyYzIzIiwiaWF0IjoxNzI0NDY4OTY4fQ.tvttczzzVKaAvNUKFxkH2tBG68FdSLhiw7_7IoBikZE',
+            'content-type' => 'application/json',
+
+        ])->get('https://api.biteship.com/v1/maps/areas?countries=ID&type=single&' . $queryString);
+
+        return response()->json($response->json());
     }
 }

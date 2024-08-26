@@ -105,7 +105,7 @@
                         src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}" />
                 </div>
             </div>
-            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box">
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] py-2 px-4 shadow bg-base-100 rounded-box">
                 <div class="flex justify-evenly">
                     <button class="btn btn-ghost btn-circle">
                         <label class="swap swap-rotate">
@@ -131,20 +131,28 @@
                         </label>
                     </button>
                 </div>
+                @auth
+                <li class="text-center text-xs">
+                    {{ auth()->user()->email }}
+                </li>
+                <li class="text-center text-sm my-1 font-bold">
+                    {{ auth()->user()->name }}
+                </li>
+                @endauth
                 <li>
                     @can('is-member')
-                    <a href="{{ route('client.profile') }}" class="py-2">
+                    <a href="{{ route('client.profile') }}" class="mx-auto">
                         <span class="fa fa-user"></span><span>Profil</span>
                     </a>
                     @endcan
                     @can('is-admin')
-                    <a href="{{ route('admin-profile.index') }}" class="py-2">
+                    <a href="{{ route('admin-profile.index') }}" class="mx-auto">
                         <span class="fa fa-user"></span><span>Profil</span>
                     </a>
                     @endcan
                 </li>
                 <div class="divider my-0"></div>
-                <li>
+                <li class="mx-auto">
                     @if (auth()->check())
                         <form action="{{ route('logout') }}" method="post">
                             @csrf

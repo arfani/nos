@@ -13,16 +13,22 @@
         <div class="mt-6">
             <x-input-label for="name" value="{{ __('Nama') }}" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
-                placeholder="{{ __('Rumah, Kantor, Kampus') }}" required value="{{ old('name') }}"
-                {{-- tidak bisa gunakan shortcut dari x-bind (yaitu : ) disini karena menggunakan blade component, jadi pake x-bind saja --}} />
+                placeholder="{{ __('Rumah, Kantor, Kampus') }}" required value="{{ old('name') }}" {{-- tidak bisa
+                gunakan shortcut dari x-bind (yaitu : ) disini karena menggunakan blade component, jadi pake x-bind saja
+                --}} />
             <x-input-error :messages="$errors->address_store->get('name')" class="mt-2" />
         </div>
 
         <div class="flex flex-col my-4">
-            <x-input-label for="address" class="mb-2" value="{{ __('Alamat') }}" />
+            <x-input-label for="address" class="mb-2" value="{{ __('Alamat lengkap') }}" />
             <textarea name="address" id="address" rows="3" class="my-input bg-primary/5 rounded"
-                placeholder="Jalan kenangan no. 1001 blok A" required>{{ old('address') }}</textarea>
+                placeholder="Jalan kenangan no. 1001 RT. 02 RW. 116 blok A" required>{{ old('address') }}</textarea>
             <x-input-error :messages="$errors->address_store->get('address')" class="mt-2" />
+        </div>
+
+        <div class="flex flex-col my-4">
+            <x-input-label for="area_id" class="mb-2" value="{{ __('Daerah (Kecamatan/Kota/Kabupaten/Provinsi)') }}" />
+            <select name="area_id" class="area_id" required></select>
         </div>
 
         <div class="mt-6">
@@ -41,14 +47,14 @@
 
         <div class="mt-6">
             <x-input-label for="hp" value="{{ __('HP') }}" />
-            <x-text-input id="hp" name="hp" type="text" class="mt-1 block w-full"
-                placeholder="{{ __('081xxx') }}" required value="{{ old('hp') }}" />
+            <x-text-input id="hp" name="hp" type="number" class="mt-1 block w-full" placeholder="{{ __('081xxx') }}"
+                required value="{{ old('hp') }}" />
             <x-input-error :messages="$errors->address_store->get('hp')" class="mt-2" />
         </div>
 
         <div class="mt-6 flex gap-2 items-center">
-            <input type="checkbox" name="isMain" id="isMain" value="1"
-                :checked="data?.isMain ? true : false" /> <label for="isMain">{{ __('Utama') }}</label>
+            <input type="checkbox" name="isMain" id="isMain" value="1" :checked="data?.isMain ? true : false" /> <label
+                for="isMain">{{ __('Utama') }}</label>
         </div>
         <div class="mt-6 flex justify-end">
             <x-secondary-button x-on:click="$dispatch('close')">

@@ -7,10 +7,10 @@ export default () => ({
     isSubmitting: false,
     colorOptions: ['Merah', 'Biru', 'Hijau', 'Kuning', 'Putih', 'Hitam', 'Jingga', 'Ungu', 'Cokelat', 'Abuabu', 'Pink', 'Toska', 'Biru langit', 'Biru laut', 'Biru muda', 'Biru tua', 'Hijau muda', 'Hijau tua', 'Merah muda', 'Merah tua', 'Emas', 'Perak', 'Marun', 'Lavender', 'Cyan', 'Indigo', 'Lemon', 'Mocca', 'Peach', 'Olive', 'Nila', 'Amber', 'Coral'],
     sizeOptions: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-    setVariantMode(mode){
+    setVariantMode(mode) {
         //PERBAIKI SET MODE VARIANT 
-        this.variantMode=mode
-        
+        this.variantMode = mode
+
     },
     setVariants(variants) {
         this.variants = JSON.parse(variants); // Parsing JSON to object
@@ -108,7 +108,6 @@ export default () => ({
         document.getElementById('description').value = editorContent;
         this.$el.submit();
     },
-
     addVariant() {
         this.productVariants = [];
         let variantKey = this.$refs.variant.value;
@@ -151,9 +150,7 @@ export default () => ({
         this.generateCombinations();
     },
     editVariantValues(key, selectedOptions) {
-        console.log("Selected options:", selectedOptions);
         this.variants[key] = Array.from(selectedOptions).map(option => option.value);
-        console.log("Updated variants:", this.variants);
         this.generateCombinations();
     },
     generateCombinations() {

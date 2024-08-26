@@ -6,19 +6,39 @@
                 <div class="flex flex-col gap-2 flex-1">
                     <div class="address bg-base-200 p-6 rounded mb-4">
                         <div class="text-xl font-bold mb-1">Alamat Pengiriman</div>
+                        {{-- SET ADDRESS DI ALPINE JS --}}
+                        <div x-init="$store.cart.setAddress(
+                            '{{$address->id}}','{{$address->name}}','{{$address->recipient}}','{{$address->hp}}','{{$address->address}}'
+                        )"></div>
 
                         <div class="flex flex-col gap-4">
                             <div class="flex-1 capitalize">
                                 <div class="">
-                                    <i class="fa fa-map-location-dot mr-2"></i> {{ $address->name }} •
-                                    {{ $address->recipient }} • {{ $address->hp }}
+                                    <i class="fa fa-map-location-dot mr-2"></i>
+                                    <span x-text="$store.cart.addressSelected.name"></span> •
+                                    <span x-text="$store.cart.addressSelected.recipient"></span> •
+                                    <span x-text="$store.cart.addressSelected.hp"></span>
                                 </div>
                                 <div class="mt-4">
-                                    {{ $address->address }}
+                                    <span x-text="$store.cart.addressSelected.address"></span>
                                 </div>
                             </div>
-                            <div class="flex-1">
-                                <button class="btn btn-sm btn-primary"><i class="fa fa-pen"></i> Ganti alamat</button>
+                            <div class="flex-1 self-start tooltip tooltip-right" data-tip="Ubah alamat">
+                                <select name="addresses" id="addresses" class="my-input" @change="$store.cart.setAddress(
+                                        $event.target.value,
+                                        $event.target.options[$event.target.selectedIndex].dataset.name,
+                                        $event.target.options[$event.target.selectedIndex].dataset.recipient,
+                                        $event.target.options[$event.target.selectedIndex].dataset.hp,
+                                        $event.target.options[$event.target.selectedIndex].dataset.address
+                                    )">
+                                    @foreach ($addresses as $address)
+                                    <option value="{{$address->id}}" data-name="{{$address->name}}"
+                                        data-recipient="{{$address->recipient}}" data-hp="{{$address->hp}}"
+                                        data-address="{{$address->address}}">
+                                        {{$address->name}}
+                                    </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -28,8 +48,7 @@
                     <div class="cart-item bg-base-200 p-4 rounded-t border-b border-primary" :key="item.product.id">
                         <div class="flex gap-2">
                             <img :src="item.product.product_pictures.length ? `/storage/${item.product.product_pictures[0].path}` :
-                                ''"
-                                alt="product-image" width="160px" class="rounded mx-2">
+                                ''" alt="product-image" width="160px" class="rounded mx-2">
 
                             <div class="name flex-1">
                                 <div class="text-xl font-bold" x-text="item.product.name"></div>
@@ -47,7 +66,9 @@
                             <div class="price mr-2 self-center">
                                 <div>
                                     <span x-text="item.quantity"></span>
-                                    {{-- JIKA PRODUCT VARIANT ID TIDAK ADA BERARTI TIDAK ADA VARIAN MAKA AMBIL DARI RELASI PRODUCT->PRODUCT_VARAINT, JIKA ADA YA AMBIL DARI PRODUCT_VARIANT GA USAH DARI PRODUCT KARENA BERARTI PRODUCT NYA ADA VARIANT --}}
+                                    {{-- JIKA PRODUCT VARIANT ID TIDAK ADA BERARTI TIDAK ADA VARIAN MAKA AMBIL DARI
+                                    RELASI PRODUCT->PRODUCT_VARAINT, JIKA ADA YA AMBIL DARI PRODUCT_VARIANT GA USAH DARI
+                                    PRODUCT KARENA BERARTI PRODUCT NYA ADA VARIANT --}}
                                     <template x-if="item.product_variant">
                                         <span
                                             x-text="'x ' + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(item.product.promo ? item.product_variant.price - (item.product_variant.price * (item.product.promo.discount / 100)) : item.product_variant.price)"></span>
@@ -68,7 +89,7 @@
                         </div>
                     </div>
                 </template>
-            <div x-show="!$store.cart.items.length">Keranjang belanjamu masih kosong !!!</div>
+                <div x-show="!$store.cart.items.length">Keranjang belanjamu masih kosong !!!</div>
             </div>
 
             <div class="rounded bg-base-200 p-4 h-fit sticky top-24">
@@ -78,13 +99,26 @@
                     <div x-text="$store.cart.totalItem"></div>
                 </div>
                 <div class="flex justify-between">
-                    <div class="w-32" class="">Total</div>
+                    <div class="w-32">Subtotal</div>
+                    <div
+                        x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.subtotal)">
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <div class="w-32">Ongkir</div>
+                    <div
+                        x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.subtotal)">
+                    </div>
+                </div>
+                <div class="divider my-0"></div>
+                <div class="flex justify-between">
+                    <div class="w-32">Total bayar</div>
                     <div
                         x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.subtotal)">
                     </div>
                 </div>
                 <div class="card-actions my-2">
-                    <a href="#" class="btn btn-primary btn-block"><i class="fa fa-money-bill-wave"></i> Bayar</a>
+                    <a href="#" class="btn btn-primary btn-block"><i class="fa fa-money-bill-wave"></i> Pembayaran</a>
                 </div>
             </div>
         </div>

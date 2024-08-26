@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             BidSeeder::class,
             CommentSeeder::class,
             CartSeeder::class,
+            // AreaSeeder::class, //tidak digunakan karena langsung ke endpoint biteship
         ]);
     }
 }

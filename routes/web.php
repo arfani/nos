@@ -120,7 +120,6 @@ Route::post('/update-photo', [ProfileController::class, 'update_photo'])
 Route::get('/notification', [NotificationController::class, 'index'])->name('client.notification');
 // END FITUR TAMBAHAN
 
-
 require __DIR__ . '/auth.php';
 
 Route::get('testing', function () {
@@ -128,10 +127,6 @@ Route::get('testing', function () {
     dd(User::paginate(1));
     return User::firstWhere('username', 'member1')->id;
     return view('testing');
-});
-
-Route::post('/dsc-webhook', function(){
-    return response()->json(['status' => 'success'], 200, ['Content-Type' => 'application/x-www-urlencoded']);
 });
 
 Route::get('/get-areas-single', [CartController::class, 'get_areas_single'])->name('get-areas-single');
