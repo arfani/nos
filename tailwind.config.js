@@ -23,11 +23,18 @@ export default {
         require('@tailwindcss/typography'),
     ],
     darkMode: 'selector',
-    
-   
+
+
     daisyui: {
-        themes: ['nord', 
-        'coffee',
+        themes: [
+            {
+                nord: {
+                    ...require("daisyui/src/theming/themes")["nord"],
+                    primary: "#086B35",
+                    primaryContent: 'fff'
+                }
+            },
+            'coffee',
             {
                 coffee: {
                     ...require('daisyui/src/theming/themes')["coffee"],
@@ -37,6 +44,6 @@ export default {
         ],
         darkTheme: 'coffee'
     },
-    
+
     darkMode: 'selector'
 };

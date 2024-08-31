@@ -18,33 +18,6 @@ class CartController extends Controller
 
     function checkout()
     {
-        // $response = Http::withHeaders([
-        //     // 'authorization' => 'biteship_live.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZHNjIiwidXNlcklkIjoiNjZjN2VlYTc5ZWE1NWYwMDEyZDcyYzIzIiwiaWF0IjoxNzI0NDcxMTYxfQ.J892b7nG4MRPAsHVv7Hz2AqGg-Nsaw1Eof2wAZX9w4w',
-        //     'authorization' => 'biteship_test.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzIiwidXNlcklkIjoiNjZjN2VlYTc5ZWE1NWYwMDEyZDcyYzIzIiwiaWF0IjoxNzI0NDY4OTY4fQ.tvttczzzVKaAvNUKFxkH2tBG68FdSLhiw7_7IoBikZE',
-        //     'content-type' => 'application/json',
-
-        //     ])->get('https://api.biteship.com/v1/maps/areas?countries=ID&input=ja');
-        //     // DIBAWAH CONTOH CEK ONGKIR
-        // // ])->post(
-        // //     'https://api.biteship.com/v1/rates/couriers',
-        // //     [
-        // //         'origin_postal_code' => 10730,
-        // //         'destination_postal_code' => 83239,
-        // //         'couriers' => 'gojek,grab,tiki,anteraja,pos,sicepat,jne',
-        // //         'items' => [
-        // //             [
-        // //                 'name' => 'test name barang',
-        // //                 'value' => 120000,
-        // //                 'quantity' => 3,
-        // //                 'weight' => 1000,
-        // //             ]
-        // //         ],
-        // //     ]
-        // // );
-
-
-        // dd($response->json());
-
         $address = Address::where('user_id', auth()->user()->id)
             ->where('isMain', 1)->first();
 
@@ -63,7 +36,7 @@ class CartController extends Controller
             return response()->json([]);
         }
 
-        $data = Cart::with('user', 'product.product_variant.product_detail.variant_value.variant', 'product_variant.product_detail.variant_value.variant', 'product.promo', 'product_variant', 'product.product_pictures')
+        $data = Cart::with('user', 'product.product_variant.product_detail.variant_value.variant', 'product_variant.product_detail.variant_value.variant', 'product.dimention','product.promo', 'product_variant', 'product.product_pictures')
             ->where('user_id', auth()->user()->id)
             ->latest()
             ->get();
@@ -126,5 +99,34 @@ class CartController extends Controller
         ])->get('https://api.biteship.com/v1/maps/areas?countries=ID&type=single&' . $queryString);
 
         return response()->json($response->json());
+    }
+
+    function cek_ongkir(Request $request)
+    {
+        // return 'disable dulu';
+        $validated = $request->validate([
+            'destination_area_id' => ['required', 'string'],
+            'couriers' => ['required', 'string'],
+            'items' => ['required','array']
+        ]);
+
+
+        $response = Http::withHeaders([
+            // 'authorization' => 'biteship_live.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZHNjIiwidXNlcklkIjoiNjZjN2VlYTc5ZWE1NWYwMDEyZDcyYzIzIiwiaWF0IjoxNzI0NDcxMTYxfQ.J892b7nG4MRPAsHVv7Hz2AqGg-Nsaw1Eof2wAZX9w4w',
+            'authorization' => 'biteship_test.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGVzIiwidXNlcklkIjoiNjZjN2VlYTc5ZWE1NWYwMDEyZDcyYzIzIiwiaWF0IjoxNzI0NDY4OTY4fQ.tvttczzzVKaAvNUKFxkH2tBG68FdSLhiw7_7IoBikZE',
+            'content-type' => 'application/json',
+            // DIBAWAH CONTOH CEK ONGKIR / COURIER RATES
+        ])->post(
+            'https://api.biteship.com/v1/rates/couriers',
+            [
+                'origin_area_id' => "IDNP6IDNC147IDND833IDZ10730",
+                "destination_area_id" => $validated["destination_area_id"],
+                'couriers' => $validated["couriers"],
+                'items' => $validated["items"],
+                // item nya hanya bisa satu, jadi sum dy
+            ]
+        );
+
+        return response()->json(['status' => 1, 'courier_rates' => $response->json()]);
     }
 }

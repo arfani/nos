@@ -10,6 +10,7 @@ class Variant extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['variant'];
     /**
      * Get all of the variant_value for the Variant
      *

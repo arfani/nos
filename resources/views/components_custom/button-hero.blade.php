@@ -54,7 +54,7 @@
         top: -2px;
         left: 0.625rem;
         position: absolute;
-        background: #e8e8e8;
+        background: #086B35;
         transition: width 0.5s ease-out, left 0.3s ease-out;
     }
 
@@ -64,7 +64,7 @@
         right: 1.875rem;
         bottom: -2px;
         position: absolute;
-        background: #e8e8e8;
+        background: #086B35;
         transition: width 0.5s ease-out, right 0.3s ease-out;
     }
 
@@ -74,7 +74,7 @@
         right: 0.625rem;
         bottom: -2px;
         position: absolute;
-        background: #e8e8e8;
+        background: #086B35;
         transition: width 0.5s ease-out, right 0.3s ease-out;
     }
 

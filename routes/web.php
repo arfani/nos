@@ -130,3 +130,4 @@ Route::get('testing', function () {
 });
 
 Route::get('/get-areas-single', [CartController::class, 'get_areas_single'])->name('get-areas-single');
+Route::post('/cek-ongkir', [CartController::class, 'cek_ongkir'])->name('cek-ongkir');

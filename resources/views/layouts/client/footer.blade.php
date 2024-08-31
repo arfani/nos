@@ -18,7 +18,9 @@
 </footer>
 <footer class="footer px-10 py-3 border-t bg-primary text-primary-content border-base-300">
     <aside class="items-center grid-flow-col">
-        <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="50px" class="hidden sm:block mr-2">
+        <span class="bg-white rounded p-2 hidden sm:block">
+            <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="50px" class="hidden sm:block">
+        </span>
         <div class="flex flex-col">
             <p>Toko Online</p>
             <strong>DSComputer</strong>

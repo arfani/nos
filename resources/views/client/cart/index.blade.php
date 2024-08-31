@@ -3,11 +3,11 @@
         <h1 class="text-3xl lg:text-4xl mb-6 font-bold pl-6">
             <i class="fa fa-cart-shopping"></i> Keranjang Belanjaanmu
         </h1>
-        <div class="flex gap-4">
+        <div class="flex flex-col sm:flex-row gap-4">
             <div class="flex flex-col gap-2 flex-1">
                 <template x-for="item in $store.cart.items">
                     <div class="cart-item bg-base-200 p-4 rounded-t border-b border-primary" :key="item.product.id">
-                        <div class="flex gap-2">
+                        <div class="flex flex-col md:flex-row items-center gap-2">
                             <img :src="item.product.product_pictures.length ? `/storage/${item.product.product_pictures[0].path}` :
                                 ''" alt="product-image" width="160px" class="rounded mx-2">
 
@@ -15,16 +15,16 @@
                                 <div class="text-xl font-bold" x-text="item.product.name"></div>
                                 <template x-if="item.product_variant">
                                     <template x-for="detail in item.product_variant.product_detail">
-                                        <div class="text-xs"
+                                        <div class="text-xs text-center md:text-start"
                                             x-text="`${detail.variant_value.variant.variant} ${detail.variant_value.value}`">
                                         </div>
                                     </template>
                                 </template>
                                 <template x-if="!item.product_variant">
-                                    <div>-</div>
+                                    <div class="text-center md:text-start">-</div>
                                 </template>
                             </div>
-                            <div class="price mr-2 self-center">
+                            <div class="price flex flex-col text-center">
                                 <div>
                                     <span x-text="item.quantity"></span>
                                     {{-- JIKA PRODUCT VARIANT ID TIDAK ADA BERARTI TIDAK ADA VARIAN MAKA AMBIL DARI
@@ -41,7 +41,7 @@
                                 </div>
                                 <template x-if="item.product.promo">
                                     <template x-if="item.product_variant">
-                                        <div class="line-through ml-auto"
+                                        <div class="line-through text-center"
                                             x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(item.product_variant.price)">
                                         </div>
                                     </template>
@@ -62,7 +62,7 @@
                 </template>
                 <div x-show="!$store.cart.items.length">Keranjang belanjamu masih kosong !!!</div>
             </div>
-            <div class="rounded bg-base-200 p-4 h-fit sticky top-24">
+            <div class="rounded bg-base-200 p-4 h-fit sticky top-24 bottom-16">
                 <h2 class="text-xl font-bold mb-2">Ringkasan Belanja</h2>
                 <div class="flex justify-between">
                     <div class="w-32">Total Item</div>
@@ -75,12 +75,12 @@
                     </div>
                 </div>
                 <div class="card-actions my-2">
-                    <a href="{{ route('client.checkout') }}" class="btn btn-primary btn-block">Beli</a>
+                    <a href="{{ route('client.checkout') }}" class="btn btn-primary btn-block"><i class="fas fa-handshake"></i> Beli</a>
                 </div>
             </div>
         </div>
         <div x-show="$store.cart.showNotifSuccess" x-transition:leave.duration.500ms
-            class="toast toast-top toast-end mt-10 z-50">
+            class="toast toast-top toast-end mt-24 z-50">
             <div role="alert" class="alert alert-success mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
                     viewBox="0 0 24 24">
@@ -91,7 +91,7 @@
             </div>
         </div>
         <div x-show="$store.cart.showNotifFailed" x-transition:leave.duration.500ms
-            class="toast toast-top toast-end mt-10 z-50">
+            class="toast toast-top toast-end mt-24 z-50">
             <div role="alert" class="alert alert-error mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
                     viewBox="0 0 24 24">

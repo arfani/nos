@@ -18,6 +18,13 @@ export default {
             return sum + (item.quantity * price)
         }, 0)
     },
+    get totalWeight() {
+        return this.items.reduce((sum, item) => {
+            let weight = item.product_variant ? item.product_variant.weight : item.product.product_variant[0].weight
+
+            return sum + (item.quantity * weight)
+        }, 0)
+    },
     init() {
         this.getDataCart();
     },
@@ -136,39 +143,111 @@ export default {
         }, 5000);
     },
     // UNTUK CHECKOUT PAGE
-    addressSelected: { name: 'testid' },
-    setAddress(id, name, recipient, hp, address) {
+    addressSelected: {},
+    setAddress(id, name, recipient, hp, address, district, city, province, postal_code, area_id) {
         this.addressSelected.id = id;
         this.addressSelected.name = name;
         this.addressSelected.recipient = recipient;
         this.addressSelected.hp = hp;
         this.addressSelected.address = address;
+        this.addressSelected.district = district;
+        this.addressSelected.city = city;
+        this.addressSelected.province = province;
+        this.addressSelected.postal_code = postal_code;
+        this.addressSelected.area_id = area_id;
 
-        // this.setDeliveryMethods()
     },
-    deliveryMethods: [],
-    // async setDeliveryMethods() {
+    courierList: [],
+    async setCourierList() {
+        // JIKA SUDAH ADA COURIER RATES PADA VARIABEL COURIERLIST MAKA JANGAN AMBIL KE CONTROLLER/ JANGAN FETCH CEK ONGKIR LAGI BIAR GA KENA CAS, TAPI INI TIDAK BERLAKU JIKA HALAMAN DI RELOAD
+        if (this.courierList.length > 0) {
+            return 0
+        }
+        const destination_area_id = this.addressSelected.area_id;
+        //AMBIL DATA BARANG
+        const items = this.items.map((item, i) => {
+            // AMBIL BARANG DARI PRODUCT VARIANT SESUAI ID TAPI JIKA TIDAK ADA MAKA AMBIL VARIANT INDEX 0
+            if (item.product_variant) {
+                return {
+                    name: item.product.name,
+                    value: item.product_variant.price,
+                    weight: +item.product_variant.weight,
+                    quantity: item.quantity,
+                    // OPTIONAL UNTUK BITESHIP
+                    sku: item.product_variant.sku,
+                    length: +item.product.dimention.length,
+                    width: +item.product.dimention.width,
+                    height: +item.product.dimention.height,
+                }
+            } else {
+                return {
+                    name: item.product.name,
+                    value: item.product.product_variant[0].price,
+                    weight: +item.product.product_variant[0].weight,
+                    quantity: item.quantity,
+                    // OPTIONAL UNTUK BITESHIP
+                    sku: item.product.product_variant[0].sku,
+                    length: +item.product.dimention.length,
+                    width: +item.product.dimention.width,
+                    height: +item.product.dimention.height,
+                }
+            }
+        });
 
-    //     try {
-    //         const response = await fetch('https://api.rajaongkir.com/starter/province', {
+        // KURIR YANG INGIN DICEK ONGKIR NYA
+        const couriers = 'jne,jnt,sicepat,gojek,grab,lalamove,anteraja,pos,deliveree,sap';
 
-    //         // method: 'GET',
-    //             // mode: 'no-cors',
-    //             headers: {
-    //                 'Content-Type': 'application/x-www-form-urlencoded',
-    //                 'key': '1d8af72b3116392197885902b6bbee85' // Tambahkan header key di sini
-    //             }
-    //         });
+        const response = await fetch(`/cek-ongkir`, {
+            method: 'POST',
+            body: JSON.stringify({
+                destination_area_id,
+                couriers,
+                items,
+            }),
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+            }
+        });
 
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
+        const result = await response.json();
 
-    //         const data = await response.json();
-    //         // this.items = data;
-    //         console.log(data, '--data')
-    //     } catch (error) {
-    //         console.error('Fetch error:', error);
-    //     }
-    // }
+        if (result.status === 1) {
+            // Successfully ger courier rates
+            this.courierList = result.courier_rates.pricing;
+        } else {
+            // Handle the error case
+            console.error('Gagal cek ongkir');
+        }
+    },
+    courierSelected: {
+        // CONTOH RESPONSE
+        // "available_collection_method": [
+        //     "pickup"
+        // ],
+        // "available_for_cash_on_delivery": false,
+        // "available_for_proof_of_delivery": false,
+        // "available_for_instant_waybill_id": true,
+        // "available_for_insurance": true,
+        // "company": "jne",
+        // "courier_name": "JNE",
+        // "courier_code": "jne",
+        // "courier_service_name": "JNE Trucking",
+        // "courier_service_code": "jtr",
+        // "description": "Trucking with minimum weight of 10 kg",
+        // "duration": "7 - 9 days",
+        // "shipment_duration_range": "7 - 9",
+        // "shipment_duration_unit": "days",
+        // "service_type": "standard",
+        // "shipping_type": "freight",
+        // "price": 161500,
+        // "type": "jtr"
+    },
+    setCourierSelected(courier) {
+        this.courierSelected = courier
+    },
+    paymentMethod: null,
+    setPaymentMethod(method){
+        this.paymentMethod = method
+    }
 }

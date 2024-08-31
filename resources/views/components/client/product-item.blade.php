@@ -1,6 +1,6 @@
 <div class="card w-72 bg-base-200 shadow-xl mb-8" x-data>
     <div x-show="$store.cart.showNotifSuccess" x-transition:leave.duration.500ms
-        class="toast toast-top toast-end mt-10 z-50">
+        class="toast toast-top toast-end mt-24 z-50">
         <div role="alert" class="alert alert-success mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
                 viewBox="0 0 24 24">
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div x-show="$store.cart.showNotifFailed" x-transition:leave.duration.500ms
-        class="toast toast-top toast-end mt-10 z-50">
+        class="toast toast-top toast-end mt-24 z-50">
         <div role="alert" class="alert alert-error mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
                 viewBox="0 0 24 24">
