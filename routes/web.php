@@ -13,6 +13,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\HomepageClientController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SosmedController;
 use App\Http\Controllers\TestimonialController;
@@ -37,16 +38,19 @@ Route::get('/products/category/{category}', [ProductController::class, 'products
 Route::get('/data-cart', [CartController::class, 'get_data']); // untuk diambil dari alpine
 Route::post('/add-to-cart', [CartController::class, 'add_to_cart']); // untuk diambil dari alpine
 
+// MEMBER ROUTES
 Route::middleware(['auth', 'verified', 'can:is-member'])
     ->group(function () {
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
         Route::get('/checkout', [CartController::class, 'checkout'])->name('client.checkout');
         Route::patch('/update-qty/{cart}', [CartController::class, 'update_qty'])->name('client.update_qty');
         Route::delete('/remove-item/{cart}', [CartController::class, 'remove_item'])->name('client.remove_item');
+
+        Route::post('/order', OrderController::class);
     });
 
 // BUAT AUTH DI VIEW AJAAAA
-
+// NANTI ATUR ROUTES NYA SEMUA, CARI WAKTU KOSONG
 
 // PROFILE
 Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile')->middleware('auth', 'can:is-member');

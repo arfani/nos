@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\DeliveryState;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -40,6 +42,7 @@ class DatabaseSeeder extends Seeder
             CommentSeeder::class,
             CartSeeder::class,
             // AreaSeeder::class, //tidak digunakan karena langsung ke endpoint biteship
+            DeliveryStateSeeder::class,
         ]);
     }
 }

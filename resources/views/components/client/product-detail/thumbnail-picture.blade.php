@@ -6,7 +6,7 @@
                 @foreach ($product->product_pictures as $picture)
                     <div class="swiper-slide">
                         <img src="{{ Storage::url($picture->path) }}" />
-                        @isset($product->auction)
+                        @if(isset($product->auction) && $product->auction->active)
                             <x-client.logo-lelang :endtime="$product->auction->endtime" />
                         @else
                             @isset($product->promo)

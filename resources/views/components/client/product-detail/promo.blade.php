@@ -7,6 +7,15 @@
         ( <span class="animate-pulse">PROMO !!!</span> )
     </h1>
 
+    @if ($product->dimention)
+        <div class="divider">Dimensi</div>
+            <div class="dimention">
+                <div><span>Panjang</span> : <span>{{ $product->dimention->length }} cm</span></div>
+                <div><span>Lebar</span> : <span>{{ $product->dimention->width }} cm</span></div>
+                <div><span>Tinggi</span> : <span>{{ $product->dimention->height }} cm</span></div>
+            </div>
+    @endif
+
     <div class="divider">Deskripsi</div>
     <p>{!! $product->description !!}</p>
 

@@ -222,26 +222,24 @@ export default {
     },
     courierSelected: {
         // CONTOH RESPONSE
-        // "available_collection_method": [
-        //     "pickup"
-        // ],
-        // "available_for_cash_on_delivery": false,
-        // "available_for_proof_of_delivery": false,
-        // "available_for_instant_waybill_id": true,
-        // "available_for_insurance": true,
-        // "company": "jne",
-        // "courier_name": "JNE",
-        // "courier_code": "jne",
-        // "courier_service_name": "JNE Trucking",
-        // "courier_service_code": "jtr",
-        // "description": "Trucking with minimum weight of 10 kg",
-        // "duration": "7 - 9 days",
-        // "shipment_duration_range": "7 - 9",
-        // "shipment_duration_unit": "days",
-        // "service_type": "standard",
-        // "shipping_type": "freight",
-        // "price": 161500,
-        // "type": "jtr"
+        "available_collection_method": ["pickup"],
+        "available_for_cash_on_delivery": false,
+        "available_for_proof_of_delivery": false,
+        "available_for_instant_waybill_id": true,
+        "available_for_insurance": true,
+        "company": "jne",
+        "courier_name": "JNE",
+        "courier_code": "jne",
+        "courier_service_name": "JNE Trucking",
+        "courier_service_code": "jtr",
+        "description": "Trucking with minimum weight of 10 kg",
+        "duration": "7 - 9 days",
+        "shipment_duration_range": "7 - 9",
+        "shipment_duration_unit": "days",
+        "service_type": "standard",
+        "shipping_type": "freight",
+        "price": 161500,
+        "type": "jtr"
     },
     setCourierSelected(courier) {
         this.courierSelected = courier
@@ -249,5 +247,30 @@ export default {
     paymentMethod: null,
     setPaymentMethod(method){
         this.paymentMethod = method
+    },
+    async submitOrder(){
+        const response = await fetch('/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                paymentMethod: this.paymentMethod,
+                total: this.subtotal + this.courierSelected.price,
+                orderAddressId: this.addressSelected.id,
+                shippingMethod: this.courierSelected,
+            })
+        });
+
+        const result = await response.json();
+
+        console.log(result, '---result');
+        
+        if (result.status === 1) {
+            // Successfully added to cart, now refresh the cart data
+        } else {
+            // Handle the error case
+        }
     }
 }

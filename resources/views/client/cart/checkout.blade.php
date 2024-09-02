@@ -105,9 +105,14 @@
                         <div class="flex gap-4 justify-center md:justify-end flex-1 flex-col sm:flex-row">
                             <button x-ref="transferBtn"
                                 :class="`btn ${$store.cart.paymentMethod=='Transfer' ? 'btn-primary' : ''}`"
-                                @click.prevent="$store.cart.setPaymentMethod('Transfer')"><i class="fa fa-credit-card"></i> Transfer <i class="fa fa-circle-check text-[#086B35]"></i></button>
+                                @click.prevent="$store.cart.setPaymentMethod('Transfer')"><i
+                                    class="fa fa-credit-card"></i> Transfer <i
+                                    x-show="$store.cart.paymentMethod=='Transfer'"
+                                    class="fa fa-circle-check text-[#086B35]"></i></button>
                             <button :class="`btn ${$store.cart.paymentMethod=='Cash' ? 'btn-primary' : ''}`"
-                                @click.prevent="$store.cart.setPaymentMethod('Cash')"><i class="fa fa-money-bills"></i> Cash</button>
+                                @click.prevent="$store.cart.setPaymentMethod('Cash')"><i class="fa fa-money-bills"></i>
+                                Cash <i x-show="$store.cart.paymentMethod=='Cash'"
+                                    class="fa fa-circle-check text-[#086B35]"></i></button>
                         </div>
                     </div>
                     {{-- END METODE PEMBAYARAN --}}
@@ -161,6 +166,7 @@
                 <div x-show="!$store.cart.items.length">Keranjang belanjamu masih kosong !!!</div>
             </div>
 
+            {{-- RINGKASAN BELANJA --}}
             <div class="rounded bg-base-200 p-4 h-fit sticky top-24 bottom-16">
                 <h2 class="text-xl font-bold mb-2">Ringkasan Belanja</h2>
                 <div class="flex flex-col gap-2">
@@ -188,12 +194,15 @@
                     <div class="flex justify-between">
                         <div class="w-32">Total bayar</div>
                         <div
-                            x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.subtotal - ($store.cart.courierSelected.price || 0))">
+                            x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.subtotal + ($store.cart.courierSelected.price || 0))">
                         </div>
                     </div>
                 </div>
                 <div class="card-actions my-2">
-                    <a href="#" :class="`btn btn-primary btn-block font-bold tracking-widest ${(!$store.cart.paymentMethod || Object.keys($store.cart.courierSelected).length == 0) ? 'btn-disabled' : ''}`">
+                    <a href="#"
+                        :class="`btn btn-primary btn-block font-bold tracking-widest ${(!$store.cart.paymentMethod || Object.keys($store.cart.courierSelected).length == 0) ? 'btn-disabled' : ''}`"
+                        @click.prevent="$store.cart.submitOrder()"
+                        >
                         <i class="fa fa-paper-plane"></i>
                         ORDER
                     </a>
