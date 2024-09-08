@@ -25,25 +25,10 @@
     <div class="divider">Ketentuan Lelang</div>
     <div>{!! $product->auction->rules !!}</div>
 
-
-    @if ($product['variants'])
-        <div class="divider">Varian</div>
-        <div class="variant mb-1">
-            <span class="variant-item">Warna</span> :
-            <select class="select" name="warna" disabled>
-                <option value="putih">putih</option>
-                <option value="merah">merah</option>
-                <option value="hijau">hijau</option>
-            </select>
-        </div>
-        <div class="variant">
-            <span class="variant-item">Ukuran</span> :
-            <select class="select" name="ukuran" disabled>
-                <option value="m">M</option>
-                <option value="l" selected>L</option>
-                <option value="xl">XL</option>
-            </select>
-        </div>
+    {{-- MENGGUNKAN KONDISI JIKA PRODUCT_VARIANT > 1 KARENA PRODUK YANG TIDAK MEMILIKI VARIANT MEMILIKI 1 SAJA DATA DI
+    TABEL PRODUCT VARIANT SEDANGKAN YANG MEMILIKI VARIANT AKAN MEMILIKI LEBIH DARI 1 DATA --}}
+    @if (count($product->product_variant) > 1)
+    <x-client.product-detail.variant :product="$product" />
     @endif
 
     @if ($product->detail_value->isNotEmpty())

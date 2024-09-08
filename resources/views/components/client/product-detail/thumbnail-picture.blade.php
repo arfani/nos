@@ -8,11 +8,9 @@
                         <img src="{{ Storage::url($picture->path) }}" />
                         @if(isset($product->auction) && $product->auction->active)
                             <x-client.logo-lelang :endtime="$product->auction->endtime" />
-                        @else
-                            @isset($product->promo)
+                        @elseif(isset($product->promo) && $product->promo->active)
                                 <x-client.logo-promo />
-                            @endisset
-                        @endisset
+                        @endif
                     </div>
                 @endforeach
             @else

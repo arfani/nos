@@ -30,7 +30,6 @@ Route::post('/comment', [AuctionController::class, 'comment'])->name('comment.st
 
 // PRODUCTS
 Route::get('/products', [ProductController::class, 'allProducts'])->name('client.products');
-Route::get('/product/{slug}', [ProductController::class, 'product'])->name('client.product');
 Route::get('/products/category/{category}', [ProductController::class, 'productsByCategory'])->name('client.productsByCategory');
 
 // CART
@@ -40,9 +39,11 @@ Route::post('/add-to-cart', [CartController::class, 'add_to_cart']); // untuk di
 
 // MEMBER ROUTES
 Route::middleware(['auth', 'verified', 'can:is-member'])
-    ->group(function () {
-        Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
-        Route::get('/checkout', [CartController::class, 'checkout'])->name('client.checkout');
+->group(function () {
+    Route::get('/product/{slug}', [ProductController::class, 'product'])->name('client.product');
+    
+    Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
+    Route::get('/checkout', [CartController::class, 'checkout'])->name('client.checkout');
         Route::patch('/update-qty/{cart}', [CartController::class, 'update_qty'])->name('client.update_qty');
         Route::delete('/remove-item/{cart}', [CartController::class, 'remove_item'])->name('client.remove_item');
 

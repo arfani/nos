@@ -1,6 +1,6 @@
 @props(['product'])
 
-<div class="flex flex-wrap gap-2 mb-4">
+<div class="flex flex-wrap gap-2 mb-4" x-data>
     @if (isset($product->auction) && $product->auction->active)
         <x-client.product-detail.lelang :product="$product" />
     @elseif (isset($product->promo) && $product->promo->active)

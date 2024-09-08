@@ -15,31 +15,31 @@ class ProductSeeder extends Seeder
     {
         Product::create([
             'name' => 'Product satu',
-            'slug' => 'product_satu',
+            'slug' => 'product-satu',
             'description' => 'Description of Product satu'
         ]);
         
         Product::create([
             'name' => 'Product dua',
-            'slug' => 'product_dua',
+            'slug' => 'product-dua',
             'description' => 'Description of Product dua'
         ]);
         
         Product::create([
             'name' => 'Product tiga',
-            'slug' => 'product_tiga',
+            'slug' => 'product-tiga',
             'description' => 'Description of Product tiga'
         ]);
         
         Product::create([
             'name' => 'Product empat',
-            'slug' => 'product_empat',
+            'slug' => 'product-empat',
             'description' => 'Description of Product empat'
         ]);
         
         Product::create([
             'name' => 'Product lima',
-            'slug' => 'product_lima',
+            'slug' => 'product-lima',
             'description' => 'Description of Product lima'
         ]);
     }
