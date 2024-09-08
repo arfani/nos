@@ -1,149 +1,56 @@
-{{-- @props([
-    'products' => [
-        [
-            'name' => 'Product test 2',
-            'slug' => 'product_test_2',
-            'img' => Storage::url('mocks/a.jpg'),
-            'price' => 10000,
-            'promo' => [
-                'active' => true,
-                'discount' => 20,
-            ],
-            'variants' => true,
-            'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
-            'description' => 'lorem ipsum lorem amet ipsum',
-            'stock' => 200,
-            'lelang' => [
-                'active' => false,
-                'endtime' => now()->addDays(3),
-                'bidStart' => 100000,
-                'bidIncrement' => 5000,
-                'ketentuan' => 'lorem ipsum dolor amet set',
-            ],
-        ],
-        [
-            'name' => 'Product test 2',
-            'slug' => 'product_test_2',
-            'img' => Storage::url('mocks/b.jpg'),
-            'price' => 10000,
-            'promo' => [
-                'active' => true,
-                'discount' => 20,
-            ],
-            'variants' => true,
-            'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
-            'description' => 'lorem ipsum lorem amet ipsum',
-            'stock' => 200,
-            'lelang' => [
-                'active' => false,
-                'endtime' => now()->addDays(3),
-                'bidStart' => 100000,
-                'bidIncrement' => 5000,
-                'ketentuan' => 'lorem ipsum dolor amet set',
-            ],
-        ],
-        [
-            'name' => 'Product test 2',
-            'slug' => 'product_test_2',
-            'img' => Storage::url('mocks/c.jpg'),
-            'price' => 10000,
-            'promo' => [
-                'active' => true,
-                'discount' => 20,
-            ],
-            'variants' => true,
-            'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
-            'description' => 'lorem ipsum lorem amet ipsum',
-            'stock' => 200,
-            'lelang' => [
-                'active' => false,
-                'endtime' => now()->addDays(3),
-                'bidStart' => 100000,
-                'bidIncrement' => 5000,
-                'ketentuan' => 'lorem ipsum dolor amet set',
-            ],
-        ],
-        [
-            'name' => 'Product test 2',
-            'slug' => 'product_test_2',
-            'img' => Storage::url('mocks/d.jpg'),
-            'price' => 10000,
-            'promo' => [
-                'active' => true,
-                'discount' => 20,
-            ],
-            'variants' => true,
-            'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
-            'description' => 'lorem ipsum lorem amet ipsum',
-            'stock' => 200,
-            'lelang' => [
-                'active' => false,
-                'endtime' => now()->addDays(3),
-                'bidStart' => 100000,
-                'bidIncrement' => 5000,
-                'ketentuan' => 'lorem ipsum dolor amet set',
-            ],
-        ],
-        [
-            'name' => 'Product test 2',
-            'slug' => 'product_test_2',
-            'img' => Storage::url('mocks/e.jpg'),
-            'price' => 10000,
-            'promo' => [
-                'active' => true,
-                'discount' => 20,
-            ],
-            'variants' => true,
-            'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
-            'description' => 'lorem ipsum lorem amet ipsum',
-            'stock' => 200,
-            'lelang' => [
-                'active' => false,
-                'endtime' => now()->addDays(3),
-                'bidStart' => 100000,
-                'bidIncrement' => 5000,
-                'ketentuan' => 'lorem ipsum dolor amet set',
-            ],
-        ],
-        [
-            'name' => 'Product test 2',
-            'slug' => 'product_test_2',
-            'img' => Storage::url('mocks/f.jpg'),
-            'price' => 10000,
-            'promo' => [
-                'active' => true,
-                'discount' => 20,
-            ],
-            'variants' => true,
-            'detail' => [['name' => 'Berat', 'value' => '2 Kg'], ['name' => 'Kondisi', 'value' => 'Second Hand']],
-            'description' => 'lorem ipsum lorem amet ipsum',
-            'stock' => 200,
-            'lelang' => [
-                'active' => false,
-                'endtime' => now()->addDays(3),
-                'bidStart' => 100000,
-                'bidIncrement' => 5000,
-                'ketentuan' => 'lorem ipsum dolor amet set',
-            ],
-        ],
-    ],
-]) --}}
-
 <x-client-layout>
     <h2 class="text-center text-3xl uppercase font-bold tracking-wider">
-        {{ $promo['data']->title }} <i class="fa fa-tags text-red-500 text-2xl pb-1"></i>
+        {{ $promo_data->title }} <i class="fa fa-tags text-red-500 text-2xl pb-1"></i>
     </h2>
-    <p class="text-center pt-2 mb-8">{{ $promo['data']->description }}</p>
+    <p class="text-center pt-2 mb-8">{{ $promo_data->description }}</p>
 
-    <div class="flex flex-wrap justify-around">
-        @foreach ($promo['items'] as $product)
-            <x-client.product-item :product="$product" />
+    <div class="flex flex-wrap justify-around" id="promo">
+        @foreach ($promo as $product)
+        <x-client.product-item :product="$product" />
         @endforeach
     </div>
 
     <div class="w-full text-center my-2">
-        <a href="" class="btn btn-primary btn-ghost tracking-wider">Lainnya</a>
+        <button id="load-more" data-page="{{ $promo->currentPage() }}" data-last-page="{{ $promo->lastPage() }}">Load
+            more</button>
     </div>
 
     <x-client.features />
+    @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#load-more').click(function () {
+                var page = $(this).data('page');
+                var lastPage = $(this).data('last-page');
+
+                if (page < lastPage) {
+                    $(this).data('page', page + 1);
+                    $('#loading').show();
+
+                    $.ajax({
+                        url: `{{ url('promo') }}?page=${page + 1}`,
+                        method: 'GET',
+                        success: function (data) {
+                            $('#promo').append(data.html);
+                            $('#loading').hide();
+
+                            if (page + 1 >= lastPage) {
+                                $('#load-more').hide();
+                            }
+                        },
+                        error: function () {
+                            $('#loading').hide();
+                            alert('An error occurred while loading more promo.');
+                        }
+                    });
+                } else {
+                    $('#load-more').hide();
+                }
+            });
+        });
+    </script>
+    @endpush
 </x-client-layout>

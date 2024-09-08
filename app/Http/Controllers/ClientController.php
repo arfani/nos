@@ -85,34 +85,44 @@ class ClientController extends Controller
         ));
     }
 
-    function promo()
+    function promo(Request $request)
     {
-        $promo_data = Setting::where('section_name', 'promo')->first();
-        $promo = [
-            'data' => $promo_data,
-            'items' => Product::whereHas('promo', function ($query) {
-                $query->where('active', true);
-            })->whereDoesntHave('auction', function ($query) {
-                $query->where('active', true);
-            })
-                // ->limit( 0 // nanti buat disini load more nya dengan limit, sementara dikosongkan dulu agar ga limit)
-                ->latest()->get()
-        ];
+        $perPage = 10;
 
-        return view('client.promo.index', compact('promo'));
+        $promo_data = Setting::where('section_name', 'promo')->first();
+        $promo = Product::whereHas('promo', function ($query) {
+            $query->where('active', true);
+        })->whereDoesntHave('auction', function ($query) {
+            $query->where('active', true);
+        })
+            // ->limit( 0 // nanti buat disini load more nya dengan limit, sementara dikosongkan dulu agar ga limit)
+            //LUPA KNP ADA KOMEN DIATAS NYURUH PAKE LIMIT
+            ->latest()->paginate($perPage);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('components.client.product-items', ['products' => $promo])->render()
+            ]);
+        }
+
+        return view('client.promo.index', compact('promo', 'promo_data'));
     }
 
-    function lelang()
+    function lelang(Request $request)
     {
+        $perPage = 1;
         $auction_data = Setting::where('section_name', 'auction')->first();
-        $auction = [
-            'data' => $auction_data,
-            'items' => Auction::with('product')
-                ->where('active', 1)
-                // ->limit($auction_data->show_items) //sama seperti di promo
-                ->latest()->get()
-        ];
+        $auction = Product::whereHas('auction', function ($query) {
+            $query->where('active', true);
+        })
+            // ->limit($auction_data->show_items) //sama seperti di promo
+            ->latest()->paginate($perPage);
 
-        return view('client.lelang.index', compact('auction'));
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('components.client.product-items', ['products' => $auction])->render()
+            ]);
+        }
+        return view('client.lelang.index', compact('auction', 'auction_data'));
     }
 }

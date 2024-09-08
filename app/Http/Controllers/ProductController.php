@@ -622,7 +622,7 @@ class ProductController extends Controller
     function allProducts(Request $request)
     {
         $keyword = $request->query('q');
-        $perPage = 10;
+        $perPage = 1;
 
         if ($keyword) {
             $products = Product::with(['product_pictures', 'promo', 'auction'])
