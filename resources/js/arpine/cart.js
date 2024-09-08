@@ -220,35 +220,16 @@ export default {
 
         const result = await response.json();
 
-        if (result.status === 1) {
+        if (result.success) {
             // Successfully ger courier rates
-            this.courierList = result.courier_rates.pricing;
+            this.courierList = result.pricing;
         } else {
             // Handle the error case
+            this.showNotificationFailed('Terjadi kesalahan saat cek ongkir, segera hubungi kami !');
             console.error('Gagal cek ongkir');
         }
     },
-    courierSelected: {
-        // CONTOH RESPONSE
-        "available_collection_method": ["pickup"],
-        "available_for_cash_on_delivery": false,
-        "available_for_proof_of_delivery": false,
-        "available_for_instant_waybill_id": true,
-        "available_for_insurance": true,
-        "company": "jne",
-        "courier_name": "JNE",
-        "courier_code": "jne",
-        "courier_service_name": "JNE Trucking",
-        "courier_service_code": "jtr",
-        "description": "Trucking with minimum weight of 10 kg",
-        "duration": "7 - 9 days",
-        "shipment_duration_range": "7 - 9",
-        "shipment_duration_unit": "days",
-        "service_type": "standard",
-        "shipping_type": "freight",
-        "price": 161500,
-        "type": "jtr"
-    },
+    courierSelected: {},
     setCourierSelected(courier) {
         this.courierSelected = courier
     },

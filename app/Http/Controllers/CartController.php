@@ -132,6 +132,6 @@ class CartController extends Controller
             ]
         );
 
-        return response()->json(['status' => 1, 'courier_rates' => $response->json()]);
+        return response()->json($response->json());
     }
 }

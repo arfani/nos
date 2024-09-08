@@ -8,8 +8,7 @@
                 <div class="flex justify-between flex-wrap">
                     <div class="capitalize"
                         x-text="`${courierRate.courier_name} - ${courierRate.courier_service_name}`"></div>
-                    <div
-                    class="font-bold text-xl"
+                    <div class="font-bold text-xl"
                         x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(courierRate.price)">
                     </div>
                 </div>
@@ -36,3 +35,13 @@
         </template>
     </div>
 </x-modal>
+<div x-show="$store.cart.showNotifFailed" x-transition:leave.duration.500ms
+    class="toast toast-top toast-end mt-24 z-50">
+    <div role="alert" class="alert alert-error mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span x-text="$store.cart.message"></span>
+    </div>
+</div>

@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderAddress;
 use App\Models\OrderDetail;
+use App\Models\ProductVariant;
 use App\Models\ShippingMethod;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -81,7 +82,12 @@ class OrderController extends Controller
                 $order_detail->discount = $cart->product->promo ? $cart->product->promo->discount : 0;
                 $order_detail->save();
 
-                $cart->delete(); // hapus cart
+                // KURANGI STOK SETELAH ORDER / CO
+                $product_variant = ProductVariant::find($cart->product_variant ? $cart->product_variant->id : $cart->product->product_variant->first()->id);
+                $product_variant->stock -= $cart->quantity;
+                $product_variant->save();
+                
+                $cart->delete(); // delete cart item
             }
         });
 
