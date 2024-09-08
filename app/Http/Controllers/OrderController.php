@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderAddress;
+use App\Models\OrderDetail;
 use App\Models\ShippingMethod;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -45,7 +50,7 @@ class OrderController extends Controller
         $addressData = collect($address->toArray())->except('id')->toArray();
         // MENGGUNAKAN FIRST OR CREATE BIAR GA TERLALU BANYAK DUPLIKAT, MISAL ADA DATA YANG SAMA MAKA GA BUAT DATA BARU LAGI
         $order_address_id = OrderAddress::firstOrCreate($addressData)->id;
-        
+
         // SHIPPINGMETHOD
         $shipping_method_id = ShippingMethod::firstOrCreate($request->shippingMethod)->id;
 
@@ -56,8 +61,69 @@ class OrderController extends Controller
         $new_order->total = $request->total;
         $new_order->order_address_id = $order_address_id;
         $new_order->shipping_method_id = $shipping_method_id;
-        $new_order->save(); 
 
-        return response()->json(["status" => 1, "message" => "Data Order berhasil dibuat", $new_order]);
+        if ($request->paymentMethod == 'Cash') {
+            $new_order->delivery_state_id = 2; //Jika Cash set status langsung 'Menunggu Konfirmasi', jika tidak maka defaultnya 'menunggu pembayaran'
+        }
+
+        DB::transaction(function () use ($new_order) {
+            $new_order->save();
+
+            $carts = Cart::where('user_id', auth()->user()->id)->get();
+
+            foreach ($carts as $cart) {
+                $order_detail = new OrderDetail();
+                $order_detail->order_id = $new_order->id;
+                $order_detail->product_id = $cart->product_id;
+                $order_detail->product_variant_id = $cart->product_variant_id;
+                $order_detail->quantity = $cart->quantity;
+                $order_detail->price = $cart->product_variant ? $cart->product_variant->price : $cart->product->product_variant->first()->price; // jika tidak ada variant maka ambil harga dari relasi product kemudian ambil dari product variant index pertama 
+                $order_detail->discount = $cart->product->promo ? $cart->product->promo->discount : 0;
+                $order_detail->save();
+
+                $cart->delete(); // hapus cart
+            }
+        });
+
+        return response()->json(["status" => 1, "message" => "Order berhasil dibuat", $new_order]);
+    }
+
+    function order_by_id(Order $order)
+    {
+        $order->load(['delivery_state', 'order_address', 'shipping_method', 'order_detail.product', 'order_detail.product_variant.product_detail.variant_value.variant']);
+
+        return response()->json($order);
+    }
+
+    function upload_bukti_bayar(Request $request, Order $order)
+    {
+        $validated = $request->validate([
+            "bukti_bayar" => ["required"]
+        ]);
+
+        if (isset($validated["bukti_bayar"])) {
+            // remove old
+            if (isset($order->bukti_pembayaran)) {
+                Storage::delete($order->bukti_pembayaran);
+            }
+
+            $filename = 'bukti_bayar-' . uniqid() . '.webp';
+            $path = 'bukti-bayar/' . $filename;
+            Storage::put($path, file_get_contents($validated["bukti_bayar"]));
+
+            $order->bukti_pembayaran = $path;
+        }
+
+        $order->save();
+
+        return redirect()->route('client.profile')
+            ->with('success', 'Berhasil upload bukti bayar!');
+    }
+
+    function download_invoice(Order $order)
+    {
+        $pdf = Pdf::loadView('pdf.invoice', compact('order'));
+
+        return $pdf->download('invoice-' . $order->id . '.pdf');
     }
 }

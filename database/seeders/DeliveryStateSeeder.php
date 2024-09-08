@@ -15,21 +15,26 @@ class DeliveryStateSeeder extends Seeder
     {
         DeliveryState::create([
             "id" => 1,
-            "name" => "Menunggu Konfirmasi"
+            "name" => "Menunggu Pembayaran"
         ]);
 
         DeliveryState::create([
             "id" => 2,
-            "name" => "Diproses"
+            "name" => "Menunggu Konfirmasi"
         ]);
 
         DeliveryState::create([
             "id" => 3,
-            "name" => "Dikirim"
+            "name" => "Diproses"
         ]);
 
         DeliveryState::create([
             "id" => 4,
+            "name" => "Dikirim"
+        ]);
+
+        DeliveryState::create([
+            "id" => 5,
             "name" => "Selesai"
         ]);
 

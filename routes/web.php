@@ -47,13 +47,18 @@ Route::middleware(['auth', 'verified', 'can:is-member'])
         Route::delete('/remove-item/{cart}', [CartController::class, 'remove_item'])->name('client.remove_item');
 
         Route::post('/order', OrderController::class);
+        Route::get('/order/{order}', [OrderController::class, 'order_by_id']);
+        Route::patch('/order/{order}', [OrderController::class, 'upload_bukti_bayar']);
+        Route::post('/download-invoice/{order}', [OrderController::class, 'download_invoice'])->name('download-invoice');
+        
+        // PROFILE
+        Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile')->middleware('auth', 'can:is-member');
     });
 
 // BUAT AUTH DI VIEW AJAAAA
 // NANTI ATUR ROUTES NYA SEMUA, CARI WAKTU KOSONG
 
-// PROFILE
-Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile')->middleware('auth', 'can:is-member');
+// NANTI COBA PINDAH JUGA ROUTE2 PROFILE DIBAWAH KE ATAS
 Route::post('/profile/address', [ProfileController::class, 'store_address'])->name('profile.store_address');
 Route::patch('/profile/address/{address}', [ProfileController::class, 'update_address'])->name('profile.update_address');
 Route::delete('/profile/address/{address}', [ProfileController::class, 'destroy_address'])->name('profile.destroy_address');

@@ -67,8 +67,12 @@
                     <div class="card-actions">
                         <button class="btn btn-primary btn-sm btn-ghost btn-circle opacity-5 hover:opacity-100"
                             @click="isEditingStatus = !isEditingStatus; if (!isEditingStatus) saveStatus(); else $nextTick(() => $refs.statusInput.focus());">
-                            <i x-show="!isEditingStatus" class="fas fa-pencil"></i>
-                            <i x-show="isEditingStatus" class="fas fa-circle-check"></i>
+                            <div class="tooltip" data-tip="Edit Status">
+                                <i x-show="!isEditingStatus" class="fas fa-pencil"></i>
+                            </div>
+                            <div class="tooltip" data-tip="Simpan Status">
+                                <i x-show="isEditingStatus" class="fas fa-circle-check"></i>
+                            </div>
                         </button>
                     </div>
                 </div>
@@ -84,6 +88,11 @@
                         :class="activeTab === 1 ? 'border-base-200 bg-base-200' : 'text-gray-600'"
                         @click="activeTab = 1; localStorage.setItem('activeTab', 1)">
                         Biodata
+                    </button>
+                    <button class="uppercase px-8 py-3 -mb-px text-sm rounded-t-2xl tracking-widest"
+                        :class="activeTab === 4 ? 'border-base-200 bg-base-200' : 'text-gray-600'"
+                        @click="activeTab = 4; localStorage.setItem('activeTab', 4)">
+                        Data Order
                     </button>
                     <button class="uppercase px-8 py-3 -mb-px text-sm rounded-t-2xl tracking-widest"
                         :class="activeTab === 2 ? 'border-base-200 bg-base-200' : 'text-gray-600'"
@@ -316,6 +325,41 @@
 
                     </div>
 
+                    <div x-show="activeTab === 4">
+                        @include('client.profile.data-order', [
+                            "numb_per_page" => $numb_per_page
+                        ])
+                        {{-- <h2 class="font-bold uppercase mb-2">Purchase Order</h2>
+
+                        <div class="table">
+                            <table class="table-auto">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Alamat Pengiriman</th>
+                                        <th>Pembayaran</th>
+                                        <th>Tanggal Order</th>
+                                        <th>Total Bayar</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($orders as $order)
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div> --}}
+                    </div>
                     <div x-show="activeTab === 2">
                         <button class="btn btn-primary mb-4 btn-sm"
                             @click.prevent="$dispatch('open-modal', {data: null, name: 'address-form-store'})"><i
@@ -353,7 +397,7 @@
                             <div class="flex gap-2 leading-relaxed mt-2">
                                 <span class="opacity-75">Penerima :</span><span>{{ $item->recipient }}</span>
                             </div>
-                            
+
                             <div class="flex items-center">
                                 <div class="flex gap-2">
                                     <span class="opacity-75">HP :</span><span>{{ $item->hp }}</span>

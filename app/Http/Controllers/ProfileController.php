@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Address;
+use App\Models\Order;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +16,27 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    function index(): View
+    function index(Request $request): View
     {
-        return view('client.profile.index');
+        $orders = Order::where('user_id', auth()->user()->id)->get();
+
+        $validated = $request->validate([
+            'name' => ['string', 'nullable'],
+        ]);
+
+        $data = Order::where('user_id', auth()->user()->id)->latest();
+
+        if (isset($validated["name"])) {
+            $data = $data->where('name', 'like', '%' . $validated["name"] . '%');
+        }
+
+        $numb_per_page = $request['numb_per_page'] ?? 10;
+
+        $data = $data->paginate($numb_per_page)->appends(array_merge($validated, ['numb_per_page' => $numb_per_page]));
+        $indexNumber = (request()->input('page', 1) - 1) * $numb_per_page;
+
+        return view('client.profile.index', compact('data', 'indexNumber', 'validated', 'numb_per_page'));
+        // return view('client.profile.index', compact('orders'));
     }
 
     function indexAdmin(): View

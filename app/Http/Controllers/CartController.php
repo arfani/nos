@@ -27,6 +27,10 @@ class CartController extends Controller
 
         $addresses = Address::where('user_id', auth()->user()->id)->get();
 
+        if($addresses->isEmpty()){
+            return redirect()->back()->withErrors(["no_address" => "Data alamat pengiriman tidak ditemukan, silahkan tambahkan data alamat Anda pada menu profile !"]);
+        }
+
         return view('client.cart.checkout', compact('address', 'addresses'));
     }
 

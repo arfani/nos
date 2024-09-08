@@ -4,6 +4,7 @@ export default {
     showNotifFailed: false,
     message: '',
     notifTimeout: null,
+    isLoading: false,
     get totalItem() {
         return this.items.reduce((sum, item) => sum + item.quantity, 0)
     },
@@ -27,6 +28,13 @@ export default {
     },
     init() {
         this.getDataCart();
+
+        // Cek apakah ada notifikasi sukses di localStorage
+    if (localStorage.getItem('orderSuccess')) {
+        this.showNotification("Terimakasih, data order berhasil kami terima !")
+        localStorage.removeItem('orderSuccess'); // Hapus setelah ditampilkan
+    }
+
     },
     async getDataCart() {
         this.items = await (await fetch('/data-cart')).json();
@@ -85,7 +93,7 @@ export default {
         if (result.status === 1) {
             // Successfully added to cart, now refresh the cart data
             await this.getDataCart();
-            this.showNotification('Berhasil update jumlah barang di keranjangmu !');
+            this.showNotification('Berhasil ditambah ke keranjang Anda !');
         } else {
             // Handle the error case
             this.showNotificationFailed('Gagal udpate data !');
@@ -105,7 +113,7 @@ export default {
         if (result.status === 1) {
             // Successfully added to cart, now refresh the cart data
             await this.getDataCart();
-            this.showNotification('Berhasil dihapus !');
+            this.showNotification('Berhasil ditambah ke keranjang Anda !');
         } else {
             // Handle the error case
             this.showNotificationFailed('Gagal dihapus !');
@@ -245,10 +253,11 @@ export default {
         this.courierSelected = courier
     },
     paymentMethod: null,
-    setPaymentMethod(method){
+    setPaymentMethod(method) {
         this.paymentMethod = method
     },
-    async submitOrder(){
+    async submitOrder() {
+        this.isLoading = true;
         const response = await fetch('/order', {
             method: 'POST',
             headers: {
@@ -265,12 +274,22 @@ export default {
 
         const result = await response.json();
 
-        console.log(result, '---result');
-        
         if (result.status === 1) {
             // Successfully added to cart, now refresh the cart data
+            this.isLoading = false;
+            window.location.href = '/profile';
+            localStorage.setItem('activeTab', 4) // set tab profile ke data order
+            localStorage.setItem('orderSuccess', true) // set tab profile ke data order
         } else {
             // Handle the error case
+            this.isLoading = false;
+            this.showNotificationFailed("Terjadi kesalahan, order gagal !");
         }
+    },
+    orderDetail: {
+        
+    },
+    async getOrderDetail(order_id){
+        this.orderDetail = await (await fetch(`/order/${order_id}`)).json();
     }
 }

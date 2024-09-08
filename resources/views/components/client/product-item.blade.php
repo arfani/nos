@@ -76,7 +76,7 @@
             <div class="flex">
                 <input type="number" name="quantity" x-ref="quantity" class="my-input px-1 w-16" min="1" value="1">
                 <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
-                    <button class="btn btn-circle btn-primary"
+                    <button class="btn btn-circle btn-ghost"
                         @click="$store.cart.addToCart('{{ $product->id }}', $refs.variant_id_selected ? $refs.variant_id_selected.value : null, $refs.quantity.value)">
                         <i class="fa fa-opencart"></i>
                     </button>
