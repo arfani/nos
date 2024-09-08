@@ -18,6 +18,7 @@ class CartController extends Controller
 
     function checkout()
     {
+        // INI KE HALAMAN CHECKOUT, BELUM ORDER. NANTI UNTUK ORDER ADA DI ORDERCONTROLLER
         $address = Address::where('user_id', auth()->user()->id)
             ->where('isMain', 1)->first();
 

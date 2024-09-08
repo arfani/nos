@@ -41,7 +41,7 @@ Route::post('/add-to-cart', [CartController::class, 'add_to_cart']); // untuk di
 Route::middleware(['auth', 'verified', 'can:is-member'])
 ->group(function () {
     Route::get('/product/{slug}', [ProductController::class, 'product'])->name('client.product');
-    
+
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
     Route::get('/checkout', [CartController::class, 'checkout'])->name('client.checkout');
         Route::patch('/update-qty/{cart}', [CartController::class, 'update_qty'])->name('client.update_qty');
@@ -127,7 +127,7 @@ Route::post('/update-photo', [ProfileController::class, 'update_photo'])
     ->name('profile.update_photo');
 
 // FITUR TAMBAHAN
-Route::get('/notification', [NotificationController::class, 'index'])->name('client.notification');
+// Route::get('/notification', [NotificationController::class, 'index'])->name('client.notification');
 // END FITUR TAMBAHAN
 
 require __DIR__ . '/auth.php';

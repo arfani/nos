@@ -15,11 +15,12 @@
             <span class="fa fa-percent"></span>
         </div>
     </a>
-    <a href="{{ route('client.notification') }}" @class(['active' => Request::routeIs('client.notification')])>
+    {{-- UNTUK PENAMBAHAN FITUR SELANJUTNYA DENGAN NOTIFIKASI --}}
+    {{-- <a href="{{ route('client.notification') }}" @class(['active' => Request::routeIs('client.notification')])>
         <div class="tooltip tooltip-primary" data-tip="Notifikasi">
             <span class="fa fa-envelope"></span>
         </div>
-    </a>
+    </a> --}}
     <a href="{{ route('client.profile') }}" @class(['active' => Request::routeIs('client.profile')])>
         <div class="tooltip tooltip-primary" data-tip="Profil">
             <span class="fa fa-user"></span>
@@ -86,7 +87,7 @@
                     <span class="text-info py-1 px-2">Subtotal: $999</span>
                     <span class="text-info py-1 px-2">Subtotal: $999</span>
                     <div class="card-actions mt-2">
-                        <a href="{{ route('client.notification') }}" class="link mx-auto">Lihat semua</a>
+                        {{-- <a href="{{ route('client.notification') }}" class="link mx-auto">Lihat semua</a> --}}
                     </div>
                 </div>
             </div>
