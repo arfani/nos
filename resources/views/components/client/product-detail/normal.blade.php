@@ -18,6 +18,9 @@
     <x-client.product-detail.variant :product="$product" />
     @endif
 
+    <div class="divider">Deskripsi</div>
+    <p>{!! $product->description ?? '-' !!}</p>
+
     @if ($product->detail_value->isNotEmpty())
     <div class="divider">Spesifikasi</div>
     @foreach ($product->detail_value as $detail)
@@ -35,15 +38,28 @@
         <div><span>Tinggi</span> : <span>{{ $product->dimention->height }} cm</span></div>
     </div>
     @endif
-
-    <div class="divider">Deskripsi</div>
-    <p>{!! $product->description ?? '-' !!}</p>
 </div>
 
 <div
     class="action-container rounded bg-base-200 shadow-xl text-base-content p-4 w-full h-fit sm:w-3/4 md:w-1/2 mx-auto md:mx-0 md:ml-auto lg:w-1/4 mb-6">
     <h1>Atur jumlah dan catatan</h1>
     <div class="divider"></div>
+
+    @if (count($product->product_variant) > 1)
+    <input type="number" min="1" value="1" class="input w-20 mb-2" x-ref="quantity" @change="
+    let selectedOption = $refs.variant_id_selected.options[$refs.variant_id_selected.selectedIndex];
+    let originalPrice = parseFloat(selectedOption.getAttribute('data-price'));
+    if ($refs.subtotal) {
+        $refs.subtotal.innerHTML = 'Rp. ' + new Intl.NumberFormat('id-ID', { style: 'decimal', minimumFractionDigits: 0 }).format(originalPrice * $refs.quantity.value);
+    }
+    " x-init="
+    let originalPrice = {{$product->product_variant->first()->price}};
+    if ($refs.subtotal) {
+        $refs.subtotal.innerHTML = 'Rp. ' + new Intl.NumberFormat('id-ID', { style: 'decimal', minimumFractionDigits: 0 }).format(originalPrice * $refs.quantity.value);
+    }
+    ">
+
+    @else
     <input type="number" min="1" value="1" class="input w-20 mb-2" x-ref="quantity" @change="
             let originalPrice = {{$product->product_variant->first()->price}};
             if ($refs.subtotal) {
@@ -51,11 +67,12 @@
             }
             " x-init="
             let originalPrice = {{$product->product_variant->first()->price}};
-            console.log(originalPrice)
             if ($refs.subtotal) {
                 $refs.subtotal.innerHTML = 'Rp. ' + new Intl.NumberFormat('id-ID', { style: 'decimal', minimumFractionDigits: 0 }).format(originalPrice * $refs.quantity.value);
             }
             ">
+    @endif
+
 
     <div>Sisa stok : <span x-ref="stock">{{ $product->product_variant->first()->stock }}</span></div>
     <input type="text" class="input w-11/12 my-2" placeholder="Catatan">

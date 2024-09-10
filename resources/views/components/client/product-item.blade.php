@@ -1,5 +1,4 @@
-<div class="card w-72 bg-base-200 shadow-xl mb-8" x-data>
-
+<div class="card w-72 bg-base-200 shadow-xl mb-8 h-fit" x-data>
     <figure class="px-10 pt-10 relative">
         <a href="{{ route('client.product', $product['slug']) }}">
             @if ($product->product_pictures->isNotEmpty())
@@ -44,10 +43,24 @@
         @can('is-member')
         <div>
             @if (count($product->product_variant) > 1)
-            <x-client.format-rp :value="$product->product_variant[0]->price" /> -
-            <x-client.format-rp :value="$product->product_variant[count($product->product_variant) - 1]->price" />
+            <div class="flex">
+                <x-client.format-rp :value="$product->product_variant[0]->price" /> -
+                <x-client.format-rp :value="$product->product_variant[count($product->product_variant) - 1]->price" />
+                <span class="text-xs align-top ml-2">-{{ $product->promo->discount }}%</span>
+            </div>
+            @else
+            @if(isset($product->promo) && $product->promo->active)
+            <span class="line-through">
+                <span x-ref="priceEl">{{'Rp. ' . number_format($product->product_variant->first()->price, 0, ',',
+                    '.')}}</span>
+            </span>
+            <span class="text-xs align-top ml-2">-{{ $product->promo->discount }}%</span>
+            <br />
+            <span x-ref="priceAfterDiscountEl">{{'Rp. ' . number_format($product->product_variant->first()->price -
+                ($product->product_variant->first()->price * $product->promo->discount / 100), 0, ',', '.')}}</span>
             @else
             <x-client.format-rp :value="$product->product_variant[0]->price" />
+            @endif
             @endif
         </div>
         <div class="card-actions">
