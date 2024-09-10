@@ -659,7 +659,6 @@ class ProductController extends Controller
     {
         $product = Product::where('slug', $slug)->firstOrFail();
 
-        // dd($product);
         return view('client.product.detail', compact('product'));
     }
 

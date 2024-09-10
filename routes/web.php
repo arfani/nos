@@ -37,10 +37,11 @@ Route::get('/products/category/{category}', [ProductController::class, 'products
 Route::get('/data-cart', [CartController::class, 'get_data']); // untuk diambil dari alpine
 Route::post('/add-to-cart', [CartController::class, 'add_to_cart']); // untuk diambil dari alpine
 
+Route::get('/product/{slug}', [ProductController::class, 'product'])->name('client.product');
+
 // MEMBER ROUTES
 Route::middleware(['auth', 'verified', 'can:is-member'])
     ->group(function () {
-        Route::get('/product/{slug}', [ProductController::class, 'product'])->name('client.product');
 
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
         Route::get('/checkout', [CartController::class, 'checkout'])->name('client.checkout');

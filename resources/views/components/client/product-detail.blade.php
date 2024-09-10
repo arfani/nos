@@ -50,7 +50,12 @@
                 <h2 class="text-lg font-semibold pb-1 px-3 rounded border-b-2 border-b-primary w-fit mx-auto">
                     Bidding
                 </h2>
-                @auth
+                @can('is-admin')
+                <div class="flex gap-1 justify-center my-4">
+                    Hanya member yang bisa bidding
+                </div>
+                @endcan
+                @can('is-member')
                     <div class="flex gap-1 justify-center my-4">
                         <form action="{{ route('bid.store') }}" method="POST">
                             @csrf
@@ -66,7 +71,7 @@
                             </div>
                         </form>
                     </div>
-                @endauth
+                @endcan
 
                 @foreach ($product->auction->bids as $bid)
                     <div

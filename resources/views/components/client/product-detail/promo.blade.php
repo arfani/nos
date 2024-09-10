@@ -106,8 +106,11 @@
         </div>
         {{-- <button class="btn btn-ghost btn-sm text-lg text-secondary"><i
                 class="fa fa-heart-circle-plus"></i></button> --}}
+        @can('is-member')
         <button class="btn btn-ghost btn-sm text-lg"
-            @click="$store.cart.addToCart('{{ $product->id }}', $refs.variant_id_selected ? $refs.variant_id_selected.value : null, $refs.quantity.value)"><i
-                class="fa fa-opencart"></i></button>
-    </div>
+            @click="$store.cart.addToCart('{{ $product->id }}', $refs.variant_id_selected ? $refs.variant_id_selected.value : null, $refs.quantity.value)">
+            <i class="fa fa-opencart"></i>
+        </button>
+        @endcan
+            </div>
 </div>
