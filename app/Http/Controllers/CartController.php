@@ -110,6 +110,7 @@ class CartController extends Controller
     {
         // return 'disable dulu';
         $validated = $request->validate([
+            'origin_area_id' => ['required', 'string'],
             'destination_area_id' => ['required', 'string'],
             'couriers' => ['required', 'string'],
             'items' => ['required','array']
@@ -124,7 +125,7 @@ class CartController extends Controller
         ])->post(
             'https://api.biteship.com/v1/rates/couriers',
             [
-                'origin_area_id' => "IDNP6IDNC147IDND833IDZ10730",
+                'origin_area_id' => $validated["origin_area_id"],
                 "destination_area_id" => $validated["destination_area_id"],
                 'couriers' => $validated["couriers"],
                 'items' => $validated["items"],

@@ -10,6 +10,7 @@
         @endforeach
     </div>
 
+    <div id="loading" style="display: none;">Loading...</div>
     <div class="w-full text-center my-2">
         <button id="load-more" data-page="{{ $promo->currentPage() }}" data-last-page="{{ $promo->lastPage() }}">Load
             more</button>
@@ -31,7 +32,8 @@
                     $('#loading').show();
 
                     $.ajax({
-                        url: `{{ url('promo') }}?page=${page + 1}`,
+                        url: `${window.location.href}?page=${page + 1}`,
+                        // url: `{{ url('promo') }}?page=${page + 1}`,
                         method: 'GET',
                         success: function (data) {
                             $('#promo').append(data.html);

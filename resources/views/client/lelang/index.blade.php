@@ -7,12 +7,14 @@
     </p>
     <div class="flex flex-wrap justify-around" id="auction">
         @foreach ($auction as $product)
-            <x-client.product-item :product="$product" />
+        <x-client.product-item :product="$product" />
         @endforeach
     </div>
 
+    <div id="loading" style="display: none;">Loading...</div>
     <div class="w-full text-center my-2">
-        <button id="load-more" data-page="{{ $auction->currentPage() }}" data-last-page="{{ $auction->lastPage() }}">Load
+        <button id="load-more" data-page="{{ $auction->currentPage() }}"
+            data-last-page="{{ $auction->lastPage() }}">Load
             more</button>
     </div>
 
@@ -32,7 +34,8 @@
                     $('#loading').show();
 
                     $.ajax({
-                        url: `{{ url('lelang') }}?page=${page + 1}`,
+                        url: `${window.location.href}?page=${page + 1}`,
+                        // url: `{{ url('lelang') }}?page=${page + 1}`,
                         method: 'GET',
                         success: function (data) {
                             $('#auction').append(data.html);

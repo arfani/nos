@@ -663,16 +663,23 @@ class ProductController extends Controller
         return view('client.product.detail', compact('product'));
     }
 
-    function productsByCategory($category): View
+    function productsByCategory(Request $request, $category)
     {
+        $perPage = 1;
         $products = Product::with(['product_pictures', 'promo', 'auction'])
             ->whereHas('category', function ($query) use ($category) {
                 $query->where('name', $category);
             })
             ->where('active', 1)
             // ->limit() // nanti dilimit setelah sudah bisa load more
-            ->latest()->get();
+            ->latest()->paginate($perPage);
 
+            if ($request->ajax()) {
+                return response()->json([
+                    'html' => view('components.client.product-items', compact('products'))->render()
+                ]);
+            }
+    
         return view('client.product.product-by-category', compact('products', 'category'));
     }
 

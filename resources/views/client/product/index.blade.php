@@ -29,7 +29,8 @@
                     $('#loading').show();
 
                     $.ajax({
-                        url: `{{ url('products') }}?page=${page + 1}`,
+                        url: `${window.location.href}?page=${page + 1}`,
+                        // url: `{{ url('products') }}?page=${page + 1}`,
                         method: 'GET',
                         success: function (data) {
                             $('#products').append(data.html);

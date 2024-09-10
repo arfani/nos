@@ -39,11 +39,11 @@ Route::post('/add-to-cart', [CartController::class, 'add_to_cart']); // untuk di
 
 // MEMBER ROUTES
 Route::middleware(['auth', 'verified', 'can:is-member'])
-->group(function () {
-    Route::get('/product/{slug}', [ProductController::class, 'product'])->name('client.product');
+    ->group(function () {
+        Route::get('/product/{slug}', [ProductController::class, 'product'])->name('client.product');
 
-    Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
-    Route::get('/checkout', [CartController::class, 'checkout'])->name('client.checkout');
+        Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
+        Route::get('/checkout', [CartController::class, 'checkout'])->name('client.checkout');
         Route::patch('/update-qty/{cart}', [CartController::class, 'update_qty'])->name('client.update_qty');
         Route::delete('/remove-item/{cart}', [CartController::class, 'remove_item'])->name('client.remove_item');
 
@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified', 'can:is-member'])
         Route::get('/order/{order}', [OrderController::class, 'order_by_id']);
         Route::patch('/order/{order}', [OrderController::class, 'upload_bukti_bayar']);
         Route::post('/download-invoice/{order}', [OrderController::class, 'download_invoice'])->name('download-invoice');
-        
+
         // PROFILE
         Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile')->middleware('auth', 'can:is-member');
     });
@@ -136,12 +136,12 @@ Route::post('/update-photo', [ProfileController::class, 'update_photo'])
 
 require __DIR__ . '/auth.php';
 
-Route::get('testing', function () {
+// Route::get('testing', function () {
 
-    dd(User::paginate(1));
-    return User::firstWhere('username', 'member1')->id;
-    return view('testing');
-});
+//     dd(User::paginate(1));
+//     return User::firstWhere('username', 'member1')->id;
+//     return view('testing');
+// });
 
 Route::get('/get-areas-single', [CartController::class, 'get_areas_single'])->name('get-areas-single');
 Route::post('/cek-ongkir', [CartController::class, 'cek_ongkir'])->name('cek-ongkir');

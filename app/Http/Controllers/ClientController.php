@@ -110,7 +110,7 @@ class ClientController extends Controller
 
     function lelang(Request $request)
     {
-        $perPage = 1;
+        $perPage = 10;
         $auction_data = Setting::where('section_name', 'auction')->first();
         $auction = Product::whereHas('auction', function ($query) {
             $query->where('active', true);

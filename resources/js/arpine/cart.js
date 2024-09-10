@@ -171,6 +171,8 @@ export default {
         if (this.courierList.length > 0) {
             return 0
         }
+
+        const origin_area_id = "IDNP6IDNC147IDND833IDZ10730";
         const destination_area_id = this.addressSelected.area_id;
         //AMBIL DATA BARANG
         const items = this.items.map((item, i) => {
@@ -208,6 +210,7 @@ export default {
         const response = await fetch(`/cek-ongkir`, {
             method: 'POST',
             body: JSON.stringify({
+                origin_area_id,
                 destination_area_id,
                 couriers,
                 items,
@@ -225,7 +228,7 @@ export default {
             this.courierList = result.pricing;
         } else {
             // Handle the error case
-            this.showNotificationFailed('Terjadi kesalahan saat cek ongkir, segera hubungi kami !');
+            this.showNotificationFailed('Terjadi kesalahan saat cek ongkir, segera hubungi admin !');
             console.error('Gagal cek ongkir');
         }
     },
