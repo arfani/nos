@@ -53,7 +53,7 @@
                     <th>Name</th>
                     <th>No. HP</th>
                     <th>Email</th>
-                    <th>JK</th>
+                    <th>Gender</th>
                     <th>Tanggal Bergabung</th>
                     <th class="text-center">Aksi</th>
                 </tr>

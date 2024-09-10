@@ -120,6 +120,7 @@ class OrderController extends Controller
             $order->bukti_pembayaran = $path;
         }
 
+        $order->delivery_state_id += 1;
         $order->save();
 
         return redirect()->route('client.profile')
@@ -131,5 +132,42 @@ class OrderController extends Controller
         $pdf = Pdf::loadView('pdf.invoice', compact('order'));
 
         return $pdf->download('invoice-' . $order->id . '.pdf');
+    }
+
+
+
+    // FORM ADMIN
+    function index(Request $request) {
+        $validated = $request->validate([
+            'invoice' => ['string', 'nullable'],
+        ]);
+
+        $data = Order::with(['order_address', 'delivery_state', 'shipping_method', 'user'])->latest();
+
+        if (isset($validated["invoice"])) {
+            $data = $data->where('invoice', 'like', '%' . $validated["invoice"] . '%');
+        }
+
+        $numb_per_page = $request['numb_per_page'] ?? 10;
+
+        $data = $data->paginate($numb_per_page)->appends(array_merge($validated, ['numb_per_page' => $numb_per_page]));
+        $indexNumber = (request()->input('page', 1) - 1) * $numb_per_page;
+
+        // dd($data);
+        return view('admin.order.index', compact('data', 'indexNumber', 'validated', 'numb_per_page'));
+    }
+
+    function show(Order $order)
+    {
+        $data = $order->load(['delivery_state', 'order_address', 'shipping_method', 'order_detail.product', 'order_detail.product_variant.product_detail.variant_value.variant']);
+
+        return view('admin.order.show', compact('data'));
+    }
+
+    function next_state(Order $order) {
+        $order->delivery_state_id += 1;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Berhasil update status menjadi '. $order->delivery_state->name);
     }
 }

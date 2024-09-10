@@ -267,9 +267,7 @@ export default {
             this.showNotificationFailed("Terjadi kesalahan, order gagal !");
         }
     },
-    orderDetail: {
-        
-    },
+    orderDetail: {},
     async getOrderDetail(order_id){
         this.orderDetail = await (await fetch(`/order/${order_id}`)).json();
     }

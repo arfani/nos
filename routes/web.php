@@ -96,6 +96,10 @@ Route::prefix('admin')
         Route::put('member-banned/{user}', [MemberController::class, 'ban'])->name('admin-member.ban');
         Route::put('member-unbanned/{user}', [MemberController::class, 'unban'])->name('admin-member.unban');
 
+        Route::get('order', [OrderController::class, 'index'])->name('admin-order.index');
+        Route::get('order/{order}', [OrderController::class, 'show'])->name('admin-order.show');
+        Route::patch('order/{order}', [OrderController::class, 'next_state'])->name('admin-order.next-state');
+
         // PAGES ADMIN
         Route::prefix('pages')->group(function () {
             Route::get('how-to-order', [PageController::class, 'howToOrderAdmin'])->name('admin.how-to-order');

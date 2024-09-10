@@ -41,6 +41,13 @@
          ])>
              Members
          </a>
+         <a href="{{ route('admin-order.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('admin-order.index') || Request::is('admin/order/*'),
+         ])>
+             Orders
+         </a>
          <a href="{{ route('brand.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
              'bg-primary text-primary-content' =>
