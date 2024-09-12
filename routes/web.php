@@ -9,6 +9,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\HomepageClientController;
@@ -78,9 +79,7 @@ Route::get('/contact', [PageController::class, 'contact'])->name('client.contact
 Route::prefix('admin')
     ->middleware(['auth', 'verified', 'can:is-admin'])
     ->group(function () {
-        Route::get('/', function () {
-            return view('admin.index');
-        })->name('admin.dashboard');
+        Route::get('/', DashboardController::class)->name('admin.dashboard');
 
         Route::resource('notice', NoticeController::class)->only('index', 'update');
         Route::resource('faq', FaqController::class)->except('show');
