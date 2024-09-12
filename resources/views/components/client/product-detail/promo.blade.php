@@ -37,7 +37,7 @@
     @endforeach
     @endif
 
-    @if ($product->dimention)
+    @if ($product->dimention->length > 0 || $product->dimention->height > 0 || $product->dimention->weight > 0)
     <div class="divider">Dimensi</div>
     <div class="dimention">
         <div><span>Panjang</span> : <span>{{ $product->dimention->length }} cm</span></div>
