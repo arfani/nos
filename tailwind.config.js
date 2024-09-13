@@ -42,7 +42,7 @@ export default {
                 }
             }
         ],
-        darkTheme: 'coffee'
+        // darkTheme: 'coffee'
     },
 
     darkMode: 'selector'

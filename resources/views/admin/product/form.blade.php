@@ -182,7 +182,7 @@
                                 <button class="ql-link"></button>
                                 <button class="ql-image"></button>
                                 <button class="ql-video"></button>
-                                <select class="ql-color"></select>
+                                {{-- <select class="ql-color"></select> --}}
                                 <select class="ql-background"></select>
                                 <button class="ql-script" value="sub"></button>
                                 <button class="ql-script" value="super"></button>
@@ -259,7 +259,7 @@
                         <input type="hidden" name="deleted_pictures" id="deleted_pictures">
 
                         {{-- PRODUCT DETAILS --}}
-                        <div id="detail-product-container" class="mt-8 flex flex-col gap-4">
+                        <div id="detail-product-container" class="mt-2 flex flex-col gap-4">
                             <div class="detail-product-item flex gap-2 items-center">
                                 <div class="flex">
                                     <span

@@ -16,10 +16,12 @@
         Harga <i class="fa fa-hammer fa-flip-horizontal text-blue-500 text-2xl"></i>
     </div>
     <div class="mb-2">
-        Harga Awal : <x-client.format-rp :value="$product->auction->bid_start" />
+        Harga Awal :
+        <x-client.format-rp :value="$product->auction->bid_start" />
     </div>
     <div>
-        Minimal Bid : <x-client.format-rp :value="$product->auction->bid_increment" />
+        Minimal Bid :
+        <x-client.format-rp :value="$product->auction->bid_increment" />
     </div>
 
     <div class="divider">Ketentuan Lelang</div>
@@ -32,21 +34,21 @@
     @endif
 
     @if ($product->detail_value->isNotEmpty())
-        <div class="divider">Spesifikasi</div>
-        @foreach ($product->detail_value as $detail)
-            <div class="specification">
-                <span>{{ $detail->detail->detail }}</span> : <span>{{ $detail->value }}</span>
-            </div>
-        @endforeach
+    <div class="divider">Spesifikasi</div>
+    @foreach ($product->detail_value as $detail)
+    <div class="specification">
+        <span>{{ $detail->detail->detail }}</span> : <span>{{ $detail->value }}</span>
+    </div>
+    @endforeach
     @endif
 
     @if ($product->dimention->length > 0 || $product->dimention->height > 0 || $product->dimention->weight > 0)
-        <div class="divider">Dimensi</div>
-            <div class="dimention">
-                <div><span>Panjang</span> : <span>{{ $product->dimention->length }} cm</span></div>
-                <div><span>Lebar</span> : <span>{{ $product->dimention->width }} cm</span></div>
-                <div><span>Tinggi</span> : <span>{{ $product->dimention->height }} cm</span></div>
-            </div>
+    <div class="divider">Dimensi</div>
+    <div class="dimention">
+        <div><span>Panjang</span> : <span>{{ $product->dimention->length }} cm</span></div>
+        <div><span>Lebar</span> : <span>{{ $product->dimention->width }} cm</span></div>
+        <div><span>Tinggi</span> : <span>{{ $product->dimention->height }} cm</span></div>
+    </div>
     @endif
 
     <div class="divider">Deskripsi</div>
@@ -58,13 +60,18 @@
     <h1>Informasi lelang</h1>
     <div class="divider"></div>
 
-    <div class="flex flex-col items-start gap-2 mb-2">
+    <div class="flex items-center gap-2 mb-2">
         <span class="">Bid Tertinggi</span>
         <span class="bg-secondary text-secondary-content py-2 px-4 rounded">
             @if ($product->auction->bids->isNotEmpty())
-                <x-client.format-rp :value="$product->auction->bids->first()->value" />
+            @auth
+            <x-client.format-rp :value="$product->auction->bids->first()->value" />
+            @endauth
+            @guest
+            -
+            @endguest
             @else
-                -
+            -
             @endif
         </span>
     </div>
@@ -72,9 +79,10 @@
         <span class="">Oleh</span>
         <span class="bg-secondary text-secondary-content py-2 px-4 rounded">
             @if (auth()->user() && $product->auction->bids->isNotEmpty())
-                {{ $product->auction->bids->first()->user_id === auth()->user()->id ? 'Anda' : $product->auction->bids->first()->user->name }}
+            {{ $product->auction->bids->first()->user_id === auth()->user()->id ? 'Anda' :
+            $product->auction->bids->first()->user->name }}
             @else
-                -
+            -
             @endif
         </span>
     </div>

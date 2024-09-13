@@ -10,7 +10,12 @@
         Harga
     </div>
 
+    @auth
     <span x-ref="priceEl">{{'Rp. ' . number_format($product->product_variant->first()->price, 0, ',', '.')}}</span>
+    @endauth
+    @guest
+    <span><a href="{{route('login')}}" class="text-green-600">Login</a> untuk lihat harga</span>
+    @endguest
 
     {{-- MENGGUNKAN KONDISI JIKA PRODUCT_VARIANT > 1 KARENA PRODUK YANG TIDAK MEMILIKI VARIANT MEMILIKI 1 SAJA DATA DI
     TABEL PRODUCT VARIANT SEDANGKAN YANG MEMILIKI VARIANT AKAN MEMILIKI LEBIH DARI 1 DATA --}}
@@ -19,7 +24,7 @@
     @endif
 
     <div class="divider">Deskripsi</div>
-    <p>{!! $product->description ?? '-' !!}</p>
+    <div class="[&_*]:!text-base-content">{!! $product->description ?? '-' !!}</div>
 
     @if ($product->detail_value->isNotEmpty())
     <div class="divider">Spesifikasi</div>
@@ -75,8 +80,10 @@
 
 
     <div>Sisa stok : <span x-ref="stock">{{ $product->product_variant->first()->stock }}</span></div>
-    <input type="text" class="input w-11/12 my-2" placeholder="Catatan">
+    {{-- <input type="text" class="input w-11/12 my-2" placeholder="Catatan"> --}}
+    @auth
     <div class="mb-2" x-ref="subtotal"></div>
+    @endauth
     <div class="flex justify-center gap-3 mt-4">
         <div class="tooltip" data-tip="Bagikan">
             <button class="btn btn-ghost btn-sm text-lg" x-data
@@ -87,7 +94,7 @@
                 class="fa fa-heart-circle-plus"></i></button> --}}
         @can('is-member')
         <button class="btn btn-ghost btn-sm text-lg"
-        @click="$store.cart.addToCart('{{ $product->id }}', $refs.variant_id_selected ? $refs.variant_id_selected.value : null, $refs.quantity.value)">
+            @click="$store.cart.addToCart('{{ $product->id }}', $refs.variant_id_selected ? $refs.variant_id_selected.value : null, $refs.quantity.value)">
             <i class="fa fa-opencart"></i>
         </button>
         @endcan

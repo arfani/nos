@@ -36,13 +36,6 @@ class CartSeeder extends Seeder
         Cart::create([
             'user_id' => $member1->id,
             'product_id' => $product2->id,
-            'product_variant_id' => $product2Variant2->id,
-            'quantity' => 2
-        ]);
-        
-        Cart::create([
-            'user_id' => $member1->id,
-            'product_id' => $product2->id,
             'product_variant_id' => $product2Variant3->id,
             'quantity' => 1
         ]);

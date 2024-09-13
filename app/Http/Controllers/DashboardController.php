@@ -22,6 +22,20 @@ class DashboardController extends Controller
             'order_products_today' => OrderDetail::whereDate('created_at', now())->count(),
         ];
 
+        $months = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        ];
 
         $ordersPerMonth = Order::select(
             DB::raw('MONTH(created_at) as month'),
@@ -30,17 +44,19 @@ class DashboardController extends Controller
             ->whereYear('created_at', now()->year)
             ->groupBy(DB::raw('MONTH(created_at)'))
             ->orderBy('month', 'asc')
-            ->get();
+            ->get()
+            ->keyBy('month');
 
-            $chartData = [
-                'months' => [],
-                'totals' => []
-            ];
-            
-            foreach ($ordersPerMonth as $order) {
-                $chartData['months'][] = \Carbon\Carbon::create()->month($order->month)->format('F'); // Nama bulan (misalnya: January, February)
-                $chartData['totals'][] = $order->total;
-            }
+        $chartData = [
+            'months' => [],
+            'totals' => []
+        ];
+
+        foreach ($months as $monthNumber => $monthName) {
+            $chartData['months'][] = $monthName;
+            // Jika data ada untuk bulan tersebut, ambil nilainya. Jika tidak, isi dengan 0.
+            $chartData['totals'][] = $ordersPerMonth->get($monthNumber)->total ?? 0;
+        }
 
         return view('admin.index', compact('data', 'chartData'));
     }

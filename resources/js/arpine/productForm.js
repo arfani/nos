@@ -8,23 +8,14 @@ export default () => ({
     colorOptions: ['Merah', 'Biru', 'Hijau', 'Kuning', 'Putih', 'Hitam', 'Jingga', 'Ungu', 'Cokelat', 'Abuabu', 'Pink', 'Toska', 'Biru langit', 'Biru laut', 'Biru muda', 'Biru tua', 'Hijau muda', 'Hijau tua', 'Merah muda', 'Merah tua', 'Emas', 'Perak', 'Marun', 'Lavender', 'Cyan', 'Indigo', 'Lemon', 'Mocca', 'Peach', 'Olive', 'Nila', 'Amber', 'Coral'],
     sizeOptions: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
     setVariantMode(mode) {
-        //PERBAIKI SET MODE VARIANT 
         this.variantMode = mode
-
     },
     setVariants(variants) {
         this.variants = JSON.parse(variants); // Parsing JSON to object
     },
-    // setVariantCombinations(variantCombinations) {
-    //     this.variantCombinations = JSON.parse(variantCombinations); // Parsing JSON to array
-    // },
     initializeProductVariants(productVariants) {
         this.productVariants = JSON.parse(productVariants);
     },
-    // // Tambahkan metode untuk mengubah stok, harga, berat, SKU, dll.
-    // updateProductVariant(index, field, value) {
-    //     this.productVariants[index][field] = value;
-    // },
     init() {
         this.$watch('variantCombinations', (val) => {
             console.log('VARIANTS:', this.variants);
@@ -100,8 +91,15 @@ export default () => ({
 
         })
     },
-
     submit() {
+        if(this.variantMode){
+            let keys = Object.keys(this.variants);
+            if (keys.length === 0) { //JIKA TIDAK ADA VARIANT
+                alert('Jika Anda mengaktifkan mode varian, maka tambahkan minimal 1 data varian !')
+                return;
+            }
+        }
+        
         this.isSubmitting = true;
         // set deskripsi editor ke hidden input agar ikut tersubmit form
         const editorContent = document.querySelector('#description-editor .ql-editor').innerHTML;

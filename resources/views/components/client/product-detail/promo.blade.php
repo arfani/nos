@@ -12,6 +12,7 @@
         Harga <i class="fa fa-tags text-red-500 text-2xl"></i>
     </div>
 
+    @auth
     <span class="line-through">
         <span x-ref="priceEl">{{'Rp. ' . number_format($product->product_variant->first()->price, 0, ',', '.')}}</span>
     </span>
@@ -20,6 +21,11 @@
     <span x-ref="priceAfterDiscountEl">{{'Rp. ' . number_format($product->product_variant->first()->price -
         ($product->product_variant->first()->price * $product->promo->discount / 100), 0, ',', '.')}}</span>
     {{-- END HARGA SECTION --}}
+    @endauth
+
+    @guest
+    <span><a href="{{route('login')}}" class="text-green-600">Login</a> untuk lihat harga</span>
+    @endguest
 
     @if (count($product->product_variant) > 1)
     <x-client.product-detail.variant :product="$product" />
@@ -96,8 +102,10 @@
     @endif
 
     <div>Sisa stok : <span x-ref="stock">{{ $product->stock }}</span></div>
-    <input type="text" class="input w-11/12 my-2" placeholder="Catatan">
+    {{-- <input type="text" class="input w-11/12 my-2" placeholder="Catatan"> --}}
+    @auth
     <div class="mb-2" x-ref="subtotal"></div>
+    @endauth
     <div class="flex justify-center gap-3 mt-4">
         <div class="tooltip" data-tip="Bagikan">
             <button class="btn btn-ghost btn-sm text-lg" x-data
@@ -112,5 +120,5 @@
             <i class="fa fa-opencart"></i>
         </button>
         @endcan
-            </div>
+    </div>
 </div>
