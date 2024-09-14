@@ -90,6 +90,8 @@ Route::prefix('admin')
         Route::resource('category', CategoryController::class)->except('show');
         Route::resource('product', ProductController::class);
 
+        Route::post('product-import', [ProductController::class, 'import'])->name('product.import');
+
         Route::get('profile', [ProfileController::class, 'indexAdmin'])->name('admin-profile.index');
         Route::get('member', [MemberController::class, 'index'])->name('admin-member.index');
         Route::get('member/{user}', [MemberController::class, 'show'])->name('admin-member.show');

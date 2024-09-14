@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Imports\ProductImport;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\CategoryProduct;
@@ -24,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -692,5 +694,11 @@ class ProductController extends Controller
             ->latest()->get();
 
         return view('client.product.product-by-keyword', compact('products'));
+    }
+
+    function import(Request $request) {
+        Excel::import(new ProductImport, $request->file("product-excel"));
+
+        return redirect()->back()->with('success', 'Berhasil import data product excel !');
     }
 }
