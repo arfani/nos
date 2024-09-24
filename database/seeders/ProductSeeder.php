@@ -42,5 +42,35 @@ class ProductSeeder extends Seeder
             'slug' => 'product-lima',
             'description' => 'Description of Product lima'
         ]);
+
+        Product::create([
+            'name' => 'Product enam',
+            'slug' => 'product-enam',
+            'description' => 'Description of Product enam'
+        ]);
+
+        Product::create([
+            'name' => 'Product tujuh',
+            'slug' => 'product-tujuh',
+            'description' => 'Description of Product tujuh'
+        ]);
+        
+        Product::create([
+            'name' => 'Product delapan',
+            'slug' => 'product-delapan',
+            'description' => 'Description of Product delapan'
+        ]);
+        
+        Product::create([
+            'name' => 'Product sembilan',
+            'slug' => 'product-sembilan',
+            'description' => 'Description of Product sembilan'
+        ]);
+
+        Product::create([
+            'name' => 'Product sepuluh',
+            'slug' => 'product-sepuluh',
+            'description' => 'Description of Product sepuluh'
+        ]);
     }
 }

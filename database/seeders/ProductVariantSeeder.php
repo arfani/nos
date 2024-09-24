@@ -14,12 +14,17 @@ class ProductVariantSeeder extends Seeder
      */
     public function run(): void
     {
-        $product1 = Product::where('name', 'Product satu')->first();
-        $product2 = Product::where('name', 'Product dua')->first();
-        $product3 = Product::where('name', 'Product tiga')->first();
-        $product4 = Product::where('name', 'Product empat')->first();
-        $product5 = Product::where('name', 'Product lima')->first();
-
+        $product1 = Product::where('slug', 'Product-satu')->first();
+        $product2 = Product::where('slug', 'Product-dua')->first();
+        $product3 = Product::where('slug', 'Product-tiga')->first();
+        $product4 = Product::where('slug', 'Product-empat')->first();
+        $product5 = Product::where('slug', 'Product-lima')->first();
+        $product6 = Product::where('slug', 'Product-enam')->first();
+        $product7 = Product::where('slug', 'Product-tujuh')->first();
+        $product8 = Product::where('slug', 'Product-delapan')->first();
+        $product9 = Product::where('slug', 'Product-sembilan')->first();
+        $product10 = Product::where('slug', 'Product-sepuluh')->first();
+        
         ProductVariant::create([
             'product_id' => $product1->id,
             'product_variant_name' => null,
@@ -94,6 +99,56 @@ class ProductVariantSeeder extends Seeder
             'product_id' => $product5->id,
             'product_variant_name' => null,
             'sku' => 'prolimaori',
+            'price' => 500000,
+            'stock' => 500,
+            'weight' => 500, //gram
+            'active' => true
+        ]);
+
+        ProductVariant::create([
+            'product_id' => $product6->id,
+            'product_variant_name' => null,
+            'sku' => 'proenamori',
+            'price' => 500000,
+            'stock' => 600,
+            'weight' => 500, //gram
+            'active' => true
+        ]);
+
+        ProductVariant::create([
+            'product_id' => $product7->id,
+            'product_variant_name' => null,
+            'sku' => 'protujuhori',
+            'price' => 500000,
+            'stock' => 700,
+            'weight' => 500, //gram
+            'active' => true
+        ]);
+
+        ProductVariant::create([
+            'product_id' => $product8->id,
+            'product_variant_name' => null,
+            'sku' => 'prodelapanori',
+            'price' => 500000,
+            'stock' => 500,
+            'weight' => 500, //gram
+            'active' => true
+        ]);
+
+        ProductVariant::create([
+            'product_id' => $product9->id,
+            'product_variant_name' => null,
+            'sku' => 'prosembilanori',
+            'price' => 500000,
+            'stock' => 500,
+            'weight' => 500, //gram
+            'active' => true
+        ]);
+
+        ProductVariant::create([
+            'product_id' => $product10->id,
+            'product_variant_name' => null,
+            'sku' => 'prosepuluhori',
             'price' => 500000,
             'stock' => 500,
             'weight' => 500, //gram
