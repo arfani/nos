@@ -41,23 +41,51 @@
         <p>{!! Str::limit($product->description, 50, '...') !!}</p>
 
         @can('is-member')
+        {{-- HARGA PRODUK HANYA BISA DILIHAT OLEH MEMBER --}}
         <div>
+            {{-- JIKA ADA VARIAN --}}
             @if (count($product->product_variant) > 1)
-            <div class="flex">
-                <x-client.format-rp :value="$product->product_variant[0]->price" /> -
-                <x-client.format-rp :value="$product->product_variant[count($product->product_variant) - 1]->price" />
-                <span class="text-xs align-top ml-2">-{{ $product->promo->discount }}%</span>
+            @if(isset($product->promo) && $product->promo->active)
+            <div class="flex flex-col">
+                <div class="flex">
+                    <span class="line-through">
+                        <x-client.format-rp :value="$product->product_variant[0]->price" /> &nbsp;-&nbsp;
+                        <x-client.format-rp
+                            :value="$product->product_variant[count($product->product_variant) - 1]->price" />
+                    </span>
+                    <span class="text-xs align-top ml-2">-{{ $product->promo->discount }}%</span>
+                </div>
+
+                <div>
+                    <x-client.format-rp
+                        :value="$product->product_variant[0]->price - ($product->product_variant[0]->price * $product->promo->discount / 100)" />
+                    &nbsp;-&nbsp;
+                    <x-client.format-rp
+                        :value="$product->product_variant[count($product->product_variant) - 1]->price - ($product->product_variant[count($product->product_variant) - 1]->price * $product->promo->discount / 100)" />
+                </div>
             </div>
             @else
+            <div class="flex">
+                <x-client.format-rp :value="$product->product_variant[0]->price" /> &nbsp;-&nbsp;
+                <x-client.format-rp :value="$product->product_variant[count($product->product_variant) - 1]->price" />
+            </div>
+            @endif
+
+            {{-- JIKA TIDAK ADA VARIAN --}}
+            @else
+
+            {{-- & JIKA ADA PROMO --}}
             @if(isset($product->promo) && $product->promo->active)
             <span class="line-through">
-                <span x-ref="priceEl">{{'Rp. ' . number_format($product->product_variant->first()->price, 0, ',',
-                    '.')}}</span>
+                <span>{{ 'Rp. ' . number_format($product->product_variant->first()->price, 0, ',', '.')
+                    }}</span>
             </span>
             <span class="text-xs align-top ml-2">-{{ $product->promo->discount }}%</span>
             <br />
-            <span x-ref="priceAfterDiscountEl">{{'Rp. ' . number_format($product->product_variant->first()->price -
+            <span>{{'Rp. ' . number_format($product->product_variant->first()->price -
                 ($product->product_variant->first()->price * $product->promo->discount / 100), 0, ',', '.')}}</span>
+
+            {{-- & JIKA TIDAK ADA PROMO --}}
             @else
             <x-client.format-rp :value="$product->product_variant[0]->price" />
             @endif
