@@ -666,7 +666,7 @@ class ProductController extends Controller
 
     function productsByCategory(Request $request, $category)
     {
-        $perPage = 1;
+        $perPage = 10;
         $products = Product::with(['product_pictures', 'promo', 'auction'])
             ->whereHas('category', function ($query) use ($category) {
                 $query->where('name', $category);

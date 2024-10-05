@@ -1,11 +1,11 @@
 <x-client-layout>
-    <h2 class="text-center text-3xl uppercase font-bold tracking-wider">
+    <h2 class="text-center text-xl sm:text-3xl uppercase font-bold tracking-wider">
         {{ $auction_data->title }} <i class="fa fa-hammer fa-flip-horizontal text-blue-500 text-2xl pb-1"></i>
     </h2>
     <p class="mt-2 mb-8 text-center">
         {{ $auction_data->description }}
     </p>
-    <div class="flex flex-wrap justify-around" id="auction">
+    <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 justify-around" id="auction">
         @foreach ($auction as $product)
         <x-client.product-item :product="$product" />
         @endforeach

@@ -188,7 +188,7 @@
     <div class="products">
         <h2 class="text-center text-3xl uppercase font-bold tracking-wider">{{ $products['data']->title }}</h2>
         <p class="text-center mb-8 mt-2">{{ $products['data']->description }}</p>
-        <div class="flex flex-wrap justify-around">
+        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 justify-around">
             @foreach ($products['items'] as $product)
             <x-client.product-item :product="$product" />
             @endforeach

@@ -1,8 +1,8 @@
 <x-client-layout>
-    <h2 class="text-center text-3xl uppercase font-bold tracking-wider">{{ __('Produk ') . '"' . $category . '"' }}</h2>
+    <h2 class="text-center text-xl sm:text-3xl uppercase font-bold tracking-wider">{{ __('Produk ') . '"' . $category . '"' }}</h2>
     <p class="text-center mb-8 mt-2">
         {{ __('Halaman ini hanya menampilkan produk dengan kategori ')}} <strong>"{{ $category }}"</strong></p>
-    <div class="flex flex-wrap justify-around" id="products_by_category">
+    <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 justify-around" id="products_by_category">
         @foreach ($products as $product)
         <x-client.product-item :product="$product" />
         @endforeach
@@ -22,7 +22,6 @@
 
     <script>
         $(document).ready(function () {
-            console.log(window.location.href, 'route');
             
             $('#load-more').click(function () {
                 var page = $(this).data('page');

@@ -1,8 +1,8 @@
 <x-client-layout>
         <div id="product-container">
-            <h2 class="text-center text-3xl uppercase font-bold tracking-wider">{{ $product_data->title }}</h2>
+            <h2 class="text-center text-xl sm:text-3xl uppercase font-bold tracking-wider">{{ $product_data->title }}</h2>
             <p class="text-center mb-8 mt-2">{{ $product_data->description }}</p>
-            <div class="flex flex-wrap justify-around" id="products">
+            <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 justify-around" id="products">
                 @foreach ($products->items() as $product)
                     <x-client.product-item :product="$product" />
                 @endforeach

@@ -1,5 +1,5 @@
-<div class="card w-72 bg-base-200 shadow-xl mb-8 h-fit" x-data>
-    <figure class="px-10 pt-10 relative">
+<div class="card sm:w-72 bg-base-200 shadow-xl mb-8 h-fit" x-data>
+    <figure class="sm:px-5 sm:pt-5 relative">
         <a href="{{ route('client.product', $product['slug']) }}">
             @if ($product->product_pictures->isNotEmpty())
             <img src="{{ Storage::url($product->product_pictures->first()->path) }}" alt="{{ $product->name }}"
@@ -17,10 +17,10 @@
     </figure>
     <div class="card-body items-center text-center">
         <a href="{{ route('client.product', $product['slug']) }}">
-            <h2 class="card-title">{{ $product->name }}</h2>
+            <h2 class="card-title text-lg">{{ $product->name }}</h2>
         </a>
         @if (count($product->product_variant) > 1)
-        <div class="variant">
+        <div class="variant w-full overflow-auto">
             <select name="variant" class="my-input" x-ref="variant_id_selected">
                 @foreach ($product->product_variant as $variant)
                 <option value="{{ $variant->id }}">
@@ -104,7 +104,7 @@
         </div>
         @endcan
         @guest
-        <div class="tooltip tooltip-bottom" data-tip="Login untuk menambahkan ke keranjang">
+        <div class="tooltip tooltip-bottom before:w-40" data-tip="Login untuk menambahkan ke keranjang">
             <a href="{{ route('login') }}" class="btn btn-circle btn-ghost">
                 <i class="fa fa-opencart"></i>
             </a>

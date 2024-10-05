@@ -32,7 +32,7 @@
 <div class="navbar bg-base-300 fixed z-20 py-3 md:px-7">
     <div class="flex-1">
         <a href="{{ route('client.home') }}" @class([
-            'ml-2 sm:mr-2',
+            'ml-2 sm:mr-2 before:w-20',
             'tooltip tooltip-primary tooltip-bottom' => !Request::routeIs(
                 'client.home'),
         ]) data-tip="Halaman Utama">
