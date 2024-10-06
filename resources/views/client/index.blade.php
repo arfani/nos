@@ -273,4 +273,11 @@
         </div>
     </div>
     @endif
+
+    {{-- WA ICON --}}
+    <span class="fixed bottom-20 sm:bottom-28 right-10 z-[9999] opacity-70 hover:opacity-100 duration-300 tooltip tooltip-left" data-tip="Chat WhatsApp">
+        <a href="https://wa.me/{{$wa_admin}}" target="_blank">
+            <i class="fa fa-whatsapp text-4xl sm:text-5xl text-green-500"></i>
+        </a>
+    </span>
 </x-client-layout>

@@ -260,8 +260,11 @@
 
                             <h2 class="font-bold uppercase mb-2 mt-4">Kontak</h2>
 
+                            <div class="">
+                                <span class="text-xs text-red-500 animate-pulse">Note: Pastikan menggunakan kode negara untuk admin (62)</span>
+                            </div>
                             <div class="flex gap-2 leading-10">
-                                <span class="opacity-75">Nomor HP :</span>
+                                <span class="opacity-75">Nomor HP (WA) :</span>
                                 <span x-show='!isEditingHp' x-text='user.hp'></span>
                                 <div @click.outside="cancelEditingHp">
                                     <input x-show="isEditingHp" type="text" x-model="tempHp" class="my-input"

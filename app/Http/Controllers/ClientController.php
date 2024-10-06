@@ -13,6 +13,7 @@ use App\Models\Promo;
 use App\Models\Setting;
 use App\Models\Sosmed;
 use App\Models\Testimonial;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -72,6 +73,8 @@ class ClientController extends Controller
             'items' => Brand::limit($brand_data->show_items)->latest()->get()
         ];
 
+        $wa_admin = User::where('level_id', 1)->first()->hp;
+
         return view('client.index', compact(
             'notice',
             'categories',
@@ -82,6 +85,7 @@ class ClientController extends Controller
             'testimonial',
             'faq',
             'brand',
+            'wa_admin'
         ));
     }
 
