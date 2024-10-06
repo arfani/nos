@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'username' => 'admin1',
             'email' => 'admin@example.com',
-            'hp' => '081907123123',
+            'hp' => '6281383655055',
             'img' => 'mocks/me.jpg',
             'fullname' => 'Administrator bin Fulan',
             'birthday' => now(),
