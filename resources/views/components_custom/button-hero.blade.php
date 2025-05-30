@@ -89,7 +89,7 @@
     }
 
     .fancy:hover .text {
-        color: black;
+        color: white;
         padding-left: 1.5em;
     }
 

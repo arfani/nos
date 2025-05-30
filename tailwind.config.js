@@ -38,7 +38,9 @@ export default {
             {
                 coffee: {
                     ...require('daisyui/src/theming/themes')["coffee"],
-                    secondary: '#373A40'
+                    primary: '#000',
+                    secondary: '#fff',
+                    'base-content': '#fff',
                 }
             }
         ],
