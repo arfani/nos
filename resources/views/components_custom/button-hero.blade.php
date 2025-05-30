@@ -45,7 +45,7 @@
         transition: all 0.3s ease-in-out;
         text-transform: uppercase;
         text-decoration: none;
-        color: oklch(var(--p));
+        color: #fff;
     }
 
     .fancy .top-key {
