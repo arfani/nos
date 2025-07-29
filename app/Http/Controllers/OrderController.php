@@ -12,6 +12,7 @@ use App\Models\ShippingMethod;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
@@ -53,7 +54,17 @@ class OrderController extends Controller
         $order_address_id = OrderAddress::firstOrCreate($addressData)->id;
 
         // SHIPPINGMETHOD
-        $shipping_method_id = ShippingMethod::firstOrCreate($request->shippingMethod)->id;
+        $shippingMethodData = collect($request->shippingMethod)->except(['currency', 'tax_lines'])->toArray();
+        $shipping_method_id = ShippingMethod::firstOrCreate($shippingMethodData)->id;
+
+        // ADA PERUBAHAN COLUMN2 DARI BITESHIP NYA, NANTI KALO ADA ERROR KARENA KOLOM SHIPPING METHOD NYA GA COCOK PAKE KODE DIBAWAH INI AJA BUAT GANTI KODE "// SHIPPINGMETHOD" DI ATAS
+        // SEMENTARA PAKE KODE "SHIPPINGMETHOD" DI ATAS DULU BUAT TAU APA AJA METHOD YG DITAMBAH BITESHIP NYA
+        // $allowedColumns = Schema::getColumnListing('shipping_methods');
+
+        // $shippingMethodData = collect($request->shippingMethod)
+        //     ->only($allowedColumns) // hanya ambil key yang memang ada di tabel
+        //     ->toArray();
+        // $shipping_method_id = ShippingMethod::firstOrCreate($shippingMethodData)->id;
 
         $new_order = new Order();
         $new_order->user_id = $user_id;
@@ -86,7 +97,7 @@ class OrderController extends Controller
                 $product_variant = ProductVariant::find($cart->product_variant ? $cart->product_variant->id : $cart->product->product_variant->first()->id);
                 $product_variant->stock -= $cart->quantity;
                 $product_variant->save();
-                
+
                 $cart->delete(); // delete cart item
             }
         });
@@ -137,7 +148,8 @@ class OrderController extends Controller
 
 
     // FORM ADMIN
-    function index(Request $request) {
+    function index(Request $request)
+    {
         $validated = $request->validate([
             'invoice' => ['string', 'nullable'],
         ]);
@@ -164,10 +176,11 @@ class OrderController extends Controller
         return view('admin.order.show', compact('data'));
     }
 
-    function next_state(Order $order) {
+    function next_state(Order $order)
+    {
         $order->delivery_state_id += 1;
         $order->save();
 
-        return redirect()->back()->with('success', 'Berhasil update status menjadi '. $order->delivery_state->name);
+        return redirect()->back()->with('success', 'Berhasil update status menjadi ' . $order->delivery_state->name);
     }
 }
