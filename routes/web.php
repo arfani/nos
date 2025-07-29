@@ -77,7 +77,7 @@ Route::get('/contact', [PageController::class, 'contact'])->name('client.contact
 
 // ADMIN ROUTES
 Route::prefix('admin')
-    ->middleware(['auth', 'verified', 'can:is-admin'])
+    ->middleware(['auth', 'verified'])
     ->group(function () {
         Route::get('/', DashboardController::class)->name('admin.dashboard');
 
