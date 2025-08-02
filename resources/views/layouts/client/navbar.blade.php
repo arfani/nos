@@ -1,5 +1,5 @@
 {{-- bottom navigation --}}
-<div class="btm-nav md:hidden bg-base-300 text-primary z-20">
+<div class="btm-nav md:hidden bg-base-300 text-primary z-20 h-16">
     <a href="{{ route('client.home') }}" @class(['active' => Request::routeIs('client.home')])>
         <div class="tooltip tooltip-primary" data-tip="Halaman Utama">
             <span class="fa fa-home"></span>
