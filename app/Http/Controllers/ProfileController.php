@@ -97,6 +97,7 @@ class ProfileController extends Controller
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        /** @var \App\Models\User $user */
         $user = auth()->user();
         $path = $request->file('photo')->store('profile-photos', 'public');
 
