@@ -15,17 +15,17 @@
         </div>
 
         @if (Session::get('success'))
-        <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms
-            x-init="setTimeout(() => show = false, 5000)" class="toast toast-top toast-end mt-10 z-20">
-            <div role="alert" class="alert alert-success mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>{{ Session::get('success') }}</span>
+            <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
+                class="toast toast-top toast-end mt-10 z-20">
+                <div role="alert" class="alert alert-success mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{{ Session::get('success') }}</span>
+                </div>
             </div>
-        </div>
         @endif
 
         {{-- LEFT SIDE --}}
@@ -57,15 +57,14 @@
 
                 <p x-show="!isEditingStatus" x-text="user.status"></p>
                 <div @click.outside="cancelEditingStatus">
-                    <textarea x-show="isEditingStatus" type="text" x-model="tempStatus" class="my-input text-center"
-                        autocomplete="off" x-ref="statusInput"
-                        @keydown.enter="isEditingStatus = !isEditingStatus; saveStatus()" x-init="$watch('isEditingStatus', value => {
+                    <textarea x-show="isEditingStatus" type="text" x-model="tempStatus" class="my-input text-center" autocomplete="off"
+                        x-ref="statusInput" @keydown.enter="isEditingStatus = !isEditingStatus; saveStatus()" x-init="$watch('isEditingStatus', value => {
                             if (value) {
                                 tempStatus = user.status
                             }
                         })"></textarea>
                     <div class="card-actions">
-                        <button class="btn btn-primary btn-sm btn-ghost btn-circle opacity-5 hover:opacity-100"
+                        <button class="btn btn-primary btn-sm btn-ghost btn-circle opacity-50 hover:opacity-100"
                             @click="isEditingStatus = !isEditingStatus; if (!isEditingStatus) saveStatus(); else $nextTick(() => $refs.statusInput.focus());">
                             <div class="tooltip" data-tip="Edit Status">
                                 <i x-show="!isEditingStatus" class="fas fa-pencil"></i>
@@ -81,8 +80,7 @@
 
         {{-- RIGHT SIDE --}}
         <div class="flex-1 bg-base-200 shadow-xl card overflow-auto w-full">
-            <div x-data="{ activeTab: parseInt(localStorage.getItem('activeTab')) || 1 }"
-                @load.window="activeTab = parseInt(localStorage.getItem('activeTab')) || 1"
+            <div x-data="{ activeTab: parseInt(localStorage.getItem('activeTab')) || 1 }" @load.window="activeTab = parseInt(localStorage.getItem('activeTab')) || 1"
                 class="w-fit">
                 <div class="flex bg-base-300 rounded-t-2xl">
                     <button class="uppercase px-2 sm:px-8 py-3 -mb-px text-sm rounded-t-2xl tracking-widest"
@@ -119,12 +117,13 @@
                             <div @click.outside="cancelEditingFullname">
                                 <input x-show="isEditingFullname" type="text" x-model="tempFullname" class="my-input"
                                     autocomplete="off" x-ref="fullnameInput"
-                                    @keydown.enter="isEditingFullname = !isEditingFullname; saveFullname()" x-init="$watch('isEditingFullname', value => {
+                                    @keydown.enter="isEditingFullname = !isEditingFullname; saveFullname()"
+                                    x-init="$watch('isEditingFullname', value => {
                                         if (value) {
                                             tempFullname = user.fullname
                                         }
                                     })">
-                                <span class="cursor-pointer opacity-5 hover:opacity-100"
+                                <span class="cursor-pointer opacity-50 hover:opacity-100"
                                     @click="isEditingFullname = !isEditingFullname; if (!isEditingFullname) saveFullname(); else $nextTick(() => $refs.fullnameInput.focus());">
                                     <i x-show="!isEditingFullname" class="fas fa-pencil"></i>
                                     <i x-show="isEditingFullname" class="fas fa-circle-check"></i>
@@ -139,12 +138,13 @@
                             <div @click.outside="cancelEditingName">
                                 <input x-show="isEditingName" type="text" x-model="tempName" class="my-input"
                                     autocomplete="off" x-ref="nameInput"
-                                    @keydown.enter="isEditingName = !isEditingName; saveName()" x-init="$watch('isEditingName', value => {
+                                    @keydown.enter="isEditingName = !isEditingName; saveName()"
+                                    x-init="$watch('isEditingName', value => {
                                         if (value) {
                                             tempName = user.name
                                         }
                                     })">
-                                <span class="cursor-pointer opacity-5 hover:opacity-100"
+                                <span class="cursor-pointer opacity-50 hover:opacity-100"
                                     @click="isEditingName = !isEditingName; if (!isEditingName) saveName(); else $nextTick(() => $refs.nameInput.focus());">
                                     <i x-show="!isEditingName" class="fas fa-pencil"></i>
                                     <i x-show="isEditingName" class="fas fa-circle-check"></i>
@@ -158,14 +158,15 @@
                             <span x-show="!isEditingBirthday" x-text='formattedBirthday'>
                             </span>
                             <div @click.outside="cancelEditingBirthday">
-                                <input x-show="isEditingBirthday" type="date" x-model="tempBirthday" class="my-input"
-                                    autocomplete="off" x-ref="birthdayInput"
-                                    @keydown.enter="isEditingBirthday = !isEditingBirthday; updateUserData()" x-init="$watch('isEditingBirthday', value => {
+                                <input x-show="isEditingBirthday" type="date" x-model="tempBirthday"
+                                    class="my-input" autocomplete="off" x-ref="birthdayInput"
+                                    @keydown.enter="isEditingBirthday = !isEditingBirthday; updateUserData()"
+                                    x-init="$watch('isEditingBirthday', value => {
                                         if (value) {
                                             tempBirthday = formatBirthdayForInput(user.birthday);
                                         }
                                     })">
-                                <span class="cursor-pointer opacity-5 hover:opacity-100"
+                                <span class="cursor-pointer opacity-50 hover:opacity-100"
                                     @click="isEditingBirthday = !isEditingBirthday; if (!isEditingBirthday) saveBirthday(); else $nextTick(() => $refs.birthdayInput.focus());">
                                     <i x-show="!isEditingBirthday" class="fas fa-pencil"></i>
                                     <i x-show="isEditingBirthday" class="fas fa-circle-check"></i>
@@ -181,7 +182,8 @@
                             <div @click.outside="cancelEditingGender">
                                 <select x-show="isEditingGender" x-model="tempGender" class="my-input"
                                     x-ref="genderInput"
-                                    @keydown.enter="isEditingGender = !isEditingGender; saveGender()" x-init="$watch('isEditingGender', value => {
+                                    @keydown.enter="isEditingGender = !isEditingGender; saveGender()"
+                                    x-init="$watch('isEditingGender', value => {
                                         if (value) {
                                             tempGender = user.gender;
                                         }
@@ -189,7 +191,7 @@
                                     <option class="bg-primary text-primary-content" value="m">Laki</option>
                                     <option class="bg-primary text-primary-content" value="f">Perempuan</option>
                                 </select>
-                                <span class="cursor-pointer opacity-5 hover:opacity-100"
+                                <span class="cursor-pointer opacity-50 hover:opacity-100"
                                     @click="isEditingGender = !isEditingGender; if (!isEditingGender) saveGender(); else $nextTick(() => $refs.genderInput.focus());">
                                     <i x-show="!isEditingGender" class="fas fa-pencil"></i>
                                     <i x-show="isEditingGender" class="fas fa-circle-check"></i>
@@ -216,7 +218,7 @@
                                     <option class="bg-primary text-primary-content" value="Menikah">Menikah</option>
                                     <option class="bg-primary text-primary-content" value="Bercerai">Bercerai</option>
                                 </select>
-                                <span class="cursor-pointer opacity-5 hover:opacity-100"
+                                <span class="cursor-pointer opacity-50 hover:opacity-100"
                                     @click="isEditingStatusPernikahan = !isEditingStatusPernikahan; if (!isEditingStatusPernikahan) saveStatusPernikahan(); else $nextTick(() => $refs.pernikahanInput.focus());">
                                     <i x-show="!isEditingStatusPernikahan" class="fas fa-pencil"></i>
                                     <i x-show="isEditingStatusPernikahan" class="fas fa-circle-check"></i>
@@ -237,7 +239,7 @@
                                             tempOccupation = user.occupation
                                         }
                                     })">
-                                <span class="cursor-pointer opacity-5 hover:opacity-100"
+                                <span class="cursor-pointer opacity-50 hover:opacity-100"
                                     @click="isEditingOccupation = !isEditingOccupation; if (!isEditingOccupation) saveOccupation(); else $nextTick(() => $refs.occupationInput.focus());">
                                     <i x-show="!isEditingOccupation" class="fas fa-pencil"></i>
                                     <i x-show="isEditingOccupation" class="fas fa-circle-check"></i>
@@ -251,7 +253,8 @@
                             <div @click.outside="cancelEditingEducation">
                                 <select x-show="isEditingEducation" x-model="tempEducation" x-ref='educationInput'
                                     class="my-input"
-                                    @keydown.enter="isEditingEducation = !isEditingEducation; saveEducation()" x-init="$watch('isEditingEducation', value => {
+                                    @keydown.enter="isEditingEducation = !isEditingEducation; saveEducation()"
+                                    x-init="$watch('isEditingEducation', value => {
                                         if (value) {
                                             tempEducation = user.education;
                                             console.log('val : ', value)
@@ -269,7 +272,7 @@
                                     <option class="bg-primary text-primary-content" value="S2">S2</option>
                                     <option class="bg-primary text-primary-content" value="S3">S3</option>
                                 </select>
-                                <span class="cursor-pointer opacity-5 hover:opacity-100"
+                                <span class="cursor-pointer opacity-50 hover:opacity-100"
                                     @click="isEditingEducation = !isEditingEducation; if (!isEditingEducation) saveEducation(); else $nextTick(() => $refs.educationInput.focus());">
                                     <i x-show="!isEditingEducation" class="fas fa-pencil"></i>
                                     <i x-show="isEditingEducation" class="fas fa-circle-check"></i>
@@ -290,7 +293,7 @@
                                             tempHp = user.hp
                                         }
                                     })">
-                                <span class="cursor-pointer opacity-5 hover:opacity-100"
+                                <span class="cursor-pointer opacity-50 hover:opacity-100"
                                     @click="isEditingHp = !isEditingHp; if (!isEditingHp) saveHp(); else $nextTick(() => $refs.hpInput.focus());">
                                     <i x-show="!isEditingHp" class="fas fa-pencil"></i>
                                     <i x-show="isEditingHp" class="fas fa-circle-check"></i>
@@ -304,12 +307,13 @@
                             <div @click.outside="cancelEditingEmail">
                                 <input x-show="isEditingEmail" type="text" x-model="tempEmail" class="my-input"
                                     autocomplete="off" x-ref="emailInput"
-                                    @keydown.enter="isEditingEmail = !isEditingEmail; saveEmail()" x-init="$watch('isEditingEmail', value => {
+                                    @keydown.enter="isEditingEmail = !isEditingEmail; saveEmail()"
+                                    x-init="$watch('isEditingEmail', value => {
                                         if (value) {
                                             tempEmail = user.email
                                         }
                                     })">
-                                <span class="cursor-pointer opacity-5 hover:opacity-100"
+                                <span class="cursor-pointer opacity-50 hover:opacity-100"
                                     @click="isEditingEmail = !isEditingEmail; if (!isEditingEmail) saveEmail(); else $nextTick(() => $refs.emailInput.focus());">
                                     <i x-show="!isEditingEmail" class="fas fa-pencil"></i>
                                     <i x-show="isEditingEmail" class="fas fa-circle-check"></i>
@@ -328,9 +332,9 @@
 
                     <div x-show="activeTab === 4">
                         @include('client.profile.data-order', [
-                            "numb_per_page" => $numb_per_page
+                            'numb_per_page' => $numb_per_page,
                         ])
-                        
+
                     </div>
                     <div x-show="activeTab === 2">
                         <button class="btn btn-primary mb-4 btn-sm"
@@ -338,55 +342,55 @@
                                 class="fas fa-plus"></i></button>
 
                         @foreach (auth()->user()->address as $item)
-                        <div class="alamat bg-base-300 p-4 rounded mb-3 shadow-lg">
-                            <h2 class="font-bold text-base mb-2">
-                                {{ $item->name }}
-                                @if ($item->isMain)
-                                <span class="badge badge-primary badge-xs badge-outline p-2">utama</span>
-                                @endif
-                            </h2>
-                            <address>
-                                {{ $item->address }}
-                            </address>
-                            <p x-data="{ note: '{{ $item->noteForCurrier }}' }" x-text="'('+note+')'" x-show="note"></p>
-
-                            <div class="flex gap-2 leading-relaxed mt-2">
-                                <span class="opacity-75">Provinsi :</span><span>{{ $item->province }}</span>
-                            </div>
-
-                            <div class="flex gap-2 leading-relaxed mt-2">
-                                <span class="opacity-75">Kota / Kabupaten :</span><span>{{ $item->city }}</span>
-                            </div>
-
-                            <div class="flex gap-2 leading-relaxed mt-2">
-                                <span class="opacity-75">Kecamatan :</span><span>{{ $item->district }}</span>
-                            </div>
-
-                            <div class="flex gap-2 leading-relaxed mt-2">
-                                <span class="opacity-75">Kode POS :</span><span>{{ $item->postal_code }}</span>
-                            </div>
-
-                            <div class="flex gap-2 leading-relaxed mt-2">
-                                <span class="opacity-75">Penerima :</span><span>{{ $item->recipient }}</span>
-                            </div>
-
-                            <div class="flex items-center">
-                                <div class="flex gap-2">
-                                    <span class="opacity-75">HP :</span><span>{{ $item->hp }}</span>
-                                </div>
-                                <div class="ml-auto">
-                                    @if (!$item->isMain)
-                                    <button type="button" class="btn btn-error btn-sm"
-                                        @click.prevent="$dispatch('open-modal', {data: '{{ $item }}', name: 'confirm-address-deletion'})">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                            <div class="alamat bg-base-300 p-4 rounded mb-3 shadow-lg">
+                                <h2 class="font-bold text-base mb-2">
+                                    {{ $item->name }}
+                                    @if ($item->isMain)
+                                        <span class="badge badge-primary badge-xs badge-outline p-2">utama</span>
                                     @endif
-                                    <button class="btn btn-primary btn-sm"
-                                        @click.prevent="$dispatch('open-modal', {data: '{{ $item }}', name: 'address-form-update'})"><i
-                                            class="fas fa-pencil"></i></button>
+                                </h2>
+                                <address>
+                                    {{ $item->address }}
+                                </address>
+                                <p x-data="{ note: '{{ $item->noteForCurrier }}' }" x-text="'('+note+')'" x-show="note"></p>
+
+                                <div class="flex gap-2 leading-relaxed mt-2">
+                                    <span class="opacity-75">Provinsi :</span><span>{{ $item->province }}</span>
+                                </div>
+
+                                <div class="flex gap-2 leading-relaxed mt-2">
+                                    <span class="opacity-75">Kota / Kabupaten :</span><span>{{ $item->city }}</span>
+                                </div>
+
+                                <div class="flex gap-2 leading-relaxed mt-2">
+                                    <span class="opacity-75">Kecamatan :</span><span>{{ $item->district }}</span>
+                                </div>
+
+                                <div class="flex gap-2 leading-relaxed mt-2">
+                                    <span class="opacity-75">Kode POS :</span><span>{{ $item->postal_code }}</span>
+                                </div>
+
+                                <div class="flex gap-2 leading-relaxed mt-2">
+                                    <span class="opacity-75">Penerima :</span><span>{{ $item->recipient }}</span>
+                                </div>
+
+                                <div class="flex items-center">
+                                    <div class="flex gap-2">
+                                        <span class="opacity-75">HP :</span><span>{{ $item->hp }}</span>
+                                    </div>
+                                    <div class="ml-auto">
+                                        @if (!$item->isMain)
+                                            <button type="button" class="btn btn-error btn-sm"
+                                                @click.prevent="$dispatch('open-modal', {data: '{{ $item }}', name: 'confirm-address-deletion'})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endif
+                                        <button class="btn btn-primary btn-sm"
+                                            @click.prevent="$dispatch('open-modal', {data: '{{ $item }}', name: 'address-form-update'})"><i
+                                                class="fas fa-pencil"></i></button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
                     </div>
 
@@ -407,12 +411,10 @@
                                 @method('put')
 
                                 <div>
-                                    <x-input-label for="update_password_current_password"
-                                        :value="__('Current Password')" />
+                                    <x-input-label for="update_password_current_password" :value="__('Current Password')" />
                                     <x-text-input id="update_password_current_password" name="current_password"
                                         type="password" class="mt-1 block w-full" autocomplete="current-password" />
-                                    <x-input-error :messages="$errors->updatePassword->get('current_password')"
-                                        class="mt-2" />
+                                    <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
                                 </div>
 
                                 <div>
@@ -423,23 +425,20 @@
                                 </div>
 
                                 <div>
-                                    <x-input-label for="update_password_password_confirmation"
-                                        :value="__('Confirm Password')" />
+                                    <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
                                     <x-text-input id="update_password_password_confirmation"
                                         name="password_confirmation" type="password" class="mt-1 block w-full"
                                         autocomplete="new-password" />
-                                    <x-input-error :messages="$errors->updatePassword->get('password_confirmation')"
-                                        class="mt-2" />
+                                    <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
                                 </div>
 
                                 <div class="flex items-center gap-4">
                                     <x-primary-button>{{ __('Save') }}</x-primary-button>
 
                                     @if (session('status') === 'password-updated')
-                                    <p x-data="{ show: true }" x-show="show" x-transition
-                                        x-init="setTimeout(() => show = false, 2000)"
-                                        class="text-sm text-gray-600 dark:text-gray-400">
-                                        {{ __('Saved.') }}</p>
+                                        <p x-data="{ show: true }" x-show="show" x-transition
+                                            x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600 dark:text-gray-400">
+                                            {{ __('Saved.') }}</p>
                                     @endif
                                 </div>
                             </form>
@@ -451,14 +450,14 @@
         </div>
 
         @push('scripts')
-        {{-- JQUERY --}}
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        {{-- SELECT2 --}}
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+            {{-- JQUERY --}}
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            {{-- SELECT2 --}}
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-        <script>
-            function data() {
+            <script>
+                function data() {
                     return {
                         isEditingStatus: false,
                         isEditingFullname: false,
@@ -640,11 +639,11 @@
                         }
                     }
                 }
-                        
+
                 $('.area_id').select2({
                     ajax: {
-                        url: '{{route("get-areas-single")}}',
-                        data: function (params) {
+                        url: '{{ route('get-areas-single') }}',
+                        data: function(params) {
                             var query = {
                                 input: params.term,
                             }
@@ -652,9 +651,9 @@
                             // Query parameters will be ?input=[term]
                             return query;
                         },
-                        processResults: function (data) {
+                        processResults: function(data) {
                             return {
-                                results: $.map(data.areas, function (item) {
+                                results: $.map(data.areas, function(item) {
                                     return {
                                         id: item.id,
                                         text: item.name
@@ -666,8 +665,7 @@
                     },
                     placeholder: 'Ketikan nama kecamatan/kota/kabupaten/provinsi',
                 });
-
-        </script>
+            </script>
         @endpush
 
         @include('client.profile.modal-address-store')
@@ -676,13 +674,12 @@
 
 
         @push('styles')
-        {{-- SELECT2 --}}
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <style>
-            .select2 {
-                width: 100% !important;
-            }
-        </style>
-
+            {{-- SELECT2 --}}
+            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+            <style>
+                .select2 {
+                    width: 100% !important;
+                }
+            </style>
         @endpush
 </x-client-layout>
