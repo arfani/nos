@@ -34,15 +34,15 @@ class ProductController extends Controller
     function index(Request $request): View
     {
         $queryParams = [
-            'name' => ['string', 'nullable'],
+            'nama' => ['string', 'nullable'],
         ];
 
         $validated = $request->validate($queryParams);
 
         $data = Product::with("product_variant", "promo", "auction")->latest();
 
-        if (isset($validated["name"])) {
-            $data = $data->where('name', 'like', '%' . $validated["name"] . '%');
+        if (isset($validated["nama"])) {
+            $data = $data->where('name', 'like', '%' . $validated["nama"] . '%');
         }
         // NUMBER OF ROWS PER PAGE
         $numbRows = $request['numbRows'] ?? 10;
@@ -376,13 +376,13 @@ class ProductController extends Controller
                 foreach ($product->product_variant as $variant) {
                     $variant->delete();
                 }
-                
+
                 // singkirkan id variant value yang duplikat
                 $variant_values = array_unique($variant_values_id);
                 // hapus variant value yang tidak digunakan / tidak ada pada product detail
                 foreach ($variant_values as $value_id) {
                     $is_exists_in_product_detail = ProductDetail::where('variant_value_id', $value_id)->exists();
-                    if(!$is_exists_in_product_detail){
+                    if (!$is_exists_in_product_detail) {
                         VariantValue::destroy($value_id);
                     }
                 }
@@ -390,7 +390,7 @@ class ProductController extends Controller
                 // variant sama seperti variant_value diatas
                 foreach ($variants_id as $variant_id) {
                     $is_exists_in_variant_value = VariantValue::where('variant_id', $variant_id)->exists();
-                    if(!$is_exists_in_variant_value){
+                    if (!$is_exists_in_variant_value) {
                         Variant::destroy($variant_id);
                     }
                 }
@@ -462,18 +462,18 @@ class ProductController extends Controller
                 //  ini akan menghapus product_details juga
                 foreach ($product->product_variant as $key => $variant) {
                     // dd($key);
-                    if($key === 0){
+                    if ($key === 0) {
                         continue;
                     }
                     $variant->delete();
                 }
-                
+
                 // singkirkan id variant value yang duplikat
                 $variant_values = array_unique($variant_values_id);
                 // hapus variant value yang tidak digunakan / tidak ada pada product detail
                 foreach ($variant_values as $value_id) {
                     $is_exists_in_product_detail = ProductDetail::where('variant_value_id', $value_id)->exists();
-                    if(!$is_exists_in_product_detail){
+                    if (!$is_exists_in_product_detail) {
                         VariantValue::destroy($value_id);
                     }
                 }
@@ -481,7 +481,7 @@ class ProductController extends Controller
                 // variant sama seperti variant_value diatas
                 foreach ($variants_id as $variant_id) {
                     $is_exists_in_variant_value = VariantValue::where('variant_id', $variant_id)->exists();
-                    if(!$is_exists_in_variant_value){
+                    if (!$is_exists_in_variant_value) {
                         Variant::destroy($variant_id);
                     }
                 }
@@ -675,12 +675,12 @@ class ProductController extends Controller
             // ->limit() // nanti dilimit setelah sudah bisa load more
             ->latest()->paginate($perPage);
 
-            if ($request->ajax()) {
-                return response()->json([
-                    'html' => view('components.client.product-items', compact('products'))->render()
-                ]);
-            }
-    
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('components.client.product-items', compact('products'))->render()
+            ]);
+        }
+
         return view('client.product.product-by-category', compact('products', 'category'));
     }
 
@@ -696,7 +696,8 @@ class ProductController extends Controller
         return view('client.product.product-by-keyword', compact('products'));
     }
 
-    function import(Request $request) {
+    function import(Request $request)
+    {
         Excel::import(new ProductImport, $request->file("product-excel"));
 
         return redirect()->back()->with('success', 'Berhasil import data product excel !');
