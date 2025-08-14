@@ -45,7 +45,7 @@
         transition: all 0.3s ease-in-out;
         text-transform: uppercase;
         text-decoration: none;
-        color: #fff;
+        color: #086b35;
     }
 
     .fancy .top-key {

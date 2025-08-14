@@ -70,6 +70,25 @@
             @include('layouts.client.cart')
         @endcan
 
+        <div class="dropdown dropdown-end">
+            @if (auth()->check())
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button class="flex">
+                        <span class="fa fa-person-running mr-2"></span><span>Keluar</span>
+                    </button>
+                </form>
+            @else
+                <div class="mx-3 flex gap-4">
+                    <a href="{{ route('login') }}" class="flex justify-center items-center gap-2"><span
+                            class="fa fa-user-o"></span><span>Masuk</span>
+                    </a>
+                    <a href="{{ route('register') }}" class="bg-[#ff6600] text-white py-3 px-10 rounded-full">Buat
+                        Akun</a>
+                </div>
+            @endif
+        </div>
+
         {{-- user icon --}}
         <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
@@ -129,20 +148,8 @@
                         </a>
                     @endcan
                 </li>
-                <div class="divider my-0"></div>
-                <li class="mx-auto">
-                    @if (auth()->check())
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            <button class="flex">
-                                <span class="fa fa-person-running mr-2"></span><span>Keluar</span>
-                            </button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}"><span>Masuk</span><span
-                                class="fa fa-right-to-bracket"></span></a>
-                    @endif
-                </li>
+                {{-- <div class="divider my-0"></div> --}}
+
             </ul>
         </div>
     </div>
