@@ -142,6 +142,7 @@ class OrderController extends Controller
     {
         $pdf = Pdf::loadView('pdf.invoice', compact('order'));
 
+        return $pdf->stream('invoice-' . $order->id . '.pdf');
         return $pdf->download('invoice-' . $order->id . '.pdf');
     }
 

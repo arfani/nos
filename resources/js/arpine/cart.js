@@ -30,10 +30,10 @@ export default {
         this.getDataCart();
 
         // Cek apakah ada notifikasi sukses di localStorage
-    if (localStorage.getItem('orderSuccess')) {
-        this.showNotification("Terimakasih, data order berhasil kami terima !")
-        localStorage.removeItem('orderSuccess'); // Hapus setelah ditampilkan
-    }
+        if (localStorage.getItem('orderSuccess')) {
+            this.showNotification("Terimakasih, data order berhasil kami terima !")
+            localStorage.removeItem('orderSuccess'); // Hapus setelah ditampilkan
+        }
 
     },
     async getDataCart() {
@@ -66,8 +66,8 @@ export default {
             this.showNotification('Berhasil ditambah ke keranjang Anda !');
         } else {
             // Handle the error case
-            console.error('Gagal menambahkan barang ke keranjang Anda !');
-            this.showNotificationFailed('Gagal menambahkan barang ke keranjang Anda !');
+            console.error(result.message);
+            this.showNotificationFailed(result.message);
         }
     },
     async updateQty(item, qty) {
@@ -271,7 +271,7 @@ export default {
         }
     },
     orderDetail: {},
-    async getOrderDetail(order_id){
+    async getOrderDetail(order_id) {
         this.orderDetail = await (await fetch(`/order/${order_id}`)).json();
     }
 }

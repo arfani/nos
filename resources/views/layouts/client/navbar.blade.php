@@ -74,7 +74,7 @@
             @if (auth()->check())
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
-                    <button class="flex">
+                    <button class="flex mx-3">
                         <span class="fa fa-person-running mr-2"></span><span>Keluar</span>
                     </button>
                 </form>

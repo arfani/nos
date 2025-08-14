@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Cart;
+use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -28,7 +30,7 @@ class CartController extends Controller
 
         $addresses = Address::where('user_id', auth()->user()->id)->get();
 
-        if($addresses->isEmpty()){
+        if ($addresses->isEmpty()) {
             return redirect()->back()->withErrors(["no_address" => "Data alamat pengiriman tidak ditemukan, silahkan tambahkan data alamat Anda pada menu profile !"]);
         }
 
@@ -41,7 +43,7 @@ class CartController extends Controller
             return response()->json([]);
         }
 
-        $data = Cart::with('user', 'product.product_variant.product_detail.variant_value.variant', 'product_variant.product_detail.variant_value.variant', 'product.dimention','product.promo', 'product_variant', 'product.product_pictures')
+        $data = Cart::with('user', 'product.product_variant.product_detail.variant_value.variant', 'product_variant.product_detail.variant_value.variant', 'product.dimention', 'product.promo', 'product_variant', 'product.product_pictures')
             ->where('user_id', auth()->user()->id)
             ->latest()
             ->get();
@@ -56,6 +58,11 @@ class CartController extends Controller
             'product_id' => $request->product_id,
             'product_variant_id' => $request->product_variant_id
         ]);
+
+        $product = ProductVariant::where('product_id', $request->product_id)->first();
+        if ($product->stock < ($cart->quantity + $request->quantity)) {
+            return response()->json(['status' => 0, 'message' => 'Stok tidak mencukupi']);
+        }
 
         // JIKA BARANG SUDAH ADA DI DALAM CART MAKA HANYA AKUMULASI QTY SAJA
         if ($cart) {
@@ -113,7 +120,7 @@ class CartController extends Controller
             'origin_area_id' => ['required', 'string'],
             'destination_area_id' => ['required', 'string'],
             'couriers' => ['required', 'string'],
-            'items' => ['required','array']
+            'items' => ['required', 'array']
         ]);
 
 

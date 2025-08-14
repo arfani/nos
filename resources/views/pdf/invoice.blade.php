@@ -94,7 +94,7 @@
             </div>
             <br>
             <div class="no">
-                {{$order->invoice}}
+                {{ $order->invoice }}
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@
             </td>
             <td>:</td>
             <td>
-                <span style="font-weight: bold">{{$order->order_address->recipient}}</span>
+                <span style="font-weight: bold">{{ $order->order_address->recipient }}</span>
             </td>
         </tr>
         <tr>
@@ -122,7 +122,7 @@
             </td>
             <td>:</td>
             <td>
-                <span style="font-weight: bold">{{$order->created_at->isoFormat('dddd, DD MMMM YYYY')}}</span>
+                <span style="font-weight: bold">{{ $order->created_at->isoFormat('dddd, DD MMMM YYYY') }}</span>
             </td>
         </tr>
         <tr>
@@ -133,8 +133,8 @@
             </td>
             <td style="vertical-align:top;">:</td>
             <td>
-                <div>{{$order->order_address->address}}</div>
-                <div>{{$order->order_address->area_name}}</div>
+                <div>{{ $order->order_address->address }}</div>
+                <div>{{ $order->order_address->area_name }}</div>
             </td>
         </tr>
         <tr>
@@ -144,7 +144,7 @@
             </td>
             <td>:</td>
             <td>
-                <span>{{$order->order_address->hp}}</span>
+                <span>{{ $order->order_address->hp }}</span>
             </td>
         </tr>
     </table>
@@ -158,63 +158,64 @@
             <td>TOTAL HARGA</td>
         </tr>
         @php
-        $totalBayar = 0; // Inisialisasi total bayar
-        $totalQty = 0; // Inisialisasi total bayar
+            $totalBayar = 0; // Inisialisasi total bayar
+            $totalQty = 0; // Inisialisasi total bayar
         @endphp
 
-        @foreach($order->order_detail as $key => $orderDetail)
-        @php
-        // Menghitung subtotal sebelum diskon
-        $subtotal = $orderDetail->price * $orderDetail->quantity;
+        @foreach ($order->order_detail as $key => $orderDetail)
+            @php
+                // Menghitung subtotal sebelum diskon
+                $subtotal = $orderDetail->price * $orderDetail->quantity;
 
-        // Cek jika ada diskon, misal diskon berupa persentase
-        $discount = isset($orderDetail->discount) ? $orderDetail->discount : 0;
-        $discountAmount = ($discount > 0) ? ($subtotal * ($discount / 100)) : 0;
+                // Cek jika ada diskon, misal diskon berupa persentase
+                $discount = isset($orderDetail->discount) ? $orderDetail->discount : 0;
+                $discountAmount = $discount > 0 ? $subtotal * ($discount / 100) : 0;
 
-        // Subtotal setelah diskon
-        $subtotalAfterDiscount = $subtotal - $discountAmount;
+                // Subtotal setelah diskon
+                $subtotalAfterDiscount = $subtotal - $discountAmount;
 
-        // Tambahkan ke total bayar
-        $totalBayar += $subtotalAfterDiscount;
+                // Tambahkan ke total bayar
+                $totalBayar += $subtotalAfterDiscount;
 
-        // akumulasi qty
-        $totalQty += $orderDetail->quantity;
-        @endphp
-        <tr>
-            <td>
-                @if($orderDetail->product_variant)
-                <span>
-                    {{ $orderDetail->product->name }}
-                    <br />
-                    <span>(
-                        @foreach($orderDetail->product_variant->product_detail as $index => $detail)
+                // akumulasi qty
+                $totalQty += $orderDetail->quantity;
+            @endphp
+            <tr>
+                <td>
+                    @if ($orderDetail->product_variant)
                         <span>
-                            {{ $detail->variant_value->variant->variant }} -
-                            {{ $detail->variant_value->value }}
-                            @if($index < $orderDetail->product_variant->product_detail->count() - 1)
-                                ,
-                                @endif
+                            {{ $orderDetail->product->name }}
+                            <br />
+                            <span>(
+                                @foreach ($orderDetail->product_variant->product_detail as $index => $detail)
+                                    <span>
+                                        {{ $detail->variant_value->variant->variant }} -
+                                        {{ $detail->variant_value->value }}
+                                        @if ($index < $orderDetail->product_variant->product_detail->count() - 1)
+                                            ,
+                                        @endif
+                                    </span>
+                                @endforeach
+                                )
+                            </span>
                         </span>
-                        @endforeach
-                        )</span>
-                </span>
-                @else
-                <span>{{ $orderDetail->product->name }}</span>
-                @endif
-            </td>
-            <td style="text-align:center;">{{ $orderDetail->quantity }}</td>
-            <td style="text-align:center;">{{ number_format($orderDetail->price, 0, ',', '.') }}</td>
-            <td style="text-align:center;">
-                {{-- Tampilkan diskon jika ada --}}
-                @if($discount > 0)
-                {{ number_format($discountAmount, 0, ',', '.') }} ({{ $discount }}%)
-                @else
-                -
-                @endif
-            </td>
-            <td style="text-align:center;">{{ number_format($subtotalAfterDiscount, 0, ',', '.') }}</td>
+                    @else
+                        <span>{{ $orderDetail->product->name }}</span>
+                    @endif
+                </td>
+                <td style="text-align:center;">{{ $orderDetail->quantity }}</td>
+                <td style="text-align:center;">{{ number_format($orderDetail->price, 0, ',', '.') }}</td>
+                <td style="text-align:center;">
+                    {{-- Tampilkan diskon jika ada --}}
+                    @if ($discount > 0)
+                        {{ number_format($discountAmount, 0, ',', '.') }} ({{ $discount }}%)
+                    @else
+                        -
+                    @endif
+                </td>
+                <td style="text-align:center;">{{ number_format($subtotalAfterDiscount, 0, ',', '.') }}</td>
 
-        </tr>
+            </tr>
         @endforeach
 
     </table>
@@ -222,8 +223,8 @@
 
     <table class="table-3">
         <tr>
-            <td>TOTAL HARGA ({{$totalQty. ' PRODUK'}})</td>
-            <td style="font-weight: bold; text-align:right">{{'Rp. '. number_format($totalBayar, 0, ',', '.') }}</td>
+            <td>TOTAL HARGA ({{ $totalQty . ' PRODUK' }})</td>
+            <td style="font-weight: bold; text-align:right">{{ 'Rp. ' . number_format($totalBayar, 0, ',', '.') }}</td>
         </tr>
         {{-- <tr>
             <td>PPN 11%</td>
@@ -232,7 +233,7 @@
         </tr> --}}
         <tr>
             <td>TOTAL BAYAR</td>
-            <td style="font-weight: bold; text-align:right">{{'Rp. '. number_format($totalBayar, 0, ',', '.') }}</td>
+            <td style="font-weight: bold; text-align:right">{{ 'Rp. ' . number_format($totalBayar, 0, ',', '.') }}</td>
         </tr>
     </table>
 
@@ -242,8 +243,9 @@
             <td>Metode Pembayaran:</td>
         </tr>
         <tr>
-            <td>{{$order->shipping_method->courier_name . " - " . $order->shipping_method->courier_service_name}}</td>
-            <td>{{$order->payment_method}}</td>
+            <td>{{ $order->shipping_method->courier_name . ' - ' . $order->shipping_method->courier_service_name }}
+            </td>
+            <td>{{ $order->payment_method }}</td>
         </tr>
     </table>
 
