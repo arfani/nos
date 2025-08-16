@@ -71,8 +71,8 @@
                             </div>
 
                             <div class="flex gap-2 leading-10">
-                                <span class="opacity-75 dark:text-base-content">Total Bayar :</span><span>
-                                    <x-client.format-rp class="dark:text-base-content" value="{{ $data->total }}" />
+                                <span class="opacity-75 dark:text-base-content">Total Bayar :</span><span
+                                    class="dark:text-base-content"><x-client.format-rp value="{{ $data->total }}" />
                                 </span>
                             </div>
 

@@ -174,12 +174,17 @@ class OrderController extends Controller
     {
         $data = $order->load(['delivery_state', 'order_address', 'shipping_method', 'order_detail.product', 'order_detail.product_variant.product_detail.variant_value.variant']);
 
+        // dd($data);
         return view('admin.order.show', compact('data'));
     }
 
     function next_state(Order $order)
     {
         $order->delivery_state_id += 1;
+
+        if ($order->delivery_state_id == 3) {
+            $order->is_paid = true;
+        }
         $order->save();
 
         return redirect()->back()->with('success', 'Berhasil update status menjadi ' . $order->delivery_state->name);
