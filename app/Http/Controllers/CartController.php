@@ -60,7 +60,10 @@ class CartController extends Controller
         ]);
 
         $product = ProductVariant::where('product_id', $request->product_id)->first();
-        if ($product->stock < ($cart->quantity + $request->quantity)) {
+
+        // JIKA ADA CART MAKA TAMBAH QTY PERMINTAAN DARI USER
+        $requestQty = $cart ? $cart->quantity + $request->quantity : $request->quantity;
+        if ($product->stock < $requestQty) {
             return response()->json(['status' => 0, 'message' => 'Stok tidak mencukupi']);
         }
 
