@@ -43,7 +43,7 @@
 
                             <div class="flex gap-2 leading-10">
                                 <span class="opacity-75">Tanggal Lahir
-                                    :</span><span>{{ $data->birthday->isoFormat('LL') }}</span>
+                                    :</span><span>{{ $data->birthday ? $data->birthday->isoFormat('LL') : '-' }}</span>
                             </div>
 
                             <div class="flex gap-2 leading-10">
