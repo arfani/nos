@@ -85,7 +85,8 @@
                                     </a>
                                 </div>
 
-                                <div class="tooltip" data-tip="Unban">
+                                <div class="tooltip"
+                                    @if ($item->banned) data-tip="Unban" @else data-tip="Ban" @endif>
                                     <form
                                         action="{{ $item->banned ? route('admin-member.unban', $item->id) : route('admin-member.ban', $item->id) }}"
                                         method="post" class="inline-block">

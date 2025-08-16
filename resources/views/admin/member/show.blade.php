@@ -2,7 +2,7 @@
     <div class="sm:mx-6 lg:mx-8 p-6 py-10 bg-secondary text-secondary-content rounded overflow-x-auto">
         <div class="flex flex-col sm:flex-row items-center sm:items-start p-4 gap-8 sm:gap-2">
             {{-- LEFT SIDE --}}
-            <div class="card w-80 bg-base-200 shadow-xl">
+            <div class="card w-80 bg-base-200 shadow-xl dark:text-base-content">
                 <figure class="px-10 pt-10 pb-2">
                     <div class="avatar">
                         <div class="w-full rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -18,7 +18,7 @@
             </div>
 
             {{-- RIGHT SIDE --}}
-            <div class="flex-1 bg-base-200 shadow-xl card">
+            <div class="flex-1 bg-base-200 shadow-xl card dark:text-base-content">
                 <div x-data="{ activeTab: 1 }">
                     <div class="flex bg-base-300 rounded-t-2xl">
                         <button class="uppercase px-8 py-3 -mb-px text-sm rounded-t-2xl"
