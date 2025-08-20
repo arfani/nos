@@ -96,7 +96,8 @@ export default {
             this.showNotification('Berhasil ditambah ke keranjang Anda !');
         } else {
             // Handle the error case
-            this.showNotificationFailed('Gagal udpate data !');
+            await this.getDataCart();
+            this.showNotificationFailed(result.message);
             console.error('Gagal udpate data');
         }
     },

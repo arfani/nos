@@ -85,6 +85,14 @@ class CartController extends Controller
 
     function update_qty(Request $request, Cart $cart)
     {
+        $product = ProductVariant::find($cart->product_variant_id);
+
+        // JIKA ADA CART MAKA TAMBAH QTY PERMINTAAN DARI USER
+        $requestQty = $request->qty;
+        if ($product->stock < $requestQty) {
+            return response()->json(['status' => 0, 'message' => 'Stok tidak mencukupi']);
+        }
+
         $cart->quantity = $request->qty;
         $cart->save();
 
