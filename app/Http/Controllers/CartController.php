@@ -59,7 +59,7 @@ class CartController extends Controller
             'product_variant_id' => $request->product_variant_id
         ]);
 
-        $product = ProductVariant::where('product_id', $request->product_id)->first();
+        $product = ProductVariant::find($request->product_variant_id);
 
         // JIKA ADA CART MAKA TAMBAH QTY PERMINTAAN DARI USER
         $requestQty = $cart ? $cart->quantity + $request->quantity : $request->quantity;
