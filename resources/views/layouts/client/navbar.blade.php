@@ -70,7 +70,7 @@
             @include('layouts.client.cart')
         @endcan
 
-        <div class="dropdown dropdown-end">
+        <div class="hidden lg:block dropdown dropdown-end">
             @if (auth()->check())
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
@@ -148,8 +148,20 @@
                         </a>
                     @endcan
                 </li>
-                {{-- <div class="divider my-0"></div> --}}
-
+                <div class="lg:hidden divider my-0"></div>
+                <li class="lg:hidden mx-auto">
+                    @if (auth()->check())
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button class="flex">
+                                <span class="fa fa-person-running mr-2"></span><span>Keluar</span>
+                            </button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}"><span>Masuk</span><span
+                                class="fa fa-right-to-bracket"></span></a>
+                    @endif
+                </li>
             </ul>
         </div>
     </div>
