@@ -59,7 +59,12 @@ class CartController extends Controller
             'product_variant_id' => $request->product_variant_id
         ]);
 
-        $product = ProductVariant::find($request->product_variant_id);
+        // JIKA VARIAN ADA MAKA AMBIL VARIANNYA, JIKA TIDAK ADA MAKA AMBIL VARIAN PERTAMA DARI PRODUCT ID
+        if ($request->product_variant_id) {
+            $product = ProductVariant::find($request->product_variant_id);
+        } else {
+            $product = ProductVariant::where('product_id', $request->product_id)->first();
+        }
 
         // JIKA ADA CART MAKA TAMBAH QTY PERMINTAAN DARI USER
         $requestQty = $cart ? $cart->quantity + $request->quantity : $request->quantity;
@@ -85,9 +90,13 @@ class CartController extends Controller
 
     function update_qty(Request $request, Cart $cart)
     {
-        $product = ProductVariant::find($cart->product_variant_id);
+        // JIKA VARIAN ADA MAKA AMBIL VARIANNYA, JIKA TIDAK ADA MAKA AMBIL VARIAN PERTAMA DARI PRODUCT ID
+        if ($cart->product_variant_id) {
+            $product = ProductVariant::find($cart->product_variant_id);
+        } else {
+            $product = ProductVariant::where('product_id', $cart->product_id)->first();
+        }
 
-        // JIKA ADA CART MAKA TAMBAH QTY PERMINTAAN DARI USER
         $requestQty = $request->qty;
         if ($product->stock < $requestQty) {
             return response()->json(['status' => 0, 'message' => 'Stok tidak mencukupi']);
