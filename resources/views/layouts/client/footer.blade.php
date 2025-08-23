@@ -16,7 +16,7 @@
         <a class="link link-hover" href="{{ route('client.contact') }}">Kontak kami</a>
     </nav>
 </footer>
-<footer class="footer px-10 py-3 border-t bg-primary text-primary-content border-base-300 mb-16">
+<footer class="footer px-10 py-3 border-t bg-primary text-primary-content border-base-300 mb-16 md:mb-0">
     <aside class="items-center grid-flow-col">
         <span class="bg-white rounded p-2 hidden sm:block">
             <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="50px" class="hidden sm:block">
