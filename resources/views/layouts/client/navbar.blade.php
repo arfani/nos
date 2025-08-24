@@ -83,7 +83,7 @@
                     <a href="{{ route('login') }}" class="flex justify-center items-center gap-2"><span
                             class="fa fa-user-o"></span><span>Masuk</span>
                     </a>
-                    <a href="{{ route('register') }}" class="bg-[#ff6600] text-white py-3 px-10 rounded-full">Buat
+                    <a href="{{ route('register') }}" class="btn btn-primary text-white py-3 px-10 rounded-full">Buat
                         Akun</a>
                 </div>
             @endif
@@ -104,12 +104,13 @@
                 </div>
             </div>
             <ul tabindex="0"
-                class="menu menu-sm dropdown-content mt-3 z-[1] py-2 px-4 shadow bg-base-100 rounded-box">
+                class="menu menu-sm dropdown-content mt-3 z-[1] py-4 px-4 shadow bg-base-100 rounded-box">
+
+                {{-- dark mode toggle --}}
                 <div class="flex justify-evenly mb-2">
                     <button class="btn btn-ghost btn-circle">
                         <label class="swap swap-rotate">
-                            <!-- this hidden checkbox controls the state -->
-                            {{-- id disini saya buat untuk menghilangkan warning pada console --}}
+                            <!-- id disini saya buat untuk menghilangkan warning pada console -->
                             <input type="checkbox" class="themeSetter hidden" value="synthwave" id="themeSetter" />
 
                             <!-- sun icon -->
