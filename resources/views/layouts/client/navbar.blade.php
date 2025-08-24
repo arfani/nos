@@ -107,7 +107,7 @@
                 class="menu menu-sm dropdown-content mt-3 z-[1] py-4 px-4 shadow bg-base-100 rounded-box">
 
                 {{-- dark mode toggle --}}
-                <div class="flex justify-evenly mb-2">
+                {{-- <div class="flex justify-evenly mb-2">
                     <button class="btn btn-ghost btn-circle">
                         <label class="swap swap-rotate">
                             <!-- id disini saya buat untuk menghilangkan warning pada console -->
@@ -128,7 +128,7 @@
                             </svg>
                         </label>
                     </button>
-                </div>
+                </div> --}}
                 @auth
                     <li class="text-center text-xs">
                         {{ auth()->user()->email }}

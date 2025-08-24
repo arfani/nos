@@ -24,7 +24,7 @@
     </div>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     @include('layouts.client.navbar')
     <!-- Page Content -->
     <main class="pt-28 pb-4 px-4 transition-all">
@@ -83,41 +83,41 @@
 
         // THEME SETTER DILETAKAN DISINI (BUKAN DI FILE JS PADA FOLDER resources/js) AGAR TIDAK BLINK DARI MODE DARK KE MODE LIGHT SAAT DALAM MODE LIGHT MUNGKIN KARENA LANGSUNG TERLOAD
         // DOM elements
-        const themeSetter = document.querySelector(".themeSetter");
-        const html = document.querySelector("html");
+        // const themeSetter = document.querySelector(".themeSetter");
+        // const html = document.querySelector("html");
 
-        // Check the browser preferred color scheme, and sets the defaultTheme based of that
-        const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const defaultTheme = prefersDarkMode ? "coffee" : "nord";
-        const preferredTheme = localStorage.getItem("theme")
+        // // Check the browser preferred color scheme, and sets the defaultTheme based of that
+        // const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        // const defaultTheme = prefersDarkMode ? "coffee" : "nord";
+        // const preferredTheme = localStorage.getItem("theme")
 
 
-        // Check if the localStorage item is set, if not set it to the default theme
-        if (!preferredTheme) {
-            localStorage.setItem("theme", defaultTheme);
-        }
+        // // Check if the localStorage item is set, if not set it to the default theme
+        // if (!preferredTheme) {
+        //     localStorage.setItem("theme", defaultTheme);
+        // }
 
-        // Sets the theme of the site either the preferredTheme or the defaultTheme (based on localStorage)
-        setTheme(preferredTheme || defaultTheme)
+        // // Sets the theme of the site either the preferredTheme or the defaultTheme (based on localStorage)
+        // setTheme(preferredTheme || defaultTheme)
 
-        themeSetter.addEventListener("change", (e) => {
-            const newTheme = e.target.checked ? 'coffee' : 'nord';
-            // Changes the theme to the newTheme
-            localStorage.setItem("theme", newTheme);
-            setTheme(newTheme)
-        });
+        // themeSetter.addEventListener("change", (e) => {
+        //     const newTheme = e.target.checked ? 'coffee' : 'nord';
+        //     // Changes the theme to the newTheme
+        //     localStorage.setItem("theme", newTheme);
+        //     setTheme(newTheme)
+        // });
 
-        function setTheme(theme) {
-            html.setAttribute('data-theme', theme)
+        // function setTheme(theme) {
+        //     html.setAttribute('data-theme', theme)
 
-            if (theme == 'nord') {
-                html.classList.remove('dark')
-                themeSetter.checked = false
-            } else {
-                html.classList.add('dark')
-                themeSetter.checked = true
-            }
-        }
+        //     if (theme == 'nord') {
+        //         html.classList.remove('dark')
+        //         themeSetter.checked = false
+        //     } else {
+        //         html.classList.add('dark')
+        //         themeSetter.checked = true
+        //     }
+        // }
     </script>
 
     @stack('scripts')
