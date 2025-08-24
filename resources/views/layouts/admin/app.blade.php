@@ -19,9 +19,9 @@
         <!-- Page Content -->
         <main class="py-12">
             {{-- <div class="overflow-hidden shadow-sm sm:rounded-lg"> --}}
-                {{-- <div class="p-6 bg-base-200 mx-2 sm:mx-4 lg:mx-6 rounded"> --}}
-                    {{ $slot }}
-                {{-- </div> --}}
+            {{-- <div class="p-6 bg-base-200 mx-2 sm:mx-4 lg:mx-6 rounded"> --}}
+            {{ $slot }}
+            {{-- </div> --}}
             {{-- </div> --}}
         </main>
         {{-- <button class="btn btn-primary themeSetter" to="coffee">coffee</button>
@@ -29,7 +29,7 @@
         @include('layouts.admin.footer')
     </div>
     @stack('scripts')
-    <script>
+    {{-- <script>
         // THEME SETTER DILETAKAN DISINI (BUKAN DI FILE JS PADA FOLDER resources/js) AGAR TIDAK BLINK DARI MODE DARK KE MODE LIGHT SAAT DALAM MODE LIGHT MUNGKIN KARENA LANGSUNG TERLOAD
         // DOM elements
         const themeSetter = document.querySelector(".themeSetter");
@@ -67,7 +67,7 @@
                 themeSetter.checked = true
             }
         }
-    </script>
+    </script> --}}
 </body>
 
 </html>
