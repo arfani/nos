@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\CategoryLabel;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class CategoryController extends Controller
 
         $validated = $request->validate($queryParams);
 
-        $data = Category::latest();
+        $data = Category::with('category_label')->latest();
 
         if (isset($validated["nama"])) {
             $data = $data->where('name', 'like', '%' . $validated["nama"] . '%');
@@ -33,13 +34,15 @@ class CategoryController extends Controller
         $headers = [
             'No',
             'Nama',
+            'Label',
             'Aksi'
         ];
 
         $rows = $data->map(function ($item) {
             return [
-                'name' => $item->name,
                 'id' => $item->id,
+                'name' => $item->name,
+                'category_label' => $item->category_label->name,
             ];
         });
 
@@ -50,7 +53,8 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return view('admin.category.form');
+        $category_labels = CategoryLabel::pluck('name', 'id')->toArray();
+        return view('admin.category.form', compact('category_labels'));
     }
 
     public function store(StoreCategoryRequest $request)
@@ -66,8 +70,8 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $data = $category;
-
-        return view('admin.category.form', compact('data'));
+        $category_labels = CategoryLabel::pluck('name', 'id')->toArray();
+        return view('admin.category.form', compact('data', 'category_labels'));
     }
 
     public function update(UpdateCategoryRequest $request, Category $category)

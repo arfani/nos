@@ -13,8 +13,8 @@
                         @endforeach
                     </div>
                 @endif
-                <form action="{{ isset($data) ? route('category.update', $data) : route('category.store') }}" method="POST"
-                    id="main">
+                <form action="{{ isset($data) ? route('category.update', $data) : route('category.store') }}"
+                    method="POST" id="main">
                     @csrf
 
                     @isset($data)
@@ -22,16 +22,28 @@
                     @endisset
                     <div class="form-container flex flex-col">
                         <div class="form-content">
-
                             <div class="flex flex-col mb-4">
                                 <label for="name" class="font-semibold mb-2">Nama</label>
                                 <input type="text" id="name" name="name"
                                     class="my-input bg-primary/5 rounded w-fit border-transparent border-b border-b-primary 
             focus:ring-transparent focus:border-transparent focus:border-b-primary"
-                                    value="{{ old('name', isset($data) ? $data->name : '') }}" required
-                                    autofocus>
+                                    value="{{ old('name', isset($data) ? $data->name : '') }}" required autofocus>
                             </div>
 
+                            <div class="flex flex-col mb-4">
+                                <label for="label" class="font-semibold mb-2">Label</label>
+                                <select id="label" name="category_label_id"
+                                    class="my-input bg-primary/5 rounded w-fit border-transparent border-b border-b-primary 
+            focus:ring-transparent focus:border-transparent focus:border-b-primary"
+                                    required>
+                                    <option value="" disabled selected>Pilih Label</option>
+                                    @foreach ($category_labels as $id => $name)
+                                        <option value="{{ $id }}"
+                                            {{ old('category_label_id', isset($data) ? $data->category_label_id : '') == $id ? 'selected' : '' }}>
+                                            {{ $name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-2 gap-2">

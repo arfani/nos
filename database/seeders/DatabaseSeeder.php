@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
             CartSeeder::class,
             // AreaSeeder::class, //tidak digunakan karena langsung ke endpoint biteship
             DeliveryStateSeeder::class,
+            CategoryLabelSeeder::class,
         ]);
     }
 }

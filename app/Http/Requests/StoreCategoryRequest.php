@@ -25,7 +25,8 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', Rule::unique(Category::class)]
+            'name' => ['required', 'string', Rule::unique(Category::class)],
+            'category_label_id' => ['required', 'exists:category_labels,id'],
         ];
     }
 }
