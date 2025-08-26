@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class CategoryLabel extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name'];
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }

@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-secondary text-secondary-content overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6">
                 <h2 class="text-xl uppercase mb-4 font-bold">{{ isset($data) ? 'Ubah' : 'Tambah' }} Data
                     {{ __('Kategori') }}</h2>
@@ -31,18 +31,24 @@
                             </div>
 
                             <div class="flex flex-col mb-4">
-                                <label for="label" class="font-semibold mb-2">Label</label>
-                                <select id="label" name="category_label_id"
-                                    class="my-input bg-primary/5 rounded w-fit border-transparent border-b border-b-primary 
+                                <label for="category_label_id" class="font-semibold mb-2">Label</label>
+                                <div class="flex items-center gap-3">
+                                    <select id="category_label_id" name="category_label_id"
+                                        class="my-input bg-primary/5 rounded w-fit border-transparent border-b border-b-primary 
             focus:ring-transparent focus:border-transparent focus:border-b-primary"
-                                    required>
-                                    <option value="" disabled selected>Pilih Label</option>
-                                    @foreach ($category_labels as $id => $name)
-                                        <option value="{{ $id }}"
-                                            {{ old('category_label_id', isset($data) ? $data->category_label_id : '') == $id ? 'selected' : '' }}>
-                                            {{ $name }}</option>
-                                    @endforeach
-                                </select>
+                                        required>
+                                        <option value="" disabled selected>Pilih Label</option>
+                                        @foreach ($category_labels as $id => $name)
+                                            <option value="{{ $id }}"
+                                                {{ old('category_label_id', isset($data) ? $data->category_label_id : '') == $id ? 'selected' : '' }}>
+                                                {{ $name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="tooltip" data-tip="Tambah category"
+                                        onclick="modalCategoryLabel.showModal()">
+                                        <span class="fa fa-plus-circle text-primary text-2xl cursor-pointer"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -56,6 +62,7 @@
                 </form>
             </div>
         </div>
+        @include('admin.category.modal-category-label')
     </div>
     @push('scripts')
         <script>

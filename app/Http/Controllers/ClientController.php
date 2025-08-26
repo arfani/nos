@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Auction;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\CategoryLabel;
 use App\Models\Faq;
 use App\Models\Feature;
 use App\Models\Notice;
@@ -74,7 +75,7 @@ class ClientController extends Controller
         ];
 
         $wa_admin = User::where('level_id', 1)->first()->hp;
-
+        
         return view('client.index', compact(
             'notice',
             'categories',

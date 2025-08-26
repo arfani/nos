@@ -25,7 +25,12 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', Rule::unique(Category::class)->ignore($this->category)]
+            'name' => ['required', 'string', Rule::unique(Category::class)->ignore($this->category)],
+            'category_label_id' => [
+                'required',
+                'integer',
+                Rule::exists('category_labels', 'id') // harus ada di tabel category_labels
+            ],
         ];
     }
 }

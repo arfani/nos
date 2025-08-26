@@ -5,6 +5,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryLabelController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
@@ -124,6 +125,7 @@ Route::prefix('admin')
 
         Route::resource('auction', AuctionController::class)->only('store', 'update');
         Route::resource('homepage-client', HomepageClientController::class)->only('index', 'update');
+        Route::resource('category-labels', CategoryLabelController::class);
     });
 
 
