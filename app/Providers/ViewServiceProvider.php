@@ -27,7 +27,7 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('layouts.client.menu', function ($view) {
             // $categories = Category::all();
             // $view->with('categories', $categories);
-            $category_labels = CategoryLabel::with('categories')->get();
+            $category_labels = CategoryLabel::with('categories')->whereHas('categories')->get();
             $view->with('category_labels', $category_labels);
         });
 
