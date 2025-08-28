@@ -33,6 +33,11 @@ class AuctionController extends Controller
 
     function bid(Request $request)
     {
+        // validate that user has phone number
+        if (!auth()->user()->phone) {
+            return redirect()->back()->with('error', 'Silakan lengkapi nomor telepon di profil Anda sebelum melakukan bid.');
+        }
+        
         $validated = $request->validate([
             'auction_id' => ['required'],
             'value' => ['required'],

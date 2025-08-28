@@ -11,8 +11,8 @@
 </div>
 
 @if (isset($product->auction) && $product->auction->active)
-
-    @if (Session::get('success'))
+ <x-ar.alert />
+    {{-- @if (Session::get('success'))
         <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
             class="toast toast-top toast-end mt-20 z-50">
             <div role="alert" class="alert alert-success mb-4">
@@ -24,7 +24,7 @@
                 <span>{{ Session::get('success') }}</span>
             </div>
         </div>
-    @endif
+    @endif --}}
 
     <div id="bidding" class="mb-14 mt-0"></div>
     @if (\Carbon\Carbon::now()->greaterThan($product->auction->endtime))
