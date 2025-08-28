@@ -34,7 +34,7 @@ class AuctionController extends Controller
     function bid(Request $request)
     {
         // validate that user has phone number
-        if (!auth()->user()->phone) {
+        if (!auth()->user()->hp) {
             return redirect()->back()->with('error', 'Silakan lengkapi nomor telepon di profil Anda sebelum melakukan bid.');
         }
         
@@ -42,6 +42,14 @@ class AuctionController extends Controller
             'auction_id' => ['required'],
             'value' => ['required'],
         ]);
+
+        // validate that bid value is greater than current highest bid + bid increment
+        $auction = Auction::find($validated["auction_id"]);
+        $highestBid = $auction->bids()->orderBy('value', 'desc')->first();
+        $minBidValue = $highestBid ? $highestBid->value + $auction->bid_increment : $auction->bid_start;
+        if ($validated["value"] < $minBidValue) {
+            return redirect()->back()->with('error', 'Nilai bid minimal harus ' . $minBidValue);
+        }
 
         $bid = new Bid();
         $bid->auction_id = $validated["auction_id"];
