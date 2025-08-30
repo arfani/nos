@@ -90,24 +90,25 @@
         </div>
 
         {{-- user icon --}}
-        <div class="dropdown dropdown-end">
-            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                <div class="w-10 rounded-full">
-                    @auth
-                        <img alt="User profile photo"
-                            src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}" />
-                    @else
-                        <div class="flex items-center justify-center h-full bg-gray-200">
-                            <span class="fa fa-user-xmark text-red-600 text-xl"></span>
-                        </div>
-                    @endauth
+        @auth
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        @auth
+                            <img alt="User profile photo"
+                                src="{{ isset(auth()->user()->img) ? Storage::url(auth()->user()->img) : asset('assets/images/image-not-found.webp') }}" />
+                        @else
+                            <div class="flex items-center justify-center h-full bg-gray-200">
+                                <span class="fa fa-user-xmark text-red-600 text-xl"></span>
+                            </div>
+                        @endauth
+                    </div>
                 </div>
-            </div>
-            <ul tabindex="0"
-                class="menu menu-sm dropdown-content mt-3 z-[1] py-4 px-4 shadow bg-base-100 rounded-box">
+                <ul tabindex="0"
+                    class="menu menu-sm dropdown-content mt-3 z-[1] py-4 px-4 shadow bg-base-100 rounded-box">
 
-                {{-- dark mode toggle --}}
-                {{-- <div class="flex justify-evenly mb-2">
+                    {{-- dark mode toggle --}}
+                    {{-- <div class="flex justify-evenly mb-2">
                     <button class="btn btn-ghost btn-circle">
                         <label class="swap swap-rotate">
                             <!-- id disini saya buat untuk menghilangkan warning pada console -->
@@ -129,41 +130,42 @@
                         </label>
                     </button>
                 </div> --}}
-                @auth
-                    <li class="text-center text-xs">
-                        {{ auth()->user()->email }}
+                    @auth
+                        <li class="text-center text-xs">
+                            {{ auth()->user()->email }}
+                        </li>
+                        <li class="text-center text-sm my-1 font-bold">
+                            {{ auth()->user()->name }}
+                        </li>
+                    @endauth
+                    <li>
+                        @can('is-member')
+                            <a href="{{ route('client.profile') }}" class="mx-auto">
+                                <span class="fa fa-user"></span><span>Profil</span>
+                            </a>
+                        @endcan
+                        @can('is-admin')
+                            <a href="{{ route('admin-profile.index') }}" class="mx-auto">
+                                <span class="fa fa-user"></span><span>Profil</span>
+                            </a>
+                        @endcan
                     </li>
-                    <li class="text-center text-sm my-1 font-bold">
-                        {{ auth()->user()->name }}
+                    <div class="lg:hidden divider my-0"></div>
+                    <li class="lg:hidden mx-auto">
+                        @if (auth()->check())
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <button class="flex">
+                                    <span class="fa fa-person-running mr-2"></span><span>Keluar</span>
+                                </button>
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}"><span>Masuk</span><span
+                                    class="fa fa-right-to-bracket"></span></a>
+                        @endif
                     </li>
-                @endauth
-                <li>
-                    @can('is-member')
-                        <a href="{{ route('client.profile') }}" class="mx-auto">
-                            <span class="fa fa-user"></span><span>Profil</span>
-                        </a>
-                    @endcan
-                    @can('is-admin')
-                        <a href="{{ route('admin-profile.index') }}" class="mx-auto">
-                            <span class="fa fa-user"></span><span>Profil</span>
-                        </a>
-                    @endcan
-                </li>
-                <div class="lg:hidden divider my-0"></div>
-                <li class="lg:hidden mx-auto">
-                    @if (auth()->check())
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            <button class="flex">
-                                <span class="fa fa-person-running mr-2"></span><span>Keluar</span>
-                            </button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}"><span>Masuk</span><span
-                                class="fa fa-right-to-bracket"></span></a>
-                    @endif
-                </li>
-            </ul>
-        </div>
+                </ul>
+            </div>
+        @endauth
     </div>
 </div>
