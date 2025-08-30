@@ -43,12 +43,13 @@ class StoreProductRequest extends FormRequest
             'detail-value' => ['nullable'],
             'variantData' => ['nullable'],
             'variantCombinationsData' => ['nullable'],
-
             'stock_variant' => 'nullable',
             'price_variant' => 'nullable',
             'weight_variant' => 'nullable',
             'sku_variant' => 'nullable',
             'active_variant' => 'nullable',
+            'brand_id' => 'nullable|exists:brands,id',
+            'youtube' => 'nullable',
         ];
     }
 

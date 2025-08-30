@@ -117,6 +117,8 @@ class ProductController extends Controller
         $new_product->name = $validated["name"];
         $new_product->slug = Str::of($validated["name"])->slug('-')->value;
         $new_product->description = $validated["description"];
+        $new_product->brand_id = $validated["brand_id"] ?? null;
+        $new_product->youtube = $validated["youtube"] ?? null;
 
         DB::transaction(function () use ($new_product, $validated) {
             $new_product->save();
@@ -355,6 +357,8 @@ class ProductController extends Controller
         $product->name = $validated["name"];
         $product->slug = Str::of($validated["name"])->slug('-')->value;
         $product->description = $validated["description"];
+        $product->brand_id = $validated["brand_id"] ?? null;
+        $product->youtube = $validated["youtube"] ?? null;
 
         DB::transaction(function () use ($product, $validated) {
             $product->save();

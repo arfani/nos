@@ -226,8 +226,8 @@
 
                         {{-- BRAND --}}
                         <div class="flex flex-col flex-1 text-black">
-                            <label for="brand" class="font-semibold mb-2 text-base-content">Brand</label>
-                            <select name="brand" id="brand">
+                            <label for="brand_id" class="font-semibold mb-2 text-base-content">Brand</label>
+                            <select name="brand_id" id="brand_id">
                                 <option></option>
                                 @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}"
