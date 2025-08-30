@@ -136,7 +136,7 @@
                                     <div class="flex">
                                         <input type="number" id="length" name="length" min="0"
                                             step=".01" class="my-input bg-primary/5 rounded-l flex-1"
-                                            placeholder="Panjang" max="87"
+                                            placeholder="Panjang" max="100"
                                             value="{{ old('stock', isset($data->dimention->length) ? $data->dimention->length : 0) }}">
                                         <span
                                             class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
@@ -148,7 +148,7 @@
                                     <div class="flex">
                                         <input type="number" id="width" name="width" min="0"
                                             step=".01" class="my-input bg-primary/5 rounded-l flex-1"
-                                            placeholder="Lebar" max="87"
+                                            placeholder="Lebar" max="100"
                                             value="{{ old('stock', isset($data->dimention->width) ? $data->dimention->width : 0) }}">
                                         <span
                                             class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
@@ -160,7 +160,7 @@
                                     <div class="flex">
                                         <input type="number" id="height" name="height" min="0"
                                             step=".01" class="my-input bg-primary/5 rounded-l flex-1"
-                                            placeholder="Tinggi" max="87"
+                                            placeholder="Tinggi" max="100"
                                             value="{{ old('stock', isset($data->dimention->height) ? $data->dimention->height : 0) }}">
                                         <span
                                             class="bg-primary text-primary-content flex justify-center items-center p-2 border-b border-primary rounded-r font-bold">cm</span>
