@@ -124,7 +124,7 @@
                  <a href="{{ route('admin.about-us') }}" @class([
                      'block px-4 py-3 mt-0 text-sm',
                      'bg-primary text-primary-content' => Request::RouteIs('admin.about-us'),
-                 ])>Tetang Kami</a>
+                 ])>Tentang Kami</a>
 
                  <a href="{{ route('admin.contact') }}" @class([
                      'block px-4 py-3 mt-0 text-sm',

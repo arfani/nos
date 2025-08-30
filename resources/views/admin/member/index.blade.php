@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="sm:mx-6 lg:mx-8 p-6 py-10 bg-secondary text-secondary-content rounded overflow-x-auto">
+    <div class="sm:mx-6 lg:mx-8 p-6 py-10 rounded overflow-x-auto">
         @if (Session::get('success'))
             <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
                 class="toast toast-top toast-end mt-10 z-10">
@@ -46,70 +46,71 @@
             </span>
         </div>
 
-        <table class="w-full mb-4 rounded">
-            <thead>
-                <tr class="text-left border-b leading-9 bg-primary text-primary-content border-b-yellow-100 [&>th]:p-2">
-                    <th class="text-center">No</th>
-                    <th>Name</th>
-                    <th>No. HP</th>
-                    <th>Email</th>
-                    <th>Gender</th>
-                    <th>Tanggal Bergabung</th>
-                    <th class="text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($data as $item)
-                    <tr
-                        class="border-b odd:bg-white/5 odd:text-accent-content [&>td]:p-2 hover:bg-primary hover:text-primary-content">
-                        <td class="text-center">{{ ++$indexNumber }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->hp }}</td>
-                        <td>{{ $item->email }}</td>
-                        <td>
-                            @if ($item->gender === 'm')
-                                <i class="fa fa-person"></i>
-                            @elseif ($item->gender === 'f')
-                                <i class="fa fa-person-dress"></i>
-                            @else
-                                -
-                            @endif
-                        </td>
-                        <td>{{ $item->created_at->isoFormat('LL') }}</td>
-                        <td>
-                            <div class="flex gap-3 justify-center">
-
-                                <div class="tooltip" data-tip="Lihat">
-                                    <a href="{{ route('admin-member.show', $item->id) }}">
-                                        <i class="fa fa-eye text-teal-600"></i>
-                                    </a>
-                                </div>
-
-                                <div class="tooltip"
-                                    @if ($item->banned) data-tip="Unban" @else data-tip="Ban" @endif>
-                                    <form
-                                        action="{{ $item->banned ? route('admin-member.unban', $item->id) : route('admin-member.ban', $item->id) }}"
-                                        method="post" class="inline-block">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit">
-                                            @if ($item->banned)
-                                                <i class="fa fa-unlock text-blue-500"></i>
-                                            @else
-                                                <i class="fa fa-ban text-red-500"></i>
-                                            @endif
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
+        <div class="overflow-x-auto">
+            <table class="table bg-base-200">
+                <thead>
+                <tr class="bg-base-300">
+                        <th class="text-center">No</th>
+                        <th>Name</th>
+                        <th>No. HP</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th>Tanggal Bergabung</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($data as $item)
+                    <tr class="odd:bg-primary/5">
+                            <td class="text-center">{{ ++$indexNumber }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->hp }}</td>
+                            <td>{{ $item->email }}</td>
+                            <td>
+                                @if ($item->gender === 'm')
+                                    <i class="fa fa-person"></i>
+                                @elseif ($item->gender === 'f')
+                                    <i class="fa fa-person-dress"></i>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>{{ $item->created_at->isoFormat('LL') }}</td>
+                            <td>
+                                <div class="flex gap-3 justify-center">
 
-        <div class="[&_p]:!text-secondary-content [&_.bg-white]:bg-primary [&_.bg-white]:text-primary-content mt-10">
-            {!! $data->links() !!}
+                                    <div class="tooltip" data-tip="Lihat">
+                                        <a href="{{ route('admin-member.show', $item->id) }}">
+                                            <i class="fa fa-eye text-teal-600"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="tooltip"
+                                        @if ($item->banned) data-tip="Unban" @else data-tip="Ban" @endif>
+                                        <form
+                                            action="{{ $item->banned ? route('admin-member.unban', $item->id) : route('admin-member.ban', $item->id) }}"
+                                            method="post" class="inline-block">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit">
+                                                @if ($item->banned)
+                                                    <i class="fa fa-unlock text-blue-500"></i>
+                                                @else
+                                                    <i class="fa fa-ban text-red-500"></i>
+                                                @endif
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div
+                class="[&_p]:!text-secondary-content [&_.bg-white]:bg-primary [&_.bg-white]:text-primary-content mt-10">
+                {!! $data->links() !!}
+            </div>
         </div>
     </div>
     @push('scripts')

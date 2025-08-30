@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="sm:mx-6 lg:mx-8 p-6 py-10 bg-secondary text-secondary-content rounded overflow-x-auto">
+    <div class="sm:mx-6 lg:mx-8 p-6 py-10 rounded overflow-x-auto">
         @if (Session::get('success'))
             <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
                 class="toast toast-top toast-end mt-10 z-10">
@@ -59,9 +59,10 @@
             </span>
         </div>
 
-        <table class="w-full mb-4 rounded">
+    <div class="overflow-x-auto">
+        <table class="table bg-base-200">
             <thead>
-                <tr class="text-left border-b leading-9 bg-primary text-primary-content border-b-yellow-100 [&>th]:p-2">
+                <tr class="bg-base-300">
                     <th class="text-center">No</th>
                     <th>Pertanyaan</th>
                     <th>Jawaban</th>
@@ -70,8 +71,7 @@
             </thead>
             <tbody>
                 @foreach ($data as $item)
-                    <tr
-                        class="border-b odd:bg-white/5 odd:text-accent-content [&>td]:p-2 hover:bg-primary hover:text-primary-content">
+                    <tr class="odd:bg-primary/5">
                         <td class="text-center">{{ ++$indexNumber }}</td>
                         <td>{{ $item->question }}</td>
                         <td>{{ $item->answer }}</td>

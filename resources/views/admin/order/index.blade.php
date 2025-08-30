@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="sm:mx-6 lg:mx-8 p-6 py-10 text-secondary-content rounded overflow-x-auto">
+    <div class="sm:mx-6 lg:mx-8 p-6 py-10 rounded overflow-x-auto">
         @if (Session::get('success'))
             <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
                 class="toast toast-top toast-end mt-10 z-10">
@@ -45,56 +45,58 @@
             </span>
         </div>
 
-        <table class="w-full mb-4 rounded">
-            <thead>
-                <tr class="text-left border-b leading-9 bg-primary text-primary-content border-b-yellow-100 [&>th]:p-2">
-                    <th class="text-center">No</th>
-                    <th class="text-center">Member</th>
-                    <th class="text-center">Invoice</th>
-                    <th class="text-center text-nowrap">Dikirim Ke</th>
-                    <th class="text-center">Kurir</th>
-                    <th class="text-center">Pembayaran</th>
-                    <th class="text-center">Total Bayar</th>
-                    <th class="text-center">Sudah Dibayar</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Tanggal Order</th>
-                    <th class="text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($data as $order)
-                    <tr
-                        class="border-b [&>td]:p-2 hover:bg-primary hover:text-primary-content dark:text-accent-content">
-                        <td class="text-center">{{ ++$indexNumber }}</td>
-                        <td class="text-center">{{ $order->user->name }}</td>
-                        <td class="text-center">{{ $order->invoice }}</td>
-                        <td class="text-center">{{ $order->order_address->name }}</td>
-                        <td class="text-center">
-                            {{ $order->shipping_method->courier_name . ' - ' . $order->shipping_method->courier_service_name }}
-                        </td>
-                        <td class="text-center">{{ $order->payment_method }}</td>
-                        <td class="text-center">
-                            <x-client.format-rp value="{{ $order->total }}" />
-                        </td>
-                        <td class="text-center">{{ $order->is_paid ? 'Lunas' : 'Belum Lunas' }}</td>
-                        <td class="text-center">{{ $order->delivery_state->name }}</td>
-                        <td class="text-center">{{ $order->created_at->isoFormat('LL') }}</td>
-                        <td class="text-center">
-                            <div class="flex gap-3 justify-center">
-                                <div class="tooltip" data-tip="Lihat">
-                                    <a href="{{ route('admin-order.show', $order->id) }}">
-                                        <i class="fa fa-eye text-teal-600"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </td>
+        <div class="overflow-x-auto">
+            <table class="table bg-base-200">
+                <thead>
+                <tr class="bg-base-300">
+                        <th class="text-center">No</th>
+                        <th class="text-center">Member</th>
+                        <th class="text-center">Invoice</th>
+                        <th class="text-center text-nowrap">Dikirim Ke</th>
+                        <th class="text-center">Kurir</th>
+                        <th class="text-center">Pembayaran</th>
+                        <th class="text-center">Total Bayar</th>
+                        <th class="text-center">Sudah Dibayar</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Tanggal Order</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($data as $order)
+                    <tr class="odd:bg-primary/5">
+                            <td class="text-center">{{ ++$indexNumber }}</td>
+                            <td class="text-center">{{ $order->user->name }}</td>
+                            <td class="text-center">{{ $order->invoice }}</td>
+                            <td class="text-center">{{ $order->order_address->name }}</td>
+                            <td class="text-center">
+                                {{ $order->shipping_method->courier_name . ' - ' . $order->shipping_method->courier_service_name }}
+                            </td>
+                            <td class="text-center">{{ $order->payment_method }}</td>
+                            <td class="text-center">
+                                <x-client.format-rp value="{{ $order->total }}" />
+                            </td>
+                            <td class="text-center">{{ $order->is_paid ? 'Lunas' : 'Belum Lunas' }}</td>
+                            <td class="text-center">{{ $order->delivery_state->name }}</td>
+                            <td class="text-center">{{ $order->created_at->isoFormat('LL') }}</td>
+                            <td class="text-center">
+                                <div class="flex gap-3 justify-center">
+                                    <div class="tooltip" data-tip="Lihat">
+                                        <a href="{{ route('admin-order.show', $order->id) }}">
+                                            <i class="fa fa-eye text-teal-600"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
 
-        <div class="[&_p]:!text-secondary-content [&_.bg-white]:bg-primary [&_.bg-white]:text-primary-content mt-10">
-            {!! $data->links() !!}
+            <div
+                class="[&_p]:!text-secondary-content [&_.bg-white]:bg-primary [&_.bg-white]:text-primary-content mt-10">
+                {!! $data->links() !!}
+            </div>
         </div>
     </div>
     @push('scripts')
