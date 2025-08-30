@@ -583,6 +583,7 @@ class ProductController extends Controller
 
                 // HAPUS SEMUA DETAIL VALUE
                 DetailValue::destroy($currentDetailValue);
+                // SIMPAN DETAIL VALUE YANG BARU
                 foreach ($validated["detail"] as $index => $detail_input) {
                     if (isset($detail_input)) { //hanya simpan detail yang tidak null
                         $detail = Detail::firstOrCreate(['detail' => $detail_input]);
@@ -602,6 +603,13 @@ class ProductController extends Controller
                         $q->select('detail_id')
                             ->from((new DetailValue())->getTable());
                     })->delete();
+            } else {
+                // JIKA TIDAK ADA DETAIL MAKA HAPUS SEMUA DETAIL YANG ADA
+                $currentDetailValue = DetailValue::where('product_id', $product->id)->get();
+                $currentDetailIds = $currentDetailValue->pluck('detail_id')->toArray();
+
+                // HAPUS SEMUA DETAIL VALUE
+                DetailValue::destroy($currentDetailValue);
             }
         });
 
