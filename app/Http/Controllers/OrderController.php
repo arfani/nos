@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Cart;
+use App\Models\DeliveryState;
 use App\Models\Order;
 use App\Models\OrderAddress;
 use App\Models\OrderDetail;
@@ -146,28 +147,67 @@ class OrderController extends Controller
         return $pdf->download('invoice-' . $order->id . '.pdf');
     }
 
-
-
     // FORM ADMIN
-    function index(Request $request)
+    public function index(Request $request)
     {
         $validated = $request->validate([
-            'invoice' => ['string', 'nullable'],
+            'invoice'            => ['string', 'nullable'],
+            'member'             => ['string', 'nullable'],
+            'search_by'          => ['string', 'nullable', 'in:invoice,member'],
+            'delivery_state_id'  => ['nullable', 'integer', 'exists:delivery_states,id'],
+            'date_from'          => ['nullable', 'date'],
+            'date_to'            => ['nullable', 'date'],
         ]);
 
         $data = Order::with(['order_address', 'delivery_state', 'shipping_method', 'user'])->latest();
 
-        if (isset($validated["invoice"])) {
-            $data = $data->where('invoice', 'like', '%' . $validated["invoice"] . '%');
+        // 🔎 filter invoice
+        if (($validated['search_by'] ?? null) === 'invoice' && !empty($validated['invoice'])) {
+            $data = $data->where('invoice', 'like', '%' . $validated['invoice'] . '%');
         }
 
-        $numb_per_page = $request['numb_per_page'] ?? 10;
+        // 🔎 filter member
+        if (($validated['search_by'] ?? null) === 'member' && !empty($validated['member'])) {
+            $data = $data->whereHas('user', function ($q) use ($validated) {
+                $q->where('name', 'like', '%' . $validated['member'] . '%');
+            });
+        }
 
-        $data = $data->paginate($numb_per_page)->appends(array_merge($validated, ['numb_per_page' => $numb_per_page]));
+        // 🔎 filter status
+        if (!empty($validated['delivery_state_id'])) {
+            $data = $data->where('delivery_state_id', $validated['delivery_state_id']);
+        }
+
+        // 🔎 filter tanggal
+        if (!empty($validated['date_from']) && !empty($validated['date_to'])) {
+            $data = $data->whereBetween('created_at', [
+                $validated['date_from'] . ' 00:00:00',
+                $validated['date_to'] . ' 23:59:59'
+            ]);
+        } elseif (!empty($validated['date_from'])) {
+            $data = $data->whereDate('created_at', '>=', $validated['date_from']);
+        } elseif (!empty($validated['date_to'])) {
+            $data = $data->whereDate('created_at', '<=', $validated['date_to']);
+        }
+
+        // jumlah per halaman
+        $numb_per_page = $request->input('numb_per_page', 10);
+
+        $data = $data->paginate($numb_per_page)->appends(array_merge($validated, [
+            'numb_per_page' => $numb_per_page,
+        ]));
+
         $indexNumber = (request()->input('page', 1) - 1) * $numb_per_page;
 
-        // dd($data);
-        return view('admin.order.index', compact('data', 'indexNumber', 'validated', 'numb_per_page'));
+        $delivery_states = \App\Models\DeliveryState::pluck('name', 'id');
+
+        return view('admin.order.index', compact(
+            'data',
+            'indexNumber',
+            'validated',
+            'numb_per_page',
+            'delivery_states'
+        ));
     }
 
     function show(Order $order)
