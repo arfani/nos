@@ -229,4 +229,28 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Berhasil update status menjadi ' . $order->delivery_state->name);
     }
+
+    function cancel(Order $order)
+    {
+        if ($order->delivery_state_id == DeliveryState::where('name', 'Dibatalkan')->first()->id) {
+            return redirect()->back()->with('error', 'Order sudah dibatalkan sebelumnya');
+        }
+
+        
+        if ($order->delivery_state_id == DeliveryState::where('name', 'Selesai')->first()->id) {
+            return redirect()->back()->with('error', 'Order sudah selesai tidak bisa dibatalkan');
+        }
+
+        $order->delivery_state_id = DeliveryState::where('name', 'Dibatalkan')->first()->id;
+        $order->save();
+
+        // KEMBALIKAN STOK
+        foreach ($order->order_detail as $detail) {
+            $product_variant = ProductVariant::find($detail->product_variant ? $detail->product_variant->id : $detail->product->product_variant->first()->id);
+            $product_variant->stock += $detail->quantity;
+            $product_variant->save();
+        }
+
+        return redirect()->back()->with('success', 'Berhasil membatalkan order dan mengembalikan stok produk');
+    }
 }

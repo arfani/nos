@@ -102,6 +102,7 @@ Route::prefix('admin')
         Route::get('order', [OrderController::class, 'index'])->name('admin-order.index');
         Route::get('order/{order}', [OrderController::class, 'show'])->name('admin-order.show');
         Route::patch('order/{order}', [OrderController::class, 'next_state'])->name('admin-order.next-state');
+        Route::patch('cancel-order/{order}', [OrderController::class, 'cancel'])->name('admin-order.cancel');
 
         // PAGES ADMIN
         Route::prefix('pages')->group(function () {

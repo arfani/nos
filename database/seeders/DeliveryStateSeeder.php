@@ -13,30 +13,20 @@ class DeliveryStateSeeder extends Seeder
      */
     public function run(): void
     {
-        DeliveryState::create([
-            "id" => 1,
-            "name" => "Menunggu Pembayaran"
-        ]);
+        $states = [
+        1 => "Menunggu Pembayaran",
+        2 => "Menunggu Konfirmasi",
+        3 => "Diproses",
+        4 => "Dikirim",
+        5 => "Selesai",
+        6 => "Dibatalkan",
+    ];
 
-        DeliveryState::create([
-            "id" => 2,
-            "name" => "Menunggu Konfirmasi"
-        ]);
-
-        DeliveryState::create([
-            "id" => 3,
-            "name" => "Diproses"
-        ]);
-
-        DeliveryState::create([
-            "id" => 4,
-            "name" => "Dikirim"
-        ]);
-
-        DeliveryState::create([
-            "id" => 5,
-            "name" => "Selesai"
-        ]);
-
+    foreach ($states as $id => $name) {
+        DeliveryState::updateOrCreate(
+            ['id' => $id],        // cari berdasarkan ID fix
+            ['name' => $name]     // kalau ada update name, kalau belum ada create
+        );
+    }
     }
 }
