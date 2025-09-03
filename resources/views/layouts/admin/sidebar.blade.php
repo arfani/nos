@@ -69,6 +69,13 @@
          ])>
              Features
          </a>
+         <a href="{{ route('bank-account.index') }}" @class([
+             'block px-4 py-3 mt-0 text-sm',
+             'bg-primary text-primary-content' =>
+                 Request::RouteIs('bank-account.index') || Request::is('admin/bank-account/*'),
+         ])>
+             Bank Accounts
+         </a>
          <a href="{{ route('sosmed.index') }}" @class([
              'block px-4 py-3 mt-0 text-sm',
              'bg-primary text-primary-content' =>

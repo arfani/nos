@@ -22,9 +22,6 @@ export default {
         require('daisyui'),
         require('@tailwindcss/typography'),
     ],
-    darkMode: 'selector',
-
-
     daisyui: {
         themes: [
             {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuctionController;
+use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
@@ -90,6 +91,7 @@ Route::prefix('admin')
         Route::resource('testimonial', TestimonialController::class);
         Route::resource('category', CategoryController::class)->except('show');
         Route::resource('product', ProductController::class);
+        Route::resource('bank-account', BankAccountController::class);
 
         Route::post('product-import', [ProductController::class, 'import'])->name('product.import');
 
