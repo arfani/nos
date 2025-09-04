@@ -14,7 +14,8 @@
                     <div class="cart-item bg-base-200 p-4 rounded-t border-b border-primary" :key="item.product.id">
                         <div class="flex flex-col md:flex-row items-center gap-2">
                             <img :src="item.product.product_pictures.length ? `/storage/${item.product.product_pictures[0].path}` :
-                                ''" alt="product-image" width="160px" class="rounded mx-2">
+                                ''"
+                                alt="product-image" width="160px" class="rounded mx-2">
 
                             <div class="name flex-1">
                                 <div class="text-xl font-bold" x-text="item.product.name"></div>
@@ -58,18 +59,18 @@
 
                 <div x-show="!$store.cart.items.length">
                     <div class="cart-item bg-base-200 p-4 rounded-t border-b border-primary">
-                        Keranjang belanjamu masih kosong !! Cek produk kami <a href="{{route('client.products')}}"
+                        Keranjang belanjamu masih kosong !! Cek produk kami <a href="{{ route('client.products') }}"
                             class="text-bold text-green-500">disini</a>
                     </div>
                 </div>
                 {{-- END LIST PRODUCT --}}
-                
+
                 <div class="flex flex-col gap-2 flex-1 mt-10">
                     <div class="address bg-base-200 p-6 rounded mb-4">
                         <div class="text-xl font-bold mb-1">Alamat Pengiriman</div>
                         {{-- SET ADDRESS DI ALPINE JS --}}
                         <div x-init="$store.cart.setAddress(
-                            '{{$address->id}}','{{$address->name}}','{{$address->recipient}}','{{$address->hp}}','{{$address->address}}','{{$address->district}}','{{$address->city}}','{{$address->province}}','{{$address->postal_code}}','{{$address->area_id}}'
+                            '{{ $address->id }}', '{{ $address->name }}', '{{ $address->recipient }}', '{{ $address->hp }}', '{{ $address->address }}', '{{ $address->district }}', '{{ $address->city }}', '{{ $address->province }}', '{{ $address->postal_code }}', '{{ $address->area_id }}'
                         )">
                         </div>
 
@@ -98,7 +99,8 @@
                                 </div>
                             </div>
                             <div class="flex-1 self-start tooltip tooltip-right" data-tip="Ubah alamat">
-                                <select name="addresses" id="addresses" class="my-input" @change="$store.cart.setAddress(
+                                <select name="addresses" id="addresses" class="my-input"
+                                    @change="$store.cart.setAddress(
                                         $event.target.value,
                                         $event.target.options[$event.target.selectedIndex].dataset.name,
                                         $event.target.options[$event.target.selectedIndex].dataset.recipient,
@@ -111,14 +113,15 @@
                                         $event.target.options[$event.target.selectedIndex].dataset.area_id,
                                     )">
                                     @foreach ($addresses as $address)
-                                    <option value="{{$address->id}}" data-name="{{$address->name}}"
-                                        data-recipient="{{$address->recipient}}" data-hp="{{$address->hp}}"
-                                        data-address="{{$address->address}}" data-district="{{$address->district}}"
-                                        data-city="{{$address->city}}" data-province="{{$address->province}}"
-                                        data-postal_code="{{$address->postal_code}}"
-                                        data-area_id="{{$address->area_id}}">
-                                        {{$address->name}}
-                                    </option>
+                                        <option value="{{ $address->id }}" data-name="{{ $address->name }}"
+                                            data-recipient="{{ $address->recipient }}" data-hp="{{ $address->hp }}"
+                                            data-address="{{ $address->address }}"
+                                            data-district="{{ $address->district }}" data-city="{{ $address->city }}"
+                                            data-province="{{ $address->province }}"
+                                            data-postal_code="{{ $address->postal_code }}"
+                                            data-area_id="{{ $address->area_id }}">
+                                            {{ $address->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -156,24 +159,64 @@
                     {{-- END METODE PENGIRIMAN --}}
 
                     {{-- METODE PEMBAYARAN --}}
-                    <div class="courier bg-base-200 p-6 rounded mb-4 flex flex-col lg:flex-row items-center gap-4 ">
-                        <button class="btn btn-primary lg:self-start" @click.prevent="$refs.transferBtn.focus()">
-                            <i class="fa fa-money-bill-wave"></i> Pembayaran
-                        </button>
-                        <div x-show="!$store.cart.paymentMethod" class="text-base-content text-center">
-                            Pilih metode pembayaran !
+                    <div class="courier bg-base-200 p-6 rounded mb-4 flex flex-col gap-5">
+                        <div class="flex flex-col lg:flex-row items-center gap-4">
+                            <button class="btn btn-primary lg:self-start" @click.prevent="$refs.transferBtn.focus()">
+                                <i class="fa fa-money-bill-wave"></i> Pembayaran
+                            </button>
+                            <div x-show="!$store.cart.paymentMethod" class="text-base-content text-center">
+                                Pilih metode pembayaran !
+                            </div>
+                            <div class="flex gap-4 justify-center md:justify-end flex-1 flex-col sm:flex-row">
+                                <button x-ref="transferBtn"
+                                    :class="`btn ${$store.cart.paymentMethod=='Transfer' ? 'btn-primary' : 'bg-gray-300'} shadow-md`"
+                                    @click.prevent="$store.cart.setPaymentMethod('Transfer')"><i
+                                        class="fa fa-credit-card"></i> Transfer <i
+                                        x-show="$store.cart.paymentMethod=='Transfer'"
+                                        class="fa fa-circle-check text-[#086B35]"></i>
+                                </button>
+                                <button
+                                    :class="`btn ${$store.cart.paymentMethod=='Cash' ? 'btn-primary' : 'bg-gray-300'} shadow-md`"
+                                    @click.prevent="$store.cart.setPaymentMethod('Cash')"><i
+                                        class="fa fa-money-bills"></i>
+                                    Cash <i x-show="$store.cart.paymentMethod=='Cash'"
+                                        class="fa fa-circle-check text-[#086B35]"></i>
+                                </button>
+                            </div>
+
                         </div>
-                        <div class="flex gap-4 justify-center md:justify-end flex-1 flex-col sm:flex-row">
-                            <button x-ref="transferBtn"
-                                :class="`btn ${$store.cart.paymentMethod=='Transfer' ? 'btn-primary' : ''}`"
-                                @click.prevent="$store.cart.setPaymentMethod('Transfer')"><i
-                                    class="fa fa-credit-card"></i> Transfer <i
-                                    x-show="$store.cart.paymentMethod=='Transfer'"
-                                    class="fa fa-circle-check text-[#086B35]"></i></button>
-                            <button :class="`btn ${$store.cart.paymentMethod=='Cash' ? 'btn-primary' : ''}`"
-                                @click.prevent="$store.cart.setPaymentMethod('Cash')"><i class="fa fa-money-bills"></i>
-                                Cash <i x-show="$store.cart.paymentMethod=='Cash'"
-                                    class="fa fa-circle-check text-[#086B35]"></i></button>
+                        {{-- Bank List --}}
+                        <div x-show="$store.cart.paymentMethod=='Transfer'" class="flex flex-col justify-end items-end w-fit ml-auto">
+                            <select name="bank_account_id" id="bank_account_id" class="my-input w-fit" 
+                            @change="$store.cart.setBankSelected(
+                                $event.target.value,
+                                $event.target.options[$event.target.selectedIndex].dataset.bank_name,
+                                $event.target.options[$event.target.selectedIndex].dataset.account_name,
+                                $event.target.options[$event.target.selectedIndex].dataset.account_number
+                                )">
+                                <option value="">Pilih Bank</option>
+                                @foreach ($bank_accounts as $bank_account)
+                                    <option value="{{ $bank_account->id }}" 
+                                    data-bank_name="{{ $bank_account->bank_name }}" 
+                                    data-account_name="{{ $bank_account->account_name }}" 
+                                    data-account_number="{{ $bank_account->account_number }}" 
+                                    >{{ $bank_account->bank_name }} -
+                                        {{ $bank_account->account_name }} - {{ $bank_account->account_number }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            <div x-show="$store.cart.bankSelected.id">
+                                <span class="font-bold">Bank dipilih:</span>
+                                <span x-text="$store.cart.bankSelected.bank_name"></span> -
+                                <span x-text="$store.cart.bankSelected.account_name"></span> -
+                                <span x-text="$store.cart.bankSelected.account_number"></span>
+                                <button @click="$store.cart.copyToClipboard($store.cart.bankSelected.account_number)"
+                                class="tooltip" data-tip="Copy nomor rekening">
+                                    <span class="far fa-copy"></span>
+                                </button>
+                            </div>
+                            
                         </div>
                     </div>
                     {{-- END METODE PEMBAYARAN --}}

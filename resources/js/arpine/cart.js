@@ -274,5 +274,24 @@ export default {
     orderDetail: {},
     async getOrderDetail(order_id) {
         this.orderDetail = await (await fetch(`/order/${order_id}`)).json();
+    },
+
+    bankSelected: {},
+    setBankSelected(id, bank_name, account_name, account_number) {
+        this.bankSelected.id = id;
+        this.bankSelected.bank_name = bank_name;
+        this.bankSelected.account_name = account_name;
+        this.bankSelected.account_number = account_number;
+    },
+
+    copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                this.showNotification('Nomor rekening berhasil disalin !');
+            })
+            .catch(err => {
+                this.showNotificationFailed('Nomor rekening gagal disalin !');
+                console.error(err);
+            })
     }
 }

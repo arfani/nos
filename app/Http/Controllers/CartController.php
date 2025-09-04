@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\BankAccount;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\ProductVariant;
@@ -28,13 +29,16 @@ class CartController extends Controller
             $address = Address::where('user_id', auth()->user()->id)->first();
         }
 
+        // yg ini untuk dropdown
         $addresses = Address::where('user_id', auth()->user()->id)->get();
 
         if ($addresses->isEmpty()) {
             return redirect()->back()->withErrors(["no_address" => "Data alamat pengiriman tidak ditemukan, silahkan tambahkan data alamat Anda pada menu profile !"]);
         }
 
-        return view('client.cart.checkout', compact('address', 'addresses'));
+        $bank_accounts = BankAccount::all();
+
+        return view('client.cart.checkout', compact('address', 'addresses', 'bank_accounts'));
     }
 
     function get_data()
