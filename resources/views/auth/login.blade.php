@@ -15,8 +15,8 @@
             <x-input-label for="password" :value="__('Password')" />
 
             <div x-data="{ show: false }" class="relative">
-                <x-text-input id="password" class="block mt-1 w-full pr-10" x-bind:type="show ? 'text' : 'password'" name="password" required
-                    autocomplete="current-password" />
+                <x-text-input id="password" class="block mt-1 w-full pr-10" x-bind:type="show ? 'text' : 'password'"
+                    name="password" required autocomplete="current-password" />
 
                 <!-- Toggle button -->
                 <button type="button" @click="show = !show"
@@ -25,12 +25,12 @@
                     <!-- Mata terbuka -->
                     <span x-show="!show" class="material-symbols-outlined">
                         visibility
-                        </span>
+                    </span>
 
                     <!-- Mata tertutup -->
                     <span x-show="show" class="material-symbols-outlined">
                         visibility_off
-                        </span>
+                    </span>
                 </button>
             </div>
 

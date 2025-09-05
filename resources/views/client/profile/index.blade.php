@@ -335,6 +335,7 @@
                         ])
 
                     </div>
+
                     <div x-show="activeTab === 2">
                         <button class="btn btn-primary mb-4 btn-sm"
                             @click.prevent="$dispatch('open-modal', {data: null, name: 'address-form-store'})"><i
@@ -411,23 +412,85 @@
 
                                 <div>
                                     <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-                                    <x-text-input id="update_password_current_password" name="current_password"
-                                        type="password" class="mt-1 block w-full" autocomplete="current-password" />
+                                    {{-- <x-text-input id="update_password_current_password" name="current_password"
+                                        type="password" class="mt-1 block w-full" autocomplete="current-password" /> --}}
+
+                                    <div x-data="{ show: false }" class="relative">
+                                        <x-text-input id="update_password_current_password"
+                                            class="block mt-1 w-full pr-10" x-bind:type="show ? 'text' : 'password'"
+                                            name="current_password" required autocomplete="current-password" />
+
+                                        <!-- Toggle button -->
+                                        <button type="button" @click="show = !show"
+                                            class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+
+                                            <!-- Mata terbuka -->
+                                            <span x-show="!show" class="material-symbols-outlined">
+                                                visibility
+                                            </span>
+
+                                            <!-- Mata tertutup -->
+                                            <span x-show="show" class="material-symbols-outlined">
+                                                visibility_off
+                                            </span>
+                                        </button>
+                                    </div>
                                     <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
                                 </div>
 
                                 <div>
                                     <x-input-label for="update_password_password" :value="__('New Password')" />
-                                    <x-text-input id="update_password_password" name="password" type="password"
-                                        class="mt-1 block w-full" autocomplete="new-password" />
+                                    {{-- <x-text-input id="update_password_password" name="password" type="password"
+                                        class="mt-1 block w-full" autocomplete="new-password" /> --}}
+
+                                    <div x-data="{ show: false }" class="relative">
+                                        <x-text-input id="update_password_password" class="block mt-1 w-full pr-10"
+                                            x-bind:type="show ? 'text' : 'password'" name="password" required
+                                            autocomplete="new-password" />
+
+                                        <!-- Toggle button -->
+                                        <button type="button" @click="show = !show"
+                                            class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+
+                                            <!-- Mata terbuka -->
+                                            <span x-show="!show" class="material-symbols-outlined">
+                                                visibility
+                                            </span>
+
+                                            <!-- Mata tertutup -->
+                                            <span x-show="show" class="material-symbols-outlined">
+                                                visibility_off
+                                            </span>
+                                        </button>
+                                    </div>
                                     <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
                                 </div>
 
                                 <div>
                                     <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-                                    <x-text-input id="update_password_password_confirmation"
+                                    {{-- <x-text-input id="update_password_password_confirmation"
                                         name="password_confirmation" type="password" class="mt-1 block w-full"
-                                        autocomplete="new-password" />
+                                        autocomplete="new-password" /> --}}
+                                    <div x-data="{ show: false }" class="relative">
+                                        <x-text-input id="update_password_password_confirmation"
+                                            class="block mt-1 w-full pr-10" x-bind:type="show ? 'text' : 'password'"
+                                            name="password_confirmation" required autocomplete="new-password" />
+
+                                        <!-- Toggle button -->
+                                        <button type="button" @click="show = !show"
+                                            class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+
+                                            <!-- Mata terbuka -->
+                                            <span x-show="!show" class="material-symbols-outlined">
+                                                visibility
+                                            </span>
+
+                                            <!-- Mata tertutup -->
+                                            <span x-show="show" class="material-symbols-outlined">
+                                                visibility_off
+                                            </span>
+                                        </button>
+                                    </div>
                                     <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
                                 </div>
 
