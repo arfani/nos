@@ -101,12 +101,12 @@
 
     <table class="table-1">
         <tr>
-            <td>DITERBITKAN ATAS NAMA</td>
+            <td style="width: 300px;">DITERBITKAN ATAS NAMA</td>
             <td>UNTUK</td>
             <td></td>
         </tr>
         <tr>
-            <td class="penjual">Penjual : CV. DS Computer</td>
+            <td class="penjual">Penjual : DS Computer</td>
             <td style="white-space: nowrap;">
                 Nama
             </td>
