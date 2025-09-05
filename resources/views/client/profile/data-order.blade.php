@@ -13,8 +13,8 @@
     </div>
     @endif
 
-    {{-- TAMPILKAN NOTIF SETELAH ORDER BERHASIL --}}
-    <div x-show="$store.cart.showNotifSuccess" x-transition:leave.duration.500ms
+    {{-- TAMPILKAN NOTIF SETELAH ORDER BERHASIL (COBA DIDISABLE SUDAH ADA DI CART.BLADE.PHP) --}} 
+    {{-- <div x-show="$store.cart.showNotifSuccess" x-transition:leave.duration.500ms
         class="toast toast-top toast-end mt-24 z-50">
         <div role="alert" class="alert alert-success mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
@@ -24,7 +24,7 @@
             </svg>
             <span x-text="$store.cart.message"></span>
         </div>
-    </div>
+    </div> --}}
 
     <div class="flex">
         <span class="mb-3">
@@ -66,6 +66,7 @@
                 <th>No</th>
                 <th>Alamat Pengiriman</th>
                 <th>Pembayaran</th>
+                <th>Bank Transfer</th>
                 <th>Tanggal Order</th>
                 <th>Total Bayar</th>
                 <th>Status</th>
@@ -82,6 +83,7 @@
 
                 <td>{{$item->order_address->name}}</td>
                 <td>{{$item->payment_method}}</td>
+                <td>{{$item->bank_account->bank_name ?? '-'}}</td>
                 <td>{{$item->created_at->isoFormat('LL')}}</td>
                 <td>
                     <x-client.format-rp value="{{$item->total}}" />

@@ -254,6 +254,7 @@ export default {
                 total: this.subtotal + this.courierSelected.price,
                 orderAddressId: this.addressSelected.id,
                 shippingMethod: this.courierSelected,
+                bankAccountId: this.paymentMethod == 'Transfer' ? this.bankSelected.id : null
             })
         });
 
@@ -278,10 +279,14 @@ export default {
 
     bankSelected: {},
     setBankSelected(id, bank_name, account_name, account_number) {
-        this.bankSelected.id = id;
-        this.bankSelected.bank_name = bank_name;
-        this.bankSelected.account_name = account_name;
-        this.bankSelected.account_number = account_number;
+        if (!id) {
+            this.bankSelected = {}
+        } else {
+            this.bankSelected.id = id;
+            this.bankSelected.bank_name = bank_name;
+            this.bankSelected.account_name = account_name;
+            this.bankSelected.account_number = account_number;
+        }
     },
 
     copyToClipboard(text) {
@@ -293,5 +298,5 @@ export default {
                 this.showNotificationFailed('Nomor rekening gagal disalin !');
                 console.error(err);
             })
-    }
+    },
 }

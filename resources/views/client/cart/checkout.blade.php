@@ -258,7 +258,7 @@
                 </div>
                 <div class="card-actions mb-2 mt-4">
                     <a href="#"
-                        :class="`btn btn-primary btn-block font-bold tracking-widest ${(!$store.cart.paymentMethod || Object.keys($store.cart.courierSelected).length == 0)  || $store.cart.isLoading || $store.cart.totalItem == 0 ? 'btn-disabled' : ''}`"
+                        :class="`btn btn-primary btn-block font-bold tracking-widest ${!$store.cart.paymentMethod || Object.keys($store.cart.courierSelected).length == 0 || $store.cart.isLoading || $store.cart.totalItem == 0 || ($store.cart.paymentMethod == 'Transfer' ? Object.keys($store.cart.bankSelected).length == 0 : false) ? 'btn-disabled' : ''}`"
                         @click.prevent="$store.cart.submitOrder()">
                         <span x-show="!$store.cart.isLoading">
                             <i class="fa fa-paper-plane"></i>

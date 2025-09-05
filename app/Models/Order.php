@@ -37,4 +37,8 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
     
+    public function bank_account(): BelongsTo
+    {
+        return $this->belongsTo(BankAccount::class);
+    }
 }

@@ -1,7 +1,7 @@
 <div class="dropdown dropdown-end" x-data>
     {{-- ALERT --}}
     <div x-show="$store.cart.showNotifSuccess" x-transition:leave.duration.500ms
-        class="toast toast-top toast-end mt-24 z-50">
+        class="toast toast-top toast-end mt-24 z-[9999]">
         <div role="alert" class="alert alert-success mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
                 viewBox="0 0 24 24">

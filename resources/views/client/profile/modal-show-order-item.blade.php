@@ -25,6 +25,14 @@
             <div>
                 <h2 class="font-bold text-lg">Pembayaran</h2>
                 <span x-text="$store.cart.orderDetail.payment_method"></span>
+                <span x-text="$store.cart.orderDetail.bank_account?.bank_name"></span>
+                <span x-text="$store.cart.orderDetail.bank_account?.account_number"></span>
+                <button @click="$store.cart.copyToClipboard($store.cart.orderDetail.bank_account?.account_number)"
+                    class="tooltip" data-tip="Copy nomor rekening">
+                    <span class="far fa-copy"></span>
+                </button>
+                <span x-show="$store.cart.showNotifSuccess" x-transition:leave.duration.100ms x-text="$store.cart.message">
+                </span>
             </div>
 
             <div class="text-end">
@@ -36,7 +44,8 @@
         <div class="flex justify-between mb-4">
             <div>
                 <h2 class="font-bold text-lg">Tanggal Order</h2>
-                <span x-text="new Date($store.cart.orderDetail.created_at).toLocaleDateString('id-ID', {
+                <span
+                    x-text="new Date($store.cart.orderDetail.created_at).toLocaleDateString('id-ID', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'

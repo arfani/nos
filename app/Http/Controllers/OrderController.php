@@ -74,6 +74,7 @@ class OrderController extends Controller
         $new_order->total = $request->total;
         $new_order->order_address_id = $order_address_id;
         $new_order->shipping_method_id = $shipping_method_id;
+        $new_order->bank_account_id = $request->bankAccountId;
 
         if ($request->paymentMethod == 'Cash') {
             $new_order->delivery_state_id = 2; //Jika Cash set status langsung 'Menunggu Konfirmasi', jika tidak maka defaultnya 'menunggu pembayaran'
@@ -108,7 +109,7 @@ class OrderController extends Controller
 
     function order_by_id(Order $order)
     {
-        $order->load(['delivery_state', 'order_address', 'shipping_method', 'order_detail.product', 'order_detail.product_variant.product_detail.variant_value.variant']);
+        $order->load(['delivery_state', 'order_address', 'shipping_method', 'order_detail.product', 'order_detail.product_variant.product_detail.variant_value.variant', 'bank_account']);
 
         return response()->json($order);
     }
