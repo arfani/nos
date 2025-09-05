@@ -93,9 +93,9 @@
         {{-- <button class="btn btn-ghost btn-sm text-lg text-secondary"><i
                 class="fa fa-heart-circle-plus"></i></button> --}}
         @can('is-member')
-        <button class="btn btn-ghost btn-sm text-lg"
+        <button class="btn btn-primary btn-sm btn-circle"
             @click="$store.cart.addToCart('{{ $product->id }}', $refs.variant_id_selected ? $refs.variant_id_selected.value : null, $refs.quantity.value)">
-            <i class="fa fa-opencart"></i>
+            <i class="fa fa-cart-shopping"></i>
         </button>
         @endcan
     </div>

@@ -13,9 +13,10 @@
 
     <div id="loading" style="display: none;">Loading...</div>
     <div class="w-full text-center my-2">
-        <button id="load-more" data-page="{{ $auction->currentPage() }}"
-            data-last-page="{{ $auction->lastPage() }}">Load
-            more</button>
+        <button id="load-more" class="btn btn-primary" data-page="{{ $auction->currentPage() }}"
+            data-last-page="{{ $auction->lastPage() }}">
+            Muat lebih banyak    
+        </button>
     </div>
 
     <x-client.features />

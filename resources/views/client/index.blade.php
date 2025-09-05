@@ -115,7 +115,7 @@
             <p class="text-center pt-2">{{ $promo['data']->description }}</p>
             <div class="swiper promoSwiper w-full pt-5">
                 <div class="w-full text-center mt-2 mb-6">
-                    <a href="{{ route('client.promo') }}" class="btn btn-primary btn-sm btn-ghost tracking-wider">
+                    <a href="{{ route('client.promo') }}" class="btn btn-primary btn-sm tracking-wider">
                         Lihat Semua
                     </a>
                 </div>
@@ -124,16 +124,18 @@
                         <div class="swiper-slide">
                             <x-client.logo-promo />
                             <a href="{{ route('client.product', $promo_item->product->slug) }}">
-                                <div class="absolute inset-0 flex items-center justify-center text-3xl">
+                                <div class="absolute left-0 bottom-16 flex items-center justify-center text-xl">
                                     <div
-                                        class="top-4 left-2 bg-gradient-to-tr from-red-500 to-yellow-200 text-black px-3 py-1 rounded-full font-bold shadow-md transform -rotate-12 flex">
-                                        @auth
-                                            <x-client.format-rp
-                                                value="{{ $promo_item->product->product_variant[0]->price }}" />
-                                        @endauth
-                                        @guest
-                                            <a href="{{ route('login') }}" class="text-xl tracking-widest">LOGIN</a>
-                                        @endguest
+                                        class="inline-block px-[50px] py-2 pl-7 text-white font-bold font-sans shadow-md [clip-path:polygon(0_0,100%_0,85%_50%,100%_100%,0_100%)] [background:linear-gradient(to_top_right,#b30000_0%,#ff4c00_40%,#ffd700_100%)]">
+                                        <span class="block font-semibold drop-shadow-[1px_1px_3px_rgba(0,0,0,1)]">
+                                            @auth
+                                                <x-client.format-rp
+                                                    value="{{ $promo_item->product->product_variant[0]->price }}" />
+                                            @endauth
+                                            @guest
+                                                <a href="{{ route('login') }}" class="text-xl tracking-widest">LOGIN</a>
+                                            @endguest
+                                        </span>
                                     </div>
                                 </div>
                                 @if ($promo_item->product->product_pictures->isNotEmpty())
@@ -161,17 +163,12 @@
                                 <a href="{{ route('client.product', $auction_item->product->slug) }}">
                                     <div class="absolute left-0 bottom-16 flex items-center justify-center text-xs">
                                         <div
-                                            class="inline-block px-[50px] py-2 pl-7 text-white font-bold font-sans 
-            shadow-md [clip-path:polygon(0_0,100%_0,85%_50%,100%_100%,0_100%)] 
-            [background:linear-gradient(to_top_right,#b30000_0%,#ff4c00_40%,#ffd700_100%)]">
-
-                                            <span
-                                                class="block font-semibold drop-shadow-[1px_1px_3px_rgba(0,0,0,1)]">
+                                            class="inline-block px-[50px] py-2 pl-7 text-white font-bold font-sans shadow-md [clip-path:polygon(0_0,100%_0,85%_50%,100%_100%,0_100%)] [background:linear-gradient(to_top_right,#b30000_0%,#ff4c00_40%,#ffd700_100%)]">
+                                            <span class="block font-semibold drop-shadow-[1px_1px_3px_rgba(0,0,0,1)]">
                                                 Mulai dari
                                             </span>
 
-                                            <span
-                                                class="block font-extrabold drop-shadow-[1px_1px_3px_rgba(0,0,0,1)]">
+                                            <span class="block font-extrabold drop-shadow-[1px_1px_3px_rgba(0,0,0,1)]">
                                                 <x-client.format-rp value="{{ $auction_item->bid_start }}" />
                                             </span>
                                         </div>
@@ -211,8 +208,9 @@
             </div>
 
             <div class="w-full text-center my-2">
-                <a href="{{ route('client.products') }}" class="btn btn-primary btn-ghost tracking-wider">Lihat Semua
-                    Produk</a>
+                <a href="{{ route('client.products') }}" class="btn btn-primary tracking-wider">
+                    Lihat Semua Produk
+                </a>
             </div>
         </div>
     @endif

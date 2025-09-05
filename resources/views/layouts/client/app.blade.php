@@ -14,7 +14,7 @@
 
     <script src="https://kit.fontawesome.com/8e04c6a931.js" crossorigin="anonymous"></script>
 
-    {{-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> --}}
+    {{-- <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet"> --}}
 </head>
 
 <body class="antialiased">

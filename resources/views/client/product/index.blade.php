@@ -10,7 +10,9 @@
     
             <div id="loading" style="display: none;">Loading...</div>
             <div class="w-full text-center my-2">
-                <button id="load-more" data-page="{{ $products->currentPage() }}" data-last-page="{{ $products->lastPage() }}">Load more</button>
+                <button id="load-more" class="btn btn-primary" data-page="{{ $products->currentPage() }}" data-last-page="{{ $products->lastPage() }}">
+                    Muat lebih banyak
+                </button>
             </div>
         </div>
     <x-client.features />

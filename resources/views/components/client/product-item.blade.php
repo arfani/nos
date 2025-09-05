@@ -98,13 +98,13 @@
                 @endif
             </div>
             <div class="card-actions">
-                <div class="flex">
+                <div class="flex gap-2">
                     <input type="number" name="quantity" x-ref="quantity" class="my-input px-1 w-16 dark:border-b-white "
                         min="1" value="1">
                     <div class="tooltip tooltip-bottom" data-tip="Tambah ke keranjang">
-                        <button class="btn btn-circle btn-ghost"
+                        <button class="btn btn-circle btn-primary"
                             @click="$store.cart.addToCart('{{ $product->id }}', $refs.variant_id_selected ? $refs.variant_id_selected.value : null, $refs.quantity.value)">
-                            <i class="fa fa-opencart"></i>
+                            <i class="fa fa-cart-shopping"></i>
                         </button>
                     </div>
                 </div>
@@ -112,8 +112,8 @@
         @endcan
         @guest
             <div class="tooltip tooltip-bottom before:w-40" data-tip="Login untuk menambahkan ke keranjang">
-                <a href="{{ route('login') }}" class="btn btn-circle btn-ghost">
-                    <i class="fa fa-opencart"></i>
+                <a href="{{ route('login') }}" class="btn btn-circle btn-primary">
+                    <i class="fa fa-cart-shopping"></i>
                 </a>
             </div>
         @endguest
