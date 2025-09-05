@@ -122,6 +122,8 @@ class ProfileController extends Controller
             'area_id' => ['required', 'string'],
             'hp' => ['required', 'string', 'regex:/^(?:\+62|62|0)8[1-9][0-9]{6,9}$/'],
             'isMain' => ['nullable', 'string'],
+        ],[
+            'hp.regex' => 'Format nomor HP tidak valid',
         ]);
 
         $area = Http::withHeaders([
@@ -175,6 +177,8 @@ class ProfileController extends Controller
             'recipient' => ['required', 'string'],
             'hp' => ['required', 'string', 'regex:/^(?:\+62|62|0)8[1-9][0-9]{6,9}$/'],
             'isMain' => ['nullable', 'string'],
+        ],[
+            'hp.regex' => 'Format nomor HP tidak valid',
         ]);
 
         $area = Http::withHeaders([

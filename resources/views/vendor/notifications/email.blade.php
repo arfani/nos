@@ -45,13 +45,13 @@
 
 {{-- Subcopy --}}
 @isset($actionText)
-<x-slot:subcopy>
-@lang(
-    'Jika Anda mengalami kendala saat menekan tombol “Reset Password”, silakan salin dan tempel URL berikut ke browser Anda:',
-    [
-        'actionText' => $actionText,
-    ]
-) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
-</x-slot:subcopy>
+    @if ($actionText === 'Reset Password')
+        <x-slot:subcopy>
+            @lang(
+                'Jika Anda mengalami kendala saat menekan tombol “:actionText”, silakan salin dan tempel URL berikut ke browser Anda:',
+                ['actionText' => $actionText]
+            ) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
+        </x-slot:subcopy>
+    @endif
 @endisset
 </x-mail::message>

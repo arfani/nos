@@ -36,7 +36,6 @@ Route::get('/products', [ProductController::class, 'allProducts'])->name('client
 Route::get('/products/category/{category}', [ProductController::class, 'productsByCategory'])->name('client.productsByCategory');
 
 // CART
-
 Route::get('/data-cart', [CartController::class, 'get_data']); // untuk diambil dari alpine
 Route::post('/add-to-cart', [CartController::class, 'add_to_cart']); // untuk diambil dari alpine
 

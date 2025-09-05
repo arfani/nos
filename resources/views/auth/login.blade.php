@@ -42,7 +42,7 @@
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded text-primary shadow-sm focus:ring-primary"
                     name="remember">
-                <span class="ms-2 text-sm text-primary">{{ __('Remember me') }}</span>
+                <span class="ms-2 text-sm text-primary">{{ __('Ingatkan saya') }}</span>
             </label>
         </div>
 
