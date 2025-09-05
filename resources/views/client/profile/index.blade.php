@@ -185,7 +185,7 @@
                                     @keydown.enter="isEditingGender = !isEditingGender; saveGender()"
                                     x-init="$watch('isEditingGender', value => {
                                         if (value) {
-                                            tempGender = user.gender;
+                                            tempGender = $refs.genderInput.value;
                                         }
                                     })">
                                     <option class="bg-primary text-primary-content" value="m">Laki</option>
@@ -211,7 +211,7 @@
                                     @keydown.enter="isEditingStatusPernikahan = !isEditingStatusPernikahan; saveStatusPernikahan()"
                                     x-init="$watch('isEditingStatusPernikahan', value => {
                                         if (value) {
-                                            tempStatusPernikahan = user['status-pernikahan'];
+                                            tempStatusPernikahan = $refs.pernikahanInput.value;
                                         }
                                     })">
                                     <option class="bg-primary text-primary-content" value="Lajang">Lajang</option>
@@ -256,8 +256,7 @@
                                     @keydown.enter="isEditingEducation = !isEditingEducation; saveEducation()"
                                     x-init="$watch('isEditingEducation', value => {
                                         if (value) {
-                                            tempEducation = user.education;
-                                            console.log('val : ', value)
+                                            tempEducation = $refs.educationInput.value;
                                         }
                                     })">
                                     <option class="bg-primary text-primary-content" value="Tidak Sekolah">Tidak
