@@ -148,7 +148,7 @@ class OrderController extends Controller
         return $pdf->download('invoice-' . $order->id . '.pdf');
     }
 
-    // FORM ADMIN
+    // FOR ADMIN ROUTE
     public function index(Request $request)
     {
         $validated = $request->validate([
@@ -160,7 +160,7 @@ class OrderController extends Controller
             'date_to'            => ['nullable', 'date'],
         ]);
 
-        $data = Order::with(['order_address', 'delivery_state', 'shipping_method', 'user'])->latest();
+        $data = Order::with(['order_address', 'delivery_state', 'shipping_method', 'user', 'bank_account'])->latest();
 
         // 🔎 filter invoice
         if (($validated['search_by'] ?? null) === 'invoice' && !empty($validated['invoice'])) {

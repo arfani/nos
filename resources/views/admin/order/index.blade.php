@@ -86,6 +86,7 @@
                     <th class="text-center text-nowrap">Dikirim Ke</th>
                     <th class="text-center">Kurir</th>
                     <th class="text-center">Pembayaran</th>
+                    <th class="text-center">Bank Transfer</th>
                     <th class="text-center">Total Bayar</th>
                     <th class="text-center">Sudah Dibayar</th>
                     <th class="text-center">Status</th>
@@ -104,6 +105,7 @@
                             {{ $order->shipping_method->courier_name . ' - ' . $order->shipping_method->courier_service_name }}
                         </td>
                         <td class="text-center">{{ $order->payment_method }}</td>
+                        <td class="text-center">{{ $order->bank_account->bank_name ?? '-' }}</td>
                         <td class="text-center">
                             <x-client.format-rp value="{{ $order->total }}" />
                         </td>

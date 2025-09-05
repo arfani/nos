@@ -62,6 +62,29 @@
                             <div class="flex gap-2 leading-10">
                                 <span class="opacity-75 dark:text-base-content">Jenis Pembayaran
                                     :</span><span class="dark:text-base-content">{{ $data->payment_method }}</span>
+                                @if ($data->payment_method === 'Transfer')
+                                    <span>{{ $data->bank_account->bank_name }}</span> -
+                                    <span>{{ $data->bank_account->account_number }}</span>
+                                    <button
+                                        @click="$store.cart.copyToClipboard('{{ $data->bank_account->account_number }}')"
+                                        class="tooltip" data-tip="Copy nomor rekening">
+                                        <span class="far fa-copy"></span>
+                                    </button>
+
+                                    {{-- TAMPILKAN NOTIF COPY TO CLIPBOARD BERHASIL (INI KARENA PENAMBAHAN BELAKANGAN DI DATA ORDER INI JADI BERANTAKAN NGAMBIL DARI STORE CART, HARUS NYA DI ORGANIZE NANTI) --}}
+                                    <div x-show="$store.cart.showNotifSuccess" x-transition:leave.duration.500ms
+                                        class="toast toast-top toast-end mt-24 z-50">
+                                        <div role="alert" class="alert alert-success mb-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="stroke-current shrink-0 h-6 w-6" fill="none"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span x-text="$store.cart.message"></span>
+                                        </div>
+                                    </div>
+                                @endif
                                 @if ($data->payment_method === 'Transfer' && $data->delivery_state_id > 1)
                                     <span class="tooltip" data-tip="Lihat bukti bayar">
                                         <a href="{{ Storage::url($data->bukti_pembayaran) }}" target="_blank"><i
