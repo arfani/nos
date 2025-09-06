@@ -50,8 +50,8 @@
                                 <span class="opacity-75 dark:text-base-content">Jenis Pembayaran
                                     :</span><span class="dark:text-base-content">{{ $data->payment_method }}</span>
                                 @if ($data->payment_method === 'Transfer')
-                                    <span>{{ $data->bank_account->bank_name }}</span> -
-                                    <span>{{ $data->bank_account->account_number }}</span>
+                                    <span>{{ $data->bank_account->bank_name ?? '' }}</span> -
+                                    <span>{{ $data->bank_account->account_number ?? '' }}</span>
                                     <button
                                         @click="$store.cart.copyToClipboard('{{ $data->bank_account->account_number }}')"
                                         class="tooltip" data-tip="Copy nomor rekening">
