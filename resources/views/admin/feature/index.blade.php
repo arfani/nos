@@ -1,19 +1,5 @@
 <x-app-layout>
     <div class="sm:mx-6 lg:mx-8 p-6 py-10 rounded overflow-x-auto">
-        @if (Session::get('success'))
-            <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
-                class="toast toast-top toast-end mt-10 z-10">
-                <div role="alert" class="alert alert-success mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>{{ Session::get('success') }}</span>
-                </div>
-            </div>
-        @endif
-
         <div class="flex">
             <a href="{{ route('feature.create') }}"
                 class="bg-primary text-primary-content rounded px-4 py-2 mb-4 inline-block">
@@ -53,7 +39,7 @@
         <div class="overflow-x-auto">
             <table class="table bg-base-200">
                 <thead>
-                <tr class="bg-base-300">
+                    <tr class="bg-base-300">
                         <th class="text-center">No</th>
                         <th>Feature</th>
                         <th class="text-center">Aksi</th>
@@ -61,7 +47,7 @@
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
-                    <tr class="odd:bg-primary/5">
+                        <tr class="odd:bg-primary/5">
                             <td class="text-center">{{ ++$indexNumber }}</td>
                             <td>{{ $item->name }}</td>
                             <td class="flex justify-evenly">

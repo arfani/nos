@@ -1,23 +1,8 @@
 <x-app-layout>
     <div class="sm:mx-6 lg:mx-8 p-6 py-10 rounded overflow-x-auto">
-        @if (Session::get('success'))
-            <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
-                class="toast toast-top toast-end mt-10 z-10">
-                <div role="alert" class="alert alert-success mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>{{ Session::get('success') }}</span>
-                </div>
-            </div>
-        @endif
-
         <div class="flex">
             <span class="ml-auto mb-3">
                 <form class="flex [&_option]:bg-secondary" id="form_search">
-
                     <div class="tooltip" data-tip="Data per halaman">
                         <select id="numb_per_page" name="numb_per_page" class="my-input mr-2 text-accent-content">
                             <option value="5" @if ($numb_per_page == '5') selected @endif>5
@@ -32,17 +17,14 @@
                             </option>
                         </select>
                     </div>
-
                     <div class="tooltip" data-tip="Tanggal Dari">
                         <input type="date" id="date_from" name="date_from" class="my-input mr-2 text-accent-content"
                             value="{{ $validated['date_from'] ?? '' }}">
                     </div>
-
                     <div class="tooltip" data-tip="Tanggal Sampai">
                         <input type="date" id="date_to" name="date_to" class="my-input mr-2 text-accent-content"
                             value="{{ $validated['date_to'] ?? '' }}">
                     </div>
-
                     <div class="tooltip" data-tip="Cari berdasarkan status">
                         <select id="delivery_state_id" name="delivery_state_id"
                             class="my-input mr-2 text-accent-content">
@@ -54,14 +36,12 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="tooltip" data-tip="Cari berdasarkan">
                         <select id="search_by" name="search_by" class="my-input mr-2 text-accent-content">
                             <option value="invoice" @if (($validated['search_by'] ?? '') == 'invoice') selected @endif>Invoice</option>
                             <option value="member" @if (($validated['search_by'] ?? '') == 'member') selected @endif>Member</option>
                         </select>
                     </div>
-
                     <div class="inline-block my-input whitespace-nowrap">
                         <input type="text" id="search" name="{{ $validated['search_by'] ?? 'invoice' }}"
                             class="border-transparent focus:outline-none focus:ring-0 focus:border-transparent bg-transparent"
@@ -71,7 +51,6 @@
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
-
                 </form>
             </span>
         </div>
@@ -141,11 +120,9 @@
                 @endforeach
             </tbody>
         </table>
-
         <div class="[&_p]:!text-secondary-content [&_.bg-white]:bg-primary [&_.bg-white]:text-primary-content mt-10">
             {!! $data->links() !!}
         </div>
-        {{-- </div> --}}
     </div>
     @push('scripts')
         <script>

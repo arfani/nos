@@ -13,8 +13,7 @@
     </div>
 @endif
 @if (Session::get('error'))
-    <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms 
-        x-init="setTimeout(() => show = false, 5000)" 
+    <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)"
         class="toast toast-top toast-end mt-10 z-50">
         <div role="alert" class="alert alert-error mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"

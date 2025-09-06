@@ -1,45 +1,18 @@
 <div class="sm:mx-6 lg:mx-8 p-6 py-10 bg-base-300 text-base-content rounded overflow-x-auto">
-    @if (Session::get('success'))
-    <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms
-        x-init="setTimeout(() => show = false, 5000)" class="toast toast-top toast-end mt-10 z-10">
-        <div role="alert" class="alert alert-success mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>{{ Session::get('success') }}</span>
-        </div>
-    </div>
-    @endif
-
-    {{-- TAMPILKAN NOTIF SETELAH ORDER BERHASIL (COBA DIDISABLE SUDAH ADA DI CART.BLADE.PHP) --}} 
-    {{-- <div x-show="$store.cart.showNotifSuccess" x-transition:leave.duration.500ms
-        class="toast toast-top toast-end mt-24 z-50">
-        <div role="alert" class="alert alert-success mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span x-text="$store.cart.message"></span>
-        </div>
-    </div> --}}
-
     <div class="flex">
         <span class="mb-3">
             <form class="flex [&_option]:bg-secondary" id="form_search">
                 <div class="tooltip" data-tip="Data per halaman">
                     <select id="numb_per_page" name="numb_per_page" class="my-input mr-2">
-                        <option value="5" @if ($numb_per_page=='5' ) selected @endif>5
+                        <option value="5" @if ($numb_per_page == '5') selected @endif>5
                         </option>
-                        <option value="10" @if ($numb_per_page=='10' ) selected @endif>10
+                        <option value="10" @if ($numb_per_page == '10') selected @endif>10
                         </option>
-                        <option value="25" @if ($numb_per_page=='25' ) selected @endif>25
+                        <option value="25" @if ($numb_per_page == '25') selected @endif>25
                         </option>
-                        <option value="50" @if ($numb_per_page=='50' ) selected @endif>50
+                        <option value="50" @if ($numb_per_page == '50') selected @endif>50
                         </option>
-                        <option value="100" @if ($numb_per_page=='100' ) selected @endif>100
+                        <option value="100" @if ($numb_per_page == '100') selected @endif>100
                         </option>
                     </select>
                 </div>
@@ -75,48 +48,48 @@
         </thead>
         <tbody>
             @foreach ($data as $item)
-            {{-- <tr
+                {{-- <tr
                 class="border-b odd:bg-white/5 odd:text-accent-content [&>td]:p-2 hover:bg-primary hover:text-primary-content">
                 --}}
-            <tr class="hover">
-                <td>{{ ++$indexNumber }}</td>
+                <tr class="hover">
+                    <td>{{ ++$indexNumber }}</td>
 
-                <td>{{$item->order_address->name}}</td>
-                <td>{{$item->payment_method}}</td>
-                <td>{{$item->bank_account->bank_name ?? '-'}}</td>
-                <td>{{$item->created_at->isoFormat('LL')}}</td>
-                <td>
-                    <x-client.format-rp value="{{$item->total}}" />
-                </td>
-                <td>{{$item->delivery_state->name}}</td>
-                <td>
-                    <div class="flex gap-4 justify-center">
-                        @if ($item->payment_method == 'Transfer')
-                        <div class="tooltip" data-tip="Upload Bukti Bayar">
-                            <a href="#"
-                                @click.prevent="$dispatch('open-modal', 'modal-upload-bukti-bayar'); $store.cart.getOrderDetail('{{$item->id}}')">
-                                <i class="fa fa-money-bills text-red-600"></i>
-                            </a>
+                    <td>{{ $item->order_address->name }}</td>
+                    <td>{{ $item->payment_method }}</td>
+                    <td>{{ $item->bank_account->bank_name ?? '-' }}</td>
+                    <td>{{ $item->created_at->isoFormat('LL') }}</td>
+                    <td>
+                        <x-client.format-rp value="{{ $item->total }}" />
+                    </td>
+                    <td>{{ $item->delivery_state->name }}</td>
+                    <td>
+                        <div class="flex gap-4 justify-center">
+                            @if ($item->payment_method == 'Transfer')
+                                <div class="tooltip" data-tip="Upload Bukti Bayar">
+                                    <a href="#"
+                                        @click.prevent="$dispatch('open-modal', 'modal-upload-bukti-bayar'); $store.cart.getOrderDetail('{{ $item->id }}')">
+                                        <i class="fa fa-money-bills text-red-600"></i>
+                                    </a>
+                                </div>
+                            @endif
+                            <div class="tooltip" data-tip="Download Invoice">
+                                <form action="{{ route('download-invoice', $item->id) }}" method="post" target="_blank"
+                                    class="inline-block">
+                                    @csrf
+                                    <button type="submit">
+                                        <i class="fa fa-download text-blue-600"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="tooltip" data-tip="Lihat">
+                                <a href="#"
+                                    @click.prevent="$dispatch('open-modal', 'modal-show-order-item'); $store.cart.getOrderDetail('{{ $item->id }}')">
+                                    <i class="fa fa-eye text-teal-600"></i>
+                                </a>
+                            </div>
                         </div>
-                        @endif
-                        <div class="tooltip" data-tip="Download Invoice">
-                            <form action="{{ route('download-invoice', $item->id) }}" method="post" target="_blank"
-                                class="inline-block">
-                                @csrf
-                                <button type="submit">
-                                    <i class="fa fa-download text-blue-600"></i>
-                                </button>
-                            </form>
-                        </div>
-                        <div class="tooltip" data-tip="Lihat">
-                            <a href="#"
-                                @click.prevent="$dispatch('open-modal', 'modal-show-order-item'); $store.cart.getOrderDetail('{{$item->id}}')">
-                                <i class="fa fa-eye text-teal-600"></i>
-                            </a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>
@@ -129,8 +102,8 @@
     @include('client.profile.modal-upload-bukti-bayar')
 </div>
 @push('scripts')
-<script>
-    (function() {
+    <script>
+        (function() {
             const deleteBtn = document.querySelectorAll('button.delete')
 
             deleteBtn.forEach(function(btn) {
@@ -151,5 +124,5 @@
                 submitForm.submit()
             })
         })()
-</script>
+    </script>
 @endpush

@@ -4,25 +4,15 @@
             <div class="p-6">
                 <h2 class="text-xl uppercase mb-4 font-bold">Halaman {{ $form_name }}</h2>
                 @if ($errors->any())
-                <div class="p-4 mb-4 text-sm text-red-700 rounded-lg bg-red-300 dark:bg-gray-800 dark:text-red-400 w-fit" role="alert">
-                    @foreach ($errors->all() as $error)
-                    <span class="font-medium block"><i class="fas fa-circle-exclamation mr-2"></i>{{ $error }}</span>
-                    @endforeach
-                </div>
-                @endif
-
-                @if (Session::get('success'))
-                <div x-data="{ show: true }" x-show="show" x-transition:leave.duration.500ms x-init="setTimeout(() => show = false, 5000)" class="toast toast-top toast-end mt-10">
-                    <div role="alert" class="alert alert-success mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{{ Session::get('success') }}</span>
+                    <div class="p-4 mb-4 text-sm text-red-700 rounded-lg bg-red-300 dark:bg-gray-800 dark:text-red-400 w-fit"
+                        role="alert">
+                        @foreach ($errors->all() as $error)
+                            <span class="font-medium block"><i
+                                    class="fas fa-circle-exclamation mr-2"></i>{{ $error }}</span>
+                        @endforeach
                     </div>
-                </div>
                 @endif
-
-                <form action="{{$update_route}}" method="POST" id="main">
+                <form action="{{ $update_route }}" method="POST" id="main">
                     @csrf
                     @method('PATCH')
 
@@ -30,8 +20,10 @@
                         <div class="form-content">
                             <div class="flex flex-col mb-4">
                                 <label for="title" class="font-semibold mb-2">Judul</label>
-                                <input type="text" id="title" name="title" class="my-input bg-primary/5 rounded w-fit border-transparent border-b border-b-primary 
-            focus:ring-transparent focus:border-transparent focus:border-b-primary" value="{{ old('title', $data->title) }}" required autofocus>
+                                <input type="text" id="title" name="title"
+                                    class="my-input bg-primary/5 rounded w-fit border-transparent border-b border-b-primary 
+            focus:ring-transparent focus:border-transparent focus:border-b-primary"
+                                    value="{{ old('title', $data->title) }}" required autofocus>
                             </div>
 
                             <div id="toolbar">
@@ -64,7 +56,8 @@
                         </div>
 
                         <div class="">
-                            <button type="submit" class="w-full py-2 px-4 bg-primary text-primary-content mt-6 rounded">Simpan</button>
+                            <button type="submit"
+                                class="w-full py-2 px-4 bg-primary text-primary-content mt-6 rounded">Simpan</button>
                         </div>
                     </div>
                 </form>
@@ -72,41 +65,41 @@
         </div>
     </div>
     @push('styles')
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
-    <style>
-        .ql-toolbar {
-            background-color: ghostwhite
-        }
-    </style>
+        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+        <style>
+            .ql-toolbar {
+                background-color: ghostwhite
+            }
+        </style>
     @endpush
     @push('scripts')
-    <script src="https://cdn.quilljs.com/1.2.2/quill.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/kensnyder/quill-image-resize-module@3411c9a7/image-resize.min.js"></script>
-    <script>
-        (function() {
-            const form = document.querySelector('form#main')
-            const submitBtn = document.querySelector('button[type="submit"]')
+        <script src="https://cdn.quilljs.com/1.2.2/quill.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/kensnyder/quill-image-resize-module@3411c9a7/image-resize.min.js"></script>
+        <script>
+            (function() {
+                const form = document.querySelector('form#main')
+                const submitBtn = document.querySelector('button[type="submit"]')
 
-            form.addEventListener('submit', function() {
-                submitBtn.setAttribute('disabled', true)
+                form.addEventListener('submit', function() {
+                    submitBtn.setAttribute('disabled', true)
 
-                var editorContent = document.querySelector('#editor .ql-editor').innerHTML;
-                document.getElementById('content').value = editorContent;
-            })
+                    var editorContent = document.querySelector('#editor .ql-editor').innerHTML;
+                    document.getElementById('content').value = editorContent;
+                })
 
-            const editor = new Quill('#editor', {
-                modules: {
-                    toolbar: {
-                        container: '#toolbar', // Selector for toolbar container
+                const editor = new Quill('#editor', {
+                    modules: {
+                        toolbar: {
+                            container: '#toolbar', // Selector for toolbar container
+                        },
+                        imageResize: {
+                            displaySize: true
+                        }
                     },
-                    imageResize: {
-                        displaySize: true
-                    }
-                },
-                theme: 'snow'
-            })
+                    theme: 'snow'
+                })
 
-        })()
-    </script>
+            })()
+        </script>
     @endpush
 </x-app-layout>
