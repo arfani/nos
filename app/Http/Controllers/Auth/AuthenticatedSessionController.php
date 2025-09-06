@@ -40,7 +40,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         if (auth()->user()->level_id === 1) {
-            return redirect()->intended(route('admin.dashboard', absolute: false));
+            return redirect()->route('admin.dashboard');
         }
         return redirect()->intended(route('client.home', absolute: false));
     }
