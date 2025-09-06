@@ -127,10 +127,10 @@
                                     @if ($cell && isset($cell['active']) && $cell['active'] == 1)
                                         {{-- convert array $cell ke string dengan json_encode --}}
                                         <i class="fa fa-gear hover:rotate-90 duration-1000 cursor-pointer"
-                                            x-on:click="$dispatch('open-modal', {data: '{{ json_encode($cell) }}', name: 'modal-auction'})"></i>
+                                            x-on:click="$dispatch('open-modal', {data: JSON.stringify(@js($cell)), name: 'modal-auction'})"></i>
                                     @else
                                         <i class="fa fa-gear hover:-rotate-90 duration-1000 cursor-pointer text-gray-800"
-                                            x-on:click="$dispatch('open-modal', {data: '{{ json_encode($cell) }}', name: 'modal-auction'})"></i>
+                                            x-on:click="$dispatch('open-modal', {data: JSON.stringify(@js($cell)), name: 'modal-auction'})"></i>
                                     @endif
                                 </td>
                                 @continue
