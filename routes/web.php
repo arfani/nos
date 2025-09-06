@@ -23,7 +23,7 @@ use App\Http\Controllers\TestimonialController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'check-banned', 'verified'])->group(function () {
     Route::get('/', [ClientController::class, 'home'])->name('client.home');
     Route::get('/promo', [ClientController::class, 'promo'])->name('client.promo');
     Route::get('/lelang', [ClientController::class, 'lelang'])->name('client.lelang');
@@ -35,7 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // MEMBER ROUTES
-Route::middleware(['auth', 'verified', 'can:is-member'])->group(function () {
+Route::middleware(['auth', 'check-banned', 'verified', 'can:is-member'])->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart');
     Route::get('/checkout', [CartController::class, 'checkout'])->name('client.checkout');
     Route::patch('/update-qty/{cart}', [CartController::class, 'update_qty'])->name('client.update_qty');
