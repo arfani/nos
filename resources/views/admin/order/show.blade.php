@@ -53,7 +53,7 @@
                                     <span>{{ $data->bank_account->bank_name ?? '' }}</span> -
                                     <span>{{ $data->bank_account->account_number ?? '' }}</span>
                                     <button
-                                        @click="$store.cart.copyToClipboard('{{ $data->bank_account->account_number }}')"
+                                        @click="$store.cart.copyToClipboard('{{ $data->bank_account->account_number ?? '' }}')"
                                         class="tooltip" data-tip="Copy nomor rekening">
                                         <span class="far fa-copy"></span>
                                     </button>
