@@ -14,13 +14,13 @@
 </head>
 
 <body class="antialiased">
+    <x-ar.alert />
     @include('layouts.admin.sidebar')
     <div id="mainContent">
         @include('layouts.admin.navbar')
         <!-- Page Content -->
         <main class="py-12">
             {{-- ntar hapus session2 handler di masing2 halaman jika ada component ini sudah cukup untuk semua halaman ADMIN --}}
-            <x-ar.alert />
 
             {{-- <div class="overflow-hidden shadow-sm sm:rounded-lg"> --}}
             {{-- <div class="p-6 bg-base-200 mx-2 sm:mx-4 lg:mx-6 rounded"> --}}

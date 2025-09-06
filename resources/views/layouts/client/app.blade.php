@@ -18,6 +18,7 @@
 </head>
 
 <body class="antialiased">
+    <x-ar.alert />
 
     <div class="loadingScreen fixed w-screen h-screen z-[9999] bg-base-300 flex justify-center items-center">
         @include('components_custom.loader')

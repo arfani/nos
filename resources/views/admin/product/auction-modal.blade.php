@@ -52,8 +52,7 @@
         <div class="mt-6">
             <x-input-label for="bid_start" value="{{ __('Harga Awal') }}" />
             <div class="flex mt-2">
-                <span
-                    class="flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">Rp</span>
+                <span class="flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">Rp</span>
                 <x-text-input type="number" id="bid_start" name="bid_start" min="0"
                     class="my-input bg-primary/5 rounded-r rounded-l-none" placeholder="200000"
                     x-bind:value="data?.bid_start || `{{ old('bid_start') }}`" required />
@@ -64,8 +63,7 @@
         <div class="my-6">
             <x-input-label for="bid_increment" value="{{ __('Kelipatan') }}" />
             <div class="flex mt-2">
-                <span
-                    class="flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">Rp</span>
+                <span class="flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">Rp</span>
                 <x-text-input type="number" id="bid_increment" name="bid_increment" min="0"
                     class="my-input bg-primary/5 rounded-r rounded-l-none" placeholder="10000"
                     x-bind:value="data?.bid_increment || `{{ old('bid_increment') }}`" required />
@@ -158,9 +156,9 @@
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <style>
         /* .ql-toolbar {
-            background-color: oklch(var(--p));
-            color: oklch(var(--pc));
-        } */
+                background-color: oklch(var(--p));
+                color: oklch(var(--pc));
+            } */
 
         /* STYLE OF TOGGLE ACTIVE */
         .checkbox-wrapper-51 input[type="checkbox"] {

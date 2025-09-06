@@ -1,5 +1,4 @@
 <x-app-layout>
-    <x-ar.alert />
     <div class="flex flex-col gap-4">
         <x-ar.homepage-client :section="$hero" />
         <x-ar.homepage-client :section="$promo" />

@@ -14,13 +14,15 @@
 </head>
 
 <body class="antialiased">
+    <x-ar.alert />
+
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
         <div>
             <a href="/">
                 <img src="{{ asset('assets/images/logo.webp') }}" alt="logo" width="100px">
             </a>
-             <!-- toggle dark mode -->
-             {{-- <div class="fixed top-10 right-12">
+            <!-- toggle dark mode -->
+            {{-- <div class="fixed top-10 right-12">
                 <!-- <button class="btn btn-outline btn-circle" type="button"> -->
                     <label class="swap swap-rotate btn btn-circle btn-outline border-dashed">
                         <!-- this hidden checkbox controls the state -->
@@ -44,7 +46,7 @@
                 <!-- </button> -->
             </div> --}}
             <!-- end toggle dark mode -->
-            
+
         </div>
 
         <div
@@ -86,7 +88,7 @@
 
         // function setTheme(theme) {
         //     html.setAttribute('data-theme', theme)
-            
+
         //     if (theme == 'nord') {
         //         html.classList.remove('dark')
         //         themeSetter.checked = false

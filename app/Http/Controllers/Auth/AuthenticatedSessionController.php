@@ -28,6 +28,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Cek apakah user sudah diban
+        if (auth()->user()->banned ?? false) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->back()->withErrors([
+                'error' => 'Akun Anda telah diban. Silakan hubungi administrator.',
+            ]);
+        }
+
         if (auth()->user()->level_id === 1) {
             return redirect()->intended(route('admin.dashboard', absolute: false));
         }
