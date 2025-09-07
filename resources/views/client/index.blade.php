@@ -129,8 +129,15 @@
                                         class="inline-block px-[50px] py-2 pl-7 text-white font-bold font-sans shadow-md [clip-path:polygon(0_0,100%_0,85%_50%,100%_100%,0_100%)] [background:linear-gradient(to_top_right,#b30000_0%,#ff4c00_40%,#ffd700_100%)]">
                                         <span class="block font-semibold drop-shadow-[1px_1px_3px_rgba(0,0,0,1)]">
                                             @auth
-                                                <x-client.format-rp
-                                                    value="{{ $promo_item->product->product_variant[0]->price }}" />
+                                                @if (auth()->user()->hasVerifiedEmail())
+                                                    <x-client.format-rp
+                                                        value="{{ $promo_item->product->product_variant[0]->price }}" />
+                                                @else
+                                                    <a href="{{ route('verification.notice') }}"
+                                                        class="text-xl tracking-widest">
+                                                        VERIFIKASI EMAIL
+                                                    </a>
+                                                @endif
                                             @endauth
                                             @guest
                                                 <a href="{{ route('login') }}" class="text-xl tracking-widest">LOGIN</a>
