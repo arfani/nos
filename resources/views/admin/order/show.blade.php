@@ -42,8 +42,13 @@
 
                             <div class="flex gap-2 leading-10">
                                 <span class="opacity-75 dark:text-base-content">Kurir
-                                    :</span><span
-                                    class="dark:text-base-content">{{ $data->shipping_method->courier_name . ' - ' . $data->shipping_method->courier_service_name }}</span>
+                                    :</span><span class="dark:text-base-content">
+                                    @isset($data->shipping_method)
+                                        {{ $data->shipping_method->courier_name . ' - ' . $data->shipping_method->courier_service_name }}
+                                    @else
+                                        {{ 'Manual - ' . $data->shipping_method_manual }}
+                                    @endisset
+                                </span>
                             </div>
 
                             <div class="flex gap-2 leading-10">

@@ -23,8 +23,8 @@ use App\Http\Controllers\TestimonialController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', [ClientController::class, 'home'])->name('client.home');
 Route::middleware(['auth', 'check-banned', 'verified'])->group(function () {
-    Route::get('/', [ClientController::class, 'home'])->name('client.home');
     Route::get('/promo', [ClientController::class, 'promo'])->name('client.promo');
     Route::get('/lelang', [ClientController::class, 'lelang'])->name('client.lelang');
     Route::post('/bid', [AuctionController::class, 'bid'])->name('bid.store');

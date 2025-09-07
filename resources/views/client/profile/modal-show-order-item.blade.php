@@ -13,12 +13,18 @@
 
         <div class="mb-2">
             <h2 class="font-bold text-lg">Kurir</h2>
-            <span x-text="$store.cart.orderDetail.shipping_method?.courier_name"></span> •
-            <span x-text="$store.cart.orderDetail.shipping_method?.courier_service_name"></span> •
-            Estimasi <span x-text="$store.cart.orderDetail.shipping_method?.duration"></span> •
-            <span
-                x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.orderDetail.shipping_method?.price)">
-            </span>
+            <div x-show="$store.cart.orderDetail.shipping_method">
+                <span x-text="$store.cart.orderDetail.shipping_method?.courier_name"></span> •
+                <span x-text="$store.cart.orderDetail.shipping_method?.courier_service_name"></span> •
+                Estimasi <span x-text="$store.cart.orderDetail.shipping_method?.duration"></span> •
+                <span
+                    x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.orderDetail.shipping_method?.price)">
+                </span>
+            </div>
+            <div x-show="!$store.cart.orderDetail.shipping_method">
+                <span>Manual</span> •
+                <span x-text="$store.cart.orderDetail.shipping_method_manual"></span>
+            </div>
         </div>
 
         <div class="flex justify-between mb-4">
@@ -31,7 +37,8 @@
                     class="tooltip" data-tip="Copy nomor rekening">
                     <span class="far fa-copy"></span>
                 </button>
-                <span x-show="$store.cart.showNotifSuccess" x-transition:leave.duration.100ms x-text="$store.cart.message">
+                <span x-show="$store.cart.showNotifSuccess" x-transition:leave.duration.100ms
+                    x-text="$store.cart.message">
                 </span>
             </div>
 

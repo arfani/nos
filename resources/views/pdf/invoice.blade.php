@@ -243,7 +243,12 @@
             <td>Metode Pembayaran:</td>
         </tr>
         <tr>
-            <td>{{ $order->shipping_method->courier_name . ' - ' . $order->shipping_method->courier_service_name }}
+            <td>
+                @isset($order->shipping_method)
+                    {{ $order->shipping_method->courier_name . ' - ' . $order->shipping_method->courier_service_name }}
+                @else
+                    {{ 'Manual - ' . $order->shipping_method_manual }}
+                @endisset
             </td>
             <td>{{ $order->payment_method }}</td>
         </tr>

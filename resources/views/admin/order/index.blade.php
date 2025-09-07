@@ -81,7 +81,11 @@
                         <td class="text-center">{{ $order->invoice }}</td>
                         <td class="text-center">{{ $order->order_address->name }}</td>
                         <td class="text-center">
-                            {{ $order->shipping_method->courier_name . ' - ' . $order->shipping_method->courier_service_name }}
+                            @isset($order->shipping_method)
+                                {{ $order->shipping_method->courier_name . ' - ' . $order->shipping_method->courier_service_name }}
+                            @else
+                                {{ ' Manual - ' . $order->shipping_method_manual }}
+                            @endisset
                         </td>
                         <td class="text-center">{{ $order->payment_method }}</td>
                         <td class="text-center">{{ $order->bank_account->bank_name ?? '-' }}</td>
@@ -93,11 +97,11 @@
                         <td class="text-center">{{ $order->created_at->isoFormat('LL') }}</td>
                         <td class="text-center">
                             <div class="flex gap-3 justify-center">
-                        
+
                                 {{-- Tombol Batalkan --}}
                                 <div class="tooltip" data-tip="Batalkan">
-                                    <form action="{{ route('admin-order.cancel', $order->id) }}" method="POST" 
-                                          onsubmit="return confirm('Yakin ingin membatalkan order ini?');">
+                                    <form action="{{ route('admin-order.cancel', $order->id) }}" method="POST"
+                                        onsubmit="return confirm('Yakin ingin membatalkan order ini?');">
                                         @csrf
                                         @method('PATCH') {{-- atau PATCH, sesuai definisi route cancel --}}
                                         <button type="submit" class="text-red-600 hover:text-red-800">
@@ -105,17 +109,17 @@
                                         </button>
                                     </form>
                                 </div>
-                        
+
                                 {{-- Tombol Lihat --}}
                                 <div class="tooltip" data-tip="Lihat">
                                     <a href="{{ route('admin-order.show', $order->id) }}">
                                         <i class="fa fa-eye text-teal-600"></i>
                                     </a>
                                 </div>
-                        
+
                             </div>
                         </td>
-                        
+
                     </tr>
                 @endforeach
             </tbody>

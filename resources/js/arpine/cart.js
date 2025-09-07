@@ -225,22 +225,26 @@ export default {
         const result = await response.json();
 
         if (result.success) {
-            // Successfully ger courier rates
+            // Successfully get courier rates
             this.courierList = result.pricing;
         } else {
             // Handle the error case
             this.showNotificationFailed('Terjadi kesalahan saat cek ongkir, segera hubungi admin !');
-            console.error('Gagal cek ongkir');
         }
     },
+
     courierSelected: {},
     setCourierSelected(courier) {
         this.courierSelected = courier
+        console.log(courier);
+
     },
+
     paymentMethod: null,
     setPaymentMethod(method) {
         this.paymentMethod = method
     },
+
     async submitOrder() {
         this.isLoading = true;
         const response = await fetch('/order', {
@@ -251,7 +255,8 @@ export default {
             },
             body: JSON.stringify({
                 paymentMethod: this.paymentMethod,
-                total: this.subtotal + this.courierSelected.price,
+                // KALO SHIPPING METHOD MANUAL SET ONGKIR 0
+                total: this.subtotal + (this.courierSelected.price || 0),
                 orderAddressId: this.addressSelected.id,
                 shippingMethod: this.courierSelected,
                 bankAccountId: this.paymentMethod == 'Transfer' ? this.bankSelected.id : null
@@ -272,6 +277,7 @@ export default {
             this.showNotificationFailed("Terjadi kesalahan, order gagal !");
         }
     },
+
     orderDetail: {},
     async getOrderDetail(order_id) {
         this.orderDetail = await (await fetch(`/order/${order_id}`)).json();

@@ -137,7 +137,18 @@
                         <div x-show="Object.keys($store.cart.courierSelected).length == 0" class="text-base-content">
                             Anda belum memilih metode pengiriman !
                         </div>
-                        <div x-show="Object.keys($store.cart.courierSelected).length > 0"
+                        <div x-show="typeof $store.cart.courierSelected == 'string'"
+                            class="capitalize font-bold flex flex-col sm:flex-row w-full items-center justify-evenly gap-2">
+                            <div class="flex flex-col items-center">
+                                <div x-text="`${$store.cart.courierSelected}`">
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col items-center">
+                                <div>Manual</div>
+                            </div>
+                        </div>
+                        <div x-show="typeof $store.cart.courierSelected == 'object' && Object.keys($store.cart.courierSelected).length > 0"
                             class="capitalize font-bold flex flex-col sm:flex-row w-full items-center justify-evenly gap-2">
                             <div class="flex flex-col items-center">
                                 <div
@@ -186,9 +197,10 @@
 
                         </div>
                         {{-- Bank List --}}
-                        <div x-show="$store.cart.paymentMethod=='Transfer'" class="flex flex-col justify-end items-end w-fit ml-auto">
-                            <select name="bank_account_id" id="bank_account_id" class="my-input w-fit" 
-                            @change="$store.cart.setBankSelected(
+                        <div x-show="$store.cart.paymentMethod=='Transfer'"
+                            class="flex flex-col justify-end items-end w-fit ml-auto">
+                            <select name="bank_account_id" id="bank_account_id" class="my-input w-fit"
+                                @change="$store.cart.setBankSelected(
                                 $event.target.value,
                                 $event.target.options[$event.target.selectedIndex].dataset.bank_name,
                                 $event.target.options[$event.target.selectedIndex].dataset.account_name,
@@ -196,11 +208,11 @@
                                 )">
                                 <option value="">Pilih Bank</option>
                                 @foreach ($bank_accounts as $bank_account)
-                                    <option value="{{ $bank_account->id }}" 
-                                    data-bank_name="{{ $bank_account->bank_name }}" 
-                                    data-account_name="{{ $bank_account->account_name }}" 
-                                    data-account_number="{{ $bank_account->account_number }}" 
-                                    >{{ $bank_account->bank_name }} -
+                                    <option value="{{ $bank_account->id }}"
+                                        data-bank_name="{{ $bank_account->bank_name }}"
+                                        data-account_name="{{ $bank_account->account_name }}"
+                                        data-account_number="{{ $bank_account->account_number }}">
+                                        {{ $bank_account->bank_name }} -
                                         {{ $bank_account->account_name }} - {{ $bank_account->account_number }}
                                     </option>
                                 @endforeach
@@ -212,11 +224,11 @@
                                 <span x-text="$store.cart.bankSelected.account_name"></span> -
                                 <span x-text="$store.cart.bankSelected.account_number"></span>
                                 <button @click="$store.cart.copyToClipboard($store.cart.bankSelected.account_number)"
-                                class="tooltip" data-tip="Copy nomor rekening">
+                                    class="tooltip" data-tip="Copy nomor rekening">
                                     <span class="far fa-copy"></span>
                                 </button>
                             </div>
-                            
+
                         </div>
                     </div>
                     {{-- END METODE PEMBAYARAN --}}
@@ -245,7 +257,7 @@
                     <div class="flex justify-between">
                         <div class="w-32">Ongkir</div>
                         <div
-                            x-text="JSON.stringify($store.cart.courierSelected) !== '{}' ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.courierSelected.price) : '-'">
+                            x-text="JSON.stringify($store.cart.courierSelected) !== '{}' ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format($store.cart.courierSelected.price || 0) : '-'">
                         </div>
                     </div>
                     <div class="divider my-0"></div>

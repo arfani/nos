@@ -54,18 +54,24 @@ class OrderController extends Controller
         // MENGGUNAKAN FIRST OR CREATE BIAR GA TERLALU BANYAK DUPLIKAT, MISAL ADA DATA YANG SAMA MAKA GA BUAT DATA BARU LAGI
         $order_address_id = OrderAddress::firstOrCreate($addressData)->id;
 
-        // SHIPPINGMETHOD
-        $shippingMethodData = collect($request->shippingMethod)->except(['currency', 'tax_lines'])->toArray();
-        $shipping_method_id = ShippingMethod::firstOrCreate($shippingMethodData)->id;
+        if (gettype($request->shippingMethod) == 'string') {
+            // kalo string berarti shipping method nya manual set shipping_method_id = null then isi shipping_method_manual
+            $shipping_method_id = null;
+            $shipping_method_manual = $request->shippingMethod;
+        } else {
+            // SHIPPINGMETHOD
+            $shippingMethodData = collect($request->shippingMethod)->except(['currency', 'tax_lines'])->toArray();
+            $shipping_method_id = ShippingMethod::firstOrCreate($shippingMethodData)->id;
 
-        // ADA PERUBAHAN COLUMN2 DARI BITESHIP NYA, NANTI KALO ADA ERROR KARENA KOLOM SHIPPING METHOD NYA GA COCOK PAKE KODE DIBAWAH INI AJA BUAT GANTI KODE "// SHIPPINGMETHOD" DI ATAS
-        // SEMENTARA PAKE KODE "SHIPPINGMETHOD" DI ATAS DULU BUAT TAU APA AJA METHOD YG DITAMBAH BITESHIP NYA
-        // $allowedColumns = Schema::getColumnListing('shipping_methods');
+            // ADA PERUBAHAN COLUMN2 DARI BITESHIP NYA, NANTI KALO ADA ERROR KARENA KOLOM SHIPPING METHOD NYA GA COCOK PAKE KODE DIBAWAH INI AJA BUAT GANTI KODE "// SHIPPINGMETHOD" DI ATAS
+            // SEMENTARA PAKE KODE "SHIPPINGMETHOD" DI ATAS DULU BUAT TAU APA AJA METHOD YG DITAMBAH BITESHIP NYA
+            // $allowedColumns = Schema::getColumnListing('shipping_methods');
 
-        // $shippingMethodData = collect($request->shippingMethod)
-        //     ->only($allowedColumns) // hanya ambil key yang memang ada di tabel
-        //     ->toArray();
-        // $shipping_method_id = ShippingMethod::firstOrCreate($shippingMethodData)->id;
+            // $shippingMethodData = collect($request->shippingMethod)
+            //     ->only($allowedColumns) // hanya ambil key yang memang ada di tabel
+            //     ->toArray();
+            // $shipping_method_id = ShippingMethod::firstOrCreate($shippingMethodData)->id;
+        }
 
         $new_order = new Order();
         $new_order->user_id = $user_id;
@@ -74,6 +80,7 @@ class OrderController extends Controller
         $new_order->total = $request->total;
         $new_order->order_address_id = $order_address_id;
         $new_order->shipping_method_id = $shipping_method_id;
+        $new_order->shipping_method_manual = $shipping_method_manual;
         $new_order->bank_account_id = $request->bankAccountId;
 
         if ($request->paymentMethod == 'Cash') {
@@ -237,7 +244,7 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Order sudah dibatalkan sebelumnya');
         }
 
-        
+
         if ($order->delivery_state_id == DeliveryState::where('name', 'Selesai')->first()->id) {
             return redirect()->back()->with('error', 'Order sudah selesai tidak bisa dibatalkan');
         }

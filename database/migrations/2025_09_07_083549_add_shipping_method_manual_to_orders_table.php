@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->foreignId('bank_account_id')->nullable()->onDelete('set null')->after('payment_method');
+            $table->string('shipping_method_manual')->nullable()->default(null);
         });
     }
 
@@ -22,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropForeign('bank_account_id');
-            $table->dropColumn('bank_account_id');
+            $table->dropColumn('shipping_method_manual');
         });
     }
 };
