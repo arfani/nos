@@ -51,10 +51,11 @@ class ClientController extends Controller
         $products = [
             'data' => $product_data,
             'items' => Product::with(['product_pictures', 'promo', 'auction', 'product_variant.product_detail.variant_value.variant'])
-                ->where('active', 1)
+                ->whereHas('product_variant', function ($query) {
+                    $query->where('active', 1);
+                })
                 ->limit($product_data->show_items)->latest()->get()
         ];
-
         $testimonial_data = Setting::where('section_name', 'testimonial')->first();
         $testimonial = [
             'data' => $testimonial_data,
@@ -75,7 +76,7 @@ class ClientController extends Controller
         ];
 
         $wa_admin = User::where('level_id', 1)->first()->hp;
-        
+
         return view('client.index', compact(
             'notice',
             'categories',
