@@ -111,7 +111,7 @@
                                 <td
                                     x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(orderDetail.price)">
                                 </td>
-                                <td x-text="orderDetail.discount"></td>
+                                <td x-text="orderDetail.discount + ' %'"></td>
                                 <td
                                     x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(orderDetail.price * orderDetail.quantity)">
                                 </td>
