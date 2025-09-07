@@ -60,6 +60,8 @@ class OrderController extends Controller
             $shipping_method_manual = $request->shippingMethod;
         } else {
             // SHIPPINGMETHOD
+            $shipping_method_manual = null;
+
             $shippingMethodData = collect($request->shippingMethod)->except(['currency', 'tax_lines'])->toArray();
             $shipping_method_id = ShippingMethod::firstOrCreate($shippingMethodData)->id;
 
