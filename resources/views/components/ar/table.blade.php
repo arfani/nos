@@ -101,7 +101,7 @@
                             @if ($k === 'promo')
                                 <td>
                                     @if ($cell == 1)
-                                        <i class="fa fa-toggle-on"></i>
+                                        <i class="fa fa-toggle-on text-[#086B35]"></i>
                                     @else
                                         <i class="fa fa-toggle-off text-gray-800"></i>
                                     @endif
@@ -112,7 +112,7 @@
                                 <td>
                                     @if ($cell && isset($cell['active']) && $cell['active'] == 1)
                                         {{-- convert array $cell ke string dengan json_encode --}}
-                                        <i class="fa fa-gear hover:rotate-90 duration-1000 cursor-pointer"
+                                        <i class="fa fa-gear hover:rotate-90 duration-1000 cursor-pointer text-[#086B35]"
                                             x-on:click="$dispatch('open-modal', {data: JSON.stringify(@js($cell)), name: 'modal-auction'})"></i>
                                     @else
                                         <i class="fa fa-gear hover:-rotate-90 duration-1000 cursor-pointer text-gray-800"

@@ -44,8 +44,7 @@
         <div class="mt-6">
             <x-input-label for="endtime" value="{{ __('Batas Waktu') }}" />
             <x-text-input name="endtime" type="datetime-local" class="mt-2" placeholder="{{ __('Batas Waktu') }}"
-                required x-bind:value="data?.endtime || `{{ old('endtime') }}`" {{-- tidak bisa gunakan shortcut dari x-bind (yaitu : ) disini karena menggunakan blade component, jadi pake x-bind saja --}}
-                min="{{ now() }}" step="1" />
+                x-bind:value="data?.endtime || `{{ old('endtime') }}`" {{-- tidak bisa gunakan shortcut dari x-bind (yaitu : ) disini karena menggunakan blade component, jadi pake x-bind saja --}} step="1" />
             <x-input-error :messages="$errors->auction_update->get('endtime')" class="mt-2" />
         </div>
 
@@ -55,7 +54,7 @@
                 <span class="flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">Rp</span>
                 <x-text-input type="number" id="bid_start" name="bid_start" min="0"
                     class="my-input bg-primary/5 rounded-r rounded-l-none" placeholder="200000"
-                    x-bind:value="data?.bid_start || `{{ old('bid_start') }}`" required />
+                    x-bind:value="data?.bid_start || `{{ old('bid_start') }}`" />
             </div>
             <x-input-error :messages="$errors->auction_update->get('bid_start')" class="mt-2" />
         </div>
@@ -66,7 +65,7 @@
                 <span class="flex justify-center items-center p-2 border-b border-primary rounded-l font-bold">Rp</span>
                 <x-text-input type="number" id="bid_increment" name="bid_increment" min="0"
                     class="my-input bg-primary/5 rounded-r rounded-l-none" placeholder="10000"
-                    x-bind:value="data?.bid_increment || `{{ old('bid_increment') }}`" required />
+                    x-bind:value="data?.bid_increment || `{{ old('bid_increment') }}`" />
             </div>
             <x-input-error :messages="$errors->auction_update->get('bid_increment')" class="mt-2" />
         </div>
@@ -156,9 +155,9 @@
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <style>
         /* .ql-toolbar {
-                background-color: oklch(var(--p));
-                color: oklch(var(--pc));
-            } */
+                    background-color: oklch(var(--p));
+                    color: oklch(var(--pc));
+                } */
 
         /* STYLE OF TOGGLE ACTIVE */
         .checkbox-wrapper-51 input[type="checkbox"] {

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class AuctionRequest extends FormRequest
 {
@@ -17,13 +18,32 @@ class AuctionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => ['required'],
-            'active' => ['nullable', 'boolean'],
-            'endtime' => ['required'],
-            'bid_start' => ['required'],
-            'bid_increment' => ['required'],
-            'rules' => ['nullable','string'],
-            'id' => ['nullable', 'numeric'],
+            'product_id'    => ['required'],
+            'active'        => ['nullable', 'boolean'],
+
+            'endtime'       => [
+                Rule::when(
+                    $this->input('active') == 1,
+                    ['required', 'date', 'after_or_equal:' . now()->toDateTimeString()]
+                ),
+            ],
+
+            'bid_start'     => [
+                Rule::when(
+                    $this->input('active') == 1,
+                    ['required', 'numeric', 'min:0']
+                ),
+            ],
+
+            'bid_increment' => [
+                Rule::when(
+                    $this->input('active') == 1,
+                    ['required', 'numeric', 'min:0']
+                ),
+            ],
+
+            'rules'         => ['nullable', 'string'],
+            'id'            => ['nullable', 'numeric'],
         ];
     }
 
