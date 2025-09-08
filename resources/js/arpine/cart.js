@@ -5,6 +5,7 @@ export default {
     message: '',
     notifTimeout: null,
     isLoading: false,
+    isThereItemWithNoStock: false,
     get totalItem() {
         return this.items.reduce((sum, item) => sum + item.quantity, 0)
     },

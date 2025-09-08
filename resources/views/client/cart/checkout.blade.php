@@ -11,7 +11,8 @@
                 </div>
 
                 <template x-for="item in $store.cart.items">
-                    <div class="cart-item bg-base-200 p-4 rounded-t border-b border-primary" :key="item.product.id">
+                    <div class="cart-item bg-base-200 p-4 rounded-t border-b border-primary" :key="item.product.id"
+                        x-init="(item.product_variant ? item.product_variant.stock <= 0 : item.product.product_variant[0].stock <= 0) ? $store.cart.isThereItemWithNoStock = true: $store.cart.isThereItemWithNoStock = false">
                         <div class="flex flex-col md:flex-row items-center gap-2">
                             <img :src="item.product.product_pictures.length ? `/storage/${item.product.product_pictures[0].path}` :
                                 ''"
@@ -29,6 +30,8 @@
                                 <template x-if="!item.product_variant">
                                     <div class="text-center md:text-start">-</div>
                                 </template>
+                                <div x-show="item.product_variant ? item.product_variant.stock <= 0 : item.product.product_variant[0].stock <= 0"
+                                    class="text-red-500 text-xs animate-pulse mt-2">Stok Habis</div>
                             </div>
                             <div class="price flex flex-col text-center">
                                 <div>
@@ -270,7 +273,7 @@
                 </div>
                 <div class="card-actions mb-2 mt-4">
                     <a href="#"
-                        :class="`btn btn-primary btn-block font-bold tracking-widest ${!$store.cart.paymentMethod || Object.keys($store.cart.courierSelected).length == 0 || $store.cart.isLoading || $store.cart.totalItem == 0 || ($store.cart.paymentMethod == 'Transfer' ? Object.keys($store.cart.bankSelected).length == 0 : false) ? 'btn-disabled' : ''}`"
+                        :class="`btn btn-primary btn-block font-bold tracking-widest ${!$store.cart.paymentMethod || Object.keys($store.cart.courierSelected).length == 0 || $store.cart.isLoading || $store.cart.totalItem == 0 || ($store.cart.paymentMethod == 'Transfer' ? Object.keys($store.cart.bankSelected).length == 0 : false) || $store.cart.isThereItemWithNoStock ? 'btn-disabled' : ''}`"
                         @click.prevent="$store.cart.submitOrder()">
                         <span x-show="!$store.cart.isLoading">
                             <i class="fa fa-paper-plane"></i>

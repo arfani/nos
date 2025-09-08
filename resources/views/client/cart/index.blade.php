@@ -24,6 +24,8 @@
                                 <template x-if="!item.product_variant">
                                     <div class="text-center md:text-start">-</div>
                                 </template>
+                                <div x-show="item.product_variant ? item.product_variant.stock <= 0 : item.product.product_variant[0].stock <= 0"
+                                    class="text-red-500 text-xs animate-pulse mt-2">Stok Habis</div>
                             </div>
                             <div class="price flex flex-col text-center">
                                 <div>
