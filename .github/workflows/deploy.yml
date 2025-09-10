@@ -19,7 +19,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "[Deploy] Fetch latest code..."
-            cd /home/dscomputer/public_html || exit
+            cd /home/dscomputer.id/public_html || exit
             git fetch --all
             git reset --hard origin/master
 
